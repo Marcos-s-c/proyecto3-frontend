@@ -3,6 +3,7 @@ import { AdminGuard } from './services/admin.guard';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
+import { PasswordResetComponent } from './pages/passwordReset/password-reset/password-reset.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
@@ -35,6 +36,12 @@ const routes: Routes = [
     component:UserDashboardComponent,
     pathMatch:'full',
     canActivate:[NormalGuard]
+  },
+  {
+    path:'password_reset',
+    component:PasswordResetComponent,
+    pathMatch:'full'
+    
   }
 ];
 
