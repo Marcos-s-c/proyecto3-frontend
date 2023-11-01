@@ -13,7 +13,7 @@ export class PasswordResetComponent implements OnInit {
     "newPassword":'',
     "repeatPassword":''
   }
-  
+
   constructor(private snack:MatSnackBar,private router:Router) { }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class PasswordResetComponent implements OnInit {
 
   formSubmit(){
     if(this.passwordReset.newPassword.trim() == '' || this.passwordReset.newPassword.trim() == null){
-      this.snack.open('La nueva contraseña es requerida','Aceptar',{
+      this.snack.open('La nueva contraseña es requerida!','Aceptar',{
         duration:3000
       })
       return;
