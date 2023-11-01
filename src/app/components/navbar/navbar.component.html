@@ -1,35 +1,35 @@
-<mat-toolbar color="primary">
+<mat-toolbar style="background-color: #F7D9D9">
   <a
     [routerLink]="'/'"
     mat-icon-button
     class="example-icon"
     arial-label="Example icon-button with menu icon"
   >
-    <mat-icon>menu_books</mat-icon>
+    <mat-icon>female</mat-icon>
   </a>
-  <span>Portal de exámenes</span>
+  <span>Venus</span>
   <span class="example-spacer"></span>
   <a
-    *ngIf = "!isLoggedIn"
+    *ngIf="!isLoggedIn"
     [routerLink]="'/login'"
     mat-icon-button
-    class = "example-icon favorite-icon"
-    aria-label = "Example icon-button with heart icon"
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
   >
     Iniciar sesión
   </a>
   <a
-    *ngIf = "!isLoggedIn"
+    *ngIf="!isLoggedIn"
     [routerLink]="'/signup'"
     mat-icon-button
     class="example-icon favorite-icon mr20 ml70"
     aria-label="Example icon-button with heart icon"
   >
-    Registrar
+    Registrarme
   </a>
   <a
-    *ngIf = "isLoggedIn"
-    (click) = "logout()"
+    *ngIf="isLoggedIn"
+    (click)="logout()"
     style="margin-right: 50px"
     mat-icon-button
     class="example-icon favorite-icon"
@@ -38,7 +38,7 @@
     Cerrar sesión
   </a>
   <button
-    *ngIf = "isLoggedIn && user"
+    *ngIf="isLoggedIn && user"
     mat-button
     style="margin-right: 10px"
     class="example-icon favorite-icon"
