@@ -47,6 +47,20 @@ export class SignupComponent implements OnInit {
       return;
     }
 
+    // Expresión regular para validar correos electrónicos
+    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+    if (!emailRegex.test(this.user.email)) {
+      this.snack.open(
+        'El email no es válido. Ingresa un correo válido.',
+        'Aceptar',
+        {
+          duration: 3000,
+        }
+      );
+      return;
+    }
+
     this.userService.añadirUsuario(this.user).subscribe(
       (data) => {
         console.log(data);
