@@ -55,7 +55,7 @@ export class SignupComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-        this.snack.open('Ha ocurrido un error en el sistema !!', 'Aceptar', {
+        this.snack.open('Ha ocurrido un error en el sistema!', 'Aceptar', {
           duration: 3000,
         });
       }

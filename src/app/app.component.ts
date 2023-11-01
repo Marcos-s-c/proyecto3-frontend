@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'sistema-examenes-frontend';
+  title = 'venus';
   constructor(private router: Router) {}
 
   shouldShowNavbar() {
