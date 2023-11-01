@@ -108,5 +108,8 @@
 			}
 		}
 	},
-	"defaultProject": "venus"
+  "defaultProject": "venus",
+  "cli": {
+    "analytics": "4b50b07c-5626-45e2-9344-fd6a1aae4e7b"
+  }
 }
