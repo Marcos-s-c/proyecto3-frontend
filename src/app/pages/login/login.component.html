@@ -43,17 +43,19 @@
             </mat-form-field>
 
             <br /><br />
-            <div class="container text-center">
-              <a href="password_reset">Recuperar la contraseña</a>
-            </div>
 
             <div class="container text-center">
               <button type="submit" mat-raised-button class="button-color custom-button">
                 Iniciar sesión
               </button>
+              
               <!-- <button type="reset" style = "margin-left: 20px;" mat-raised-button color="accent">Limpiar</button> -->
             </div>
+            
           </form>
+          <mat-dialog-actions class="container text-center">
+            <button mat-raised-button (click)="openDialog()">Recuperar contraseña</button>
+          </mat-dialog-actions>
         </mat-card>
       </div>
     </div>

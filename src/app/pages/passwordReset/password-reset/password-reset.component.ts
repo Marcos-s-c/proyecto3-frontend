@@ -11,7 +11,8 @@ export class PasswordResetComponent implements OnInit {
 
   passwordReset={
     "newPassword":'',
-    "repeatPassword":''
+    "repeatPassword":'',
+    "code":''
   }
 
   constructor(private snack:MatSnackBar,private router:Router) { }

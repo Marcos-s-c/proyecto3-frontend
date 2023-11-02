@@ -2,6 +2,8 @@ import { Router } from '@angular/router';
 import { LoginService } from './../../services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
+import {DialogPasswordResetComponent} from './dialog-password-reset/dialog-password-reset.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +19,15 @@ export class LoginComponent implements OnInit {
   constructor(
     private snack: MatSnackBar,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private matDialog:MatDialog
   ) {}
+
+  openDialog(){
+    this.matDialog.open(DialogPasswordResetComponent,{
+      width:'350px',
+    })
+  }
 
   ngOnInit(): void {}
 
