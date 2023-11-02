@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   openDialog(){
     this.matDialog.open(DialogPasswordResetComponent,{
-      width:'350px',
+      width:'500px',
     })
   }
 
