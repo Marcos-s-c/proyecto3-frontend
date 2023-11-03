@@ -2,14 +2,14 @@ import { Router } from '@angular/router';
 import { LoginService } from './../../services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
-import {DialogPasswordResetComponent} from './dialog-password-reset/dialog-password-reset.component';
-import {MatDialog} from '@angular/material/dialog';
+import { DialogPasswordResetComponent } from './dialog-password-reset/dialog-password-reset.component';
+import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-
 })
 export class LoginComponent implements OnInit {
   loginData = {
@@ -21,13 +21,13 @@ export class LoginComponent implements OnInit {
     private snack: MatSnackBar,
     private loginService: LoginService,
     private router: Router,
-    private matDialog:MatDialog
+    private matDialog: MatDialog
   ) {}
 
-  openDialog(){
-    this.matDialog.open(DialogPasswordResetComponent,{
-      width:'500px',
-    })
+  openDialog() {
+    this.matDialog.open(DialogPasswordResetComponent, {
+      width: '500px',
+    });
   }
 
   ngOnInit(): void {}
@@ -67,9 +67,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.loginService.generateToken(this.loginData).subscribe(
-      (data: any) => {
-        this.loginService.loginUser(data.token);
-        this.loginService.setUser(data.user);
+      (response: any) => {
+        console.log(response);
+        this.loginService.loginUser(response.token);
+        this.loginService.setUser(response.user);
         console.log(this.loginService.getUserRole());
 
         if (this.loginService.getUserRole() == 'ADMIN') {
@@ -84,7 +85,21 @@ export class LoginComponent implements OnInit {
           this.loginService.logout();
         }
       },
-     
+      (error) => {
+        console.log(error);
+        Swal.fire({
+          title: 'Credenciales invalidos',
+          text: 'Lo sentimos, no pudimos procesar tus credenciales en este momento. Por favor, inténtalo de nuevo más tarde o comunícate con el soporte técnico si el problema persiste.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+          }
+        });
+      }
     );
   }
 }

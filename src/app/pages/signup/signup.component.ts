@@ -40,8 +40,6 @@ export class SignupComponent implements OnInit {
         'Aceptar',
         {
           duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
         }
       );
       return;
@@ -62,8 +60,8 @@ export class SignupComponent implements OnInit {
     }
 
     this.userService.añadirUsuario(this.user).subscribe(
-      (data) => {
-        console.log(data);
+      (response) => {
+        console.log(response);
         Swal.fire('Usuario guardado', 'Usuario registrado con exito.');
         this.router.navigate(['/login']);
       },

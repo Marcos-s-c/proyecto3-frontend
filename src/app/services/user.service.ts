@@ -19,4 +19,13 @@ export class UserService {
       email
     );
   }
+
+  public changePassword(passcode: any) {
+    return this.httpClient.post(
+      `${baserUrl}/rest/auth/recuperarContra`,
+      passcode
+
+      
+    );
+  }
 }

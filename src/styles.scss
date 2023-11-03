@@ -51,7 +51,14 @@ body {
 }
 
 .button-color {
-  background-color: #f7d9d9;
+  background-color: #f25287;
+  color: white !important;
+}
+
+.button-color:hover {
+  background-color: #f25287;
+  color: white !important;
+  font-size: large;
 }
 
 .custom-button:hover {
@@ -62,7 +69,6 @@ body {
 .custom-button {
   color: #f25287;
 }
-
 
 .mat-form-field-appearance-outline .mat-form-field-outline {
   color: pink;
