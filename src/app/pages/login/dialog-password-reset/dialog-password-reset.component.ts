@@ -18,7 +18,8 @@ export class DialogPasswordResetComponent implements OnInit {
   constructor(
     private snack: MatSnackBar,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
@@ -32,10 +33,6 @@ export class DialogPasswordResetComponent implements OnInit {
         duration: 3000,
       });
       return;
-    } else {
-      this.snack.open('El email fue enviado con éxito!', 'Aceptar', {
-        duration: 3000,
-      });
     }
 
     // Expresión regular para validar correos electrónicos
@@ -69,6 +66,7 @@ export class DialogPasswordResetComponent implements OnInit {
         }).then((result) => {
           if (result.isConfirmed) {
             // El usuario hizo clic en "Aceptar"
+            this.dialog.closeAll();
             this.router.navigate(['/']);
           }
         });
