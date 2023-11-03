@@ -1,32 +1,42 @@
-@import '../../../mixins/text';
+@import "../../../mixins/text";
 
-.hero-container{
+.hero-container {
   display: flex;
-  .hero-section{
-    flex:1;
-    p{
+  .hero-section {
+    flex: 1;
+    p {
       padding: 2% 10%;
-      margin:0;
+      margin: 0;
       @include paragraph;
       text-align: center;
     }
   }
-  .hero-image{
+  .hero-image {
     width: 100%;
-    margin:0;
+    margin: 0;
     height: 100%;
   }
-  .hero-logo{
+  .hero-logo {
     padding-top: 5%;
     display: block;
     margin-left: auto;
     margin-right: auto;
   }
-  h1{
+  h1 {
     @include title;
     padding-top: 2%;
     text-align: center;
   }
+
+  image-container1 img {
+    width: 0% !important;
+    height: 0% !important;
+  }
+
+  @media (max-width: 768px) {
+    .image-container1 img {
+      width: 0% !important;
+      height: 0% !important;
+    }
+  }
 }
-
-
