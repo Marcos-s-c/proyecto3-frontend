@@ -11,4 +11,12 @@ export class UserService {
   public añadirUsuario(user: any) {
     return this.httpClient.post(`${baserUrl}/rest/auth/register`, user);
   }
+
+  public reiniciarContraseña(email: any) {
+    console.log(email);
+    return this.httpClient.post(
+      `${baserUrl}/rest/auth/enviarCorreoReset`,
+      email
+    );
+  }
 }

@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material/dialog';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+
 })
 export class LoginComponent implements OnInit {
   loginData = {
@@ -83,12 +84,7 @@ export class LoginComponent implements OnInit {
           this.loginService.logout();
         }
       },
-      (error) => {
-        console.log(error);
-        this.snack.open('Detalles inválidos!', 'Aceptar', {
-          duration: 3000,
-        });
-      }
+     
     );
   }
 }
