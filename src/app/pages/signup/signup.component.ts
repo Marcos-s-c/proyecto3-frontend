@@ -40,8 +40,6 @@ export class SignupComponent implements OnInit {
         'Aceptar',
         {
           duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
         }
       );
       return;
