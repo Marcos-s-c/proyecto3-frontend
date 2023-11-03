@@ -2,14 +2,13 @@ import { Router } from '@angular/router';
 import { LoginService } from './../../services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
-import {DialogPasswordResetComponent} from './dialog-password-reset/dialog-password-reset.component';
-import {MatDialog} from '@angular/material/dialog';
+import { DialogPasswordResetComponent } from './dialog-password-reset/dialog-password-reset.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-
 })
 export class LoginComponent implements OnInit {
   loginData = {
@@ -21,13 +20,13 @@ export class LoginComponent implements OnInit {
     private snack: MatSnackBar,
     private loginService: LoginService,
     private router: Router,
-    private matDialog:MatDialog
+    private matDialog: MatDialog
   ) {}
 
-  openDialog(){
-    this.matDialog.open(DialogPasswordResetComponent,{
-      width:'500px',
-    })
+  openDialog() {
+    this.matDialog.open(DialogPasswordResetComponent, {
+      width: '500px',
+    });
   }
 
   ngOnInit(): void {}
@@ -66,25 +65,22 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginService.generateToken(this.loginData).subscribe(
-      (data: any) => {
-        this.loginService.loginUser(data.token);
-        this.loginService.setUser(data.user);
-        console.log(this.loginService.getUserRole());
+    this.loginService.generateToken(this.loginData).subscribe((data: any) => {
+      this.loginService.loginUser(data.token);
+      this.loginService.setUser(data.user);
+      console.log(this.loginService.getUserRole());
 
-        if (this.loginService.getUserRole() == 'ADMIN') {
-          //dashboard admin
-          //window.location.href = '/admin';
-          this.router.navigate(['admin']);
-          this.loginService.loginStatusSubjec.next(true);
-        } else if (this.loginService.getUserRole() == 'ROLE_USER') {
-          this.router.navigate(['/']);
-          this.loginService.loginStatusSubjec.next(true);
-        } else {
-          this.loginService.logout();
-        }
-      },
-     
-    );
+      if (this.loginService.getUserRole() == 'ADMIN') {
+        //dashboard admin
+        //window.location.href = '/admin';
+        this.router.navigate(['admin']);
+        this.loginService.loginStatusSubjec.next(true);
+      } else if (this.loginService.getUserRole() == 'USER') {
+        this.router.navigate(['/']);
+        this.loginService.loginStatusSubjec.next(true);
+      } else {
+        this.loginService.logout();
+      }
+    });
   }
 }

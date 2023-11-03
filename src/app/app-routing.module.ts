@@ -11,42 +11,40 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path : '',
-    component : HomeComponent,
-    pathMatch : 'full'
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full',
   },
   {
-    path : 'signup',
-    component : SignupComponent,
-    pathMatch : 'full'
+    path: 'signup',
+    component: SignupComponent,
+    pathMatch: 'full',
   },
   {
-    path : 'login',
-    component : LoginComponent,
-    pathMatch : 'full'
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: 'full',
   },
   {
-    path:'admin',
-    component:DashboardComponent,
-    pathMatch:'full',
-    canActivate:[AdminGuard]
+    path: 'admin',
+    component: DashboardComponent,
+    pathMatch: 'full',
+    canActivate: [AdminGuard],
   },
   {
-    path:'user-dashboard',
-    component:UserDashboardComponent,
-    pathMatch:'full',
-    canActivate:[NormalGuard]
+    path: 'user-dashboard',
+    component: UserDashboardComponent,
+    pathMatch: 'full',
+    canActivate: [NormalGuard],
   },
   {
-    path:'password_reset',
-    component:PasswordResetComponent,
-    pathMatch:'full'
-    
-  }
+    path: 'password_reset/:userCode',
+    component: PasswordResetComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

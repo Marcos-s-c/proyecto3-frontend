@@ -24,13 +24,16 @@ export class DialogPasswordResetComponent implements OnInit {
   formSubmit() {
     if (
       this.dialogEmail.email.trim() == '' ||
-      this.dialogEmail.email.trim() == null) {
+      this.dialogEmail.email.trim() == null
+    ) {
       this.snack.open('El email es requerido!', 'Aceptar', {
-        duration: 3000,});
+        duration: 3000,
+      });
       return;
-    }else{
+    } else {
       this.snack.open('El email fue enviado con éxito!', 'Aceptar', {
-        duration: 3000,});
+        duration: 3000,
+      });
     }
 
     // Expresión regular para validar correos electrónicos
@@ -47,19 +50,12 @@ export class DialogPasswordResetComponent implements OnInit {
       return;
     }
 
-    console.log(this.dialogEmail.email);
-
     this.userService
       .reiniciarContraseña(this.dialogEmail)
       .subscribe((data: any) => {
-        console.log(data);
-        this.snack.open(
-          'Se ha enviado un código a tú correo.',
-          'Aceptar',
-          {
-            duration: 3000,
-          }
-        );
+        this.snack.open('Se ha enviado un código a tú correo.', 'Aceptar', {
+          duration: 3000,
+        });
       });
   }
 }

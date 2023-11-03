@@ -14,9 +14,16 @@ export class UserService {
 
   public reiniciarContraseña(email: any) {
     console.log(email);
-    return this.httpClient.post(
+    return this.httpClient.get(
       `${baserUrl}/rest/auth/enviarCorreoReset`,
       email
+    );
+  }
+
+  public changePassword(passcode: any) {
+    return this.httpClient.post(
+      `${baserUrl}/rest/auth/recuperarContra`,
+      passcode
     );
   }
 }
