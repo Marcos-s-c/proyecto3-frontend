@@ -1,4 +1,5 @@
-<mat-toolbar style="background-color: #F7D9D9">
+<mat-toolbar style="background-color: #f7d9d9; color: #df5583;
+          font-weight: 400;">
   <a
     [routerLink]="'/'"
     mat-icon-button
@@ -18,15 +19,17 @@
   >
     Iniciar sesión
   </a>
-  <a
-    *ngIf="!isLoggedIn"
-    [routerLink]="'/signup'"
-    mat-icon-button
-    class="example-icon favorite-icon mr20 ml70"
-    aria-label="Example icon-button with heart icon"
-  >
-    Registrarme
-  </a>
+  <div style="margin-right: 10px; ">
+    <a
+      *ngIf="!isLoggedIn"
+      [routerLink]="'/signup'"
+      mat-icon-button
+      class="example-icon favorite-icon mr20 ml70"
+      aria-label="Example icon-button with heart icon"
+    >
+      Registrarme
+    </a>
+  </div>
   <a
     *ngIf="isLoggedIn"
     (click)="logout()"
