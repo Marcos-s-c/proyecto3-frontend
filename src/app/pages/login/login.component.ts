@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { DialogPasswordResetComponent } from './dialog-password-reset/dialog-password-reset.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -65,22 +66,40 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginService.generateToken(this.loginData).subscribe((data: any) => {
-      this.loginService.loginUser(data.token);
-      this.loginService.setUser(data.user);
-      console.log(this.loginService.getUserRole());
+    this.loginService.generateToken(this.loginData).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.loginService.loginUser(response.token);
+        this.loginService.setUser(response.user);
+        console.log(this.loginService.getUserRole());
 
-      if (this.loginService.getUserRole() == 'ADMIN') {
-        //dashboard admin
-        //window.location.href = '/admin';
-        this.router.navigate(['admin']);
-        this.loginService.loginStatusSubjec.next(true);
-      } else if (this.loginService.getUserRole() == 'USER') {
-        this.router.navigate(['/']);
-        this.loginService.loginStatusSubjec.next(true);
-      } else {
-        this.loginService.logout();
+        if (this.loginService.getUserRole() == 'ADMIN') {
+          //dashboard admin
+          //window.location.href = '/admin';
+          this.router.navigate(['admin']);
+          this.loginService.loginStatusSubjec.next(true);
+        } else if (this.loginService.getUserRole() == 'ROLE_USER') {
+          this.router.navigate(['/']);
+          this.loginService.loginStatusSubjec.next(true);
+        } else {
+          this.loginService.logout();
+        }
+      },
+      (error) => {
+        console.log(error);
+        Swal.fire({
+          title: 'Credenciales invalidos',
+          text: 'Lo sentimos, no pudimos procesar tus credenciales en este momento. Por favor, inténtalo de nuevo más tarde o comunícate con el soporte técnico si el problema persiste.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+          }
+        });
       }
-    });
+    );
   }
 }

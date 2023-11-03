@@ -62,8 +62,8 @@ export class SignupComponent implements OnInit {
     }
 
     this.userService.añadirUsuario(this.user).subscribe(
-      (data) => {
-        console.log(data);
+      (response) => {
+        console.log(response);
         Swal.fire('Usuario guardado', 'Usuario registrado con exito.');
         this.router.navigate(['/login']);
       },

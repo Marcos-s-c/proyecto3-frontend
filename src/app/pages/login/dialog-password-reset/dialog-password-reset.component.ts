@@ -1,7 +1,9 @@
+import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dialog-password-reset',
@@ -52,9 +54,23 @@ export class DialogPasswordResetComponent implements OnInit {
 
     this.userService
       .reiniciarContraseña(this.dialogEmail)
-      .subscribe((data: any) => {
-        this.snack.open('Se ha enviado un código a tú correo.', 'Aceptar', {
-          duration: 3000,
+      .subscribe((response) => {
+        Swal.fire(
+          'Revisar Correo',
+          'Se ha enviado un código de restablecimiento de contraseña a su dirección de correo electrónico. '
+        );
+        Swal.fire({
+          title: 'Revisar Correo',
+          text: 'Se ha enviado un código de restablecimiento de contraseña a su dirección de correo electrónico.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#FF69B4',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+            this.router.navigate(['/']);
+          }
         });
       });
   }
