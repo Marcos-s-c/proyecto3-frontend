@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
       (error) => {
         console.log(error);
         Swal.fire({
-          title: 'Credenciales invalidos',
+          title: 'Credenciales inválidos',
           text: 'Lo sentimos, no pudimos procesar tus credenciales en este momento. Por favor, inténtalo de nuevo más tarde o comunícate con el soporte técnico si el problema persiste.',
           showCancelButton: false,
           showConfirmButton: true,
