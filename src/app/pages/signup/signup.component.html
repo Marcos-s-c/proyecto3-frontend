@@ -1,25 +1,41 @@
 <div class="bootstrap-wrapper">
   <div class="container">
-    <div class="row" style="margin-top: 20px">
-      <div class="container">
+    <div class="row">
+      <div class="container ">
         <div class="left-section">
           <div class="image-container">
-            <img src="../../../assets/icon.png" />
+            <img
+              src="../../../assets/icon.png"
+              style="
+                box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+                  0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+                  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+              "
+            />
           </div>
         </div>
+
         <div>
           <button
             mat-raised-button
             class="button-color custom-button"
-            style="position: absolute; margin-left: 20px; margin-top: 4px"
+            style="position: absolute; margin-left: 20px; margin-top: 8px"
             routerLink="/"
             routerLinkActive="active"
           >
             < Regresar
           </button>
         </div>
-        <div class="right-section">
-          <div class="text-center" style="padding-top: 20px">
+
+        <div
+          class="right-section rcorners1"
+          style="
+            box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+              0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+              0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+          "
+        >
+          <div class="text-center" style="padding-top: 25px">
             <h1 style="font-weight: 400">Crea Tu Cuenta Personal</h1>
             <form (ngSubmit)="formSubmit()">
               <mat-form-field class="full-width" appearance="outline">
