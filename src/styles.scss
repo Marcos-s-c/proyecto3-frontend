@@ -62,3 +62,21 @@ body {
 .custom-button {
   color: #f25287;
 }
+
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: pink;
+}
+
+.mat-form-field-appearance-outline:hover .mat-form-field-outline {
+  color: #f25287;
+}
+
+.mat-form-field {
+  &.mat-focused {
+    .mat-form-field-label {
+      color: #df5583;
+      font-weight: 400;
+    }
+  }
+}
