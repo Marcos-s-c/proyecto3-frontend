@@ -1,0 +1,17 @@
+<swiper-container init="false">
+  <swiper-slide class="swiper-container" *ngFor="let slide of slides">
+    <div class="slide-inner">
+      <img class="swiper-slide" src={{slide.src}}/>
+      <figure>
+        <blockquote>
+          <p>{{slide.testimony}} </p>
+        </blockquote>
+        <figcaption>
+          <p>{{slide.name}}</p>
+        </figcaption>
+      </figure>
+    </div>
+
+  </swiper-slide>
+</swiper-container>
+

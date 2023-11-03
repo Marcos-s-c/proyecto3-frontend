@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { TextAreaComponent } from './text-area.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('TextAreaComponent', () => {
+  let component: TextAreaComponent;
+  let fixture: ComponentFixture<TextAreaComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HomeComponent]
+      imports: [TextAreaComponent]
     });
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(TextAreaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

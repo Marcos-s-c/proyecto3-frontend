@@ -1,0 +1,28 @@
+import {Component, Input} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
+
+@Component({
+  selector: 'app-input',
+  standalone: true,
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.scss']
+})
+export class InputComponent {
+  @Input() name: string | undefined;
+  /*input= new FormControl('', [Validators.required]);
+  getErrorMessage() {
+    if (this.input.hasError('required')) {
+      return 'Debes digitar tu información personal.';
+    }
+
+    return this.input.hasError('email') ? 'Este campo no se puede enviar vacío' : '';
+  }
+
+    <input matInput placeholder="pat@example.com"  [formControl]="input" required]>
+  <mat-error *ngIf="input.invalid">{{getErrorMessage()}}</mat-error>
+*/
+}

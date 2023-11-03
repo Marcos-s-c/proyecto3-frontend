@@ -15,7 +15,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { HomeComponent } from './pages/home/home.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,9 +22,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { authInterceptorProviders } from './services/auth.interceptor';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
-
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DialogPasswordResetComponent } from './pages/login/dialog-password-reset/dialog-password-reset.component';
+import { register } from 'swiper/element/bundle';
+// register Swiper custom elements
+register();
 
 @NgModule({
   declarations: [
@@ -33,7 +34,6 @@ import { DialogPasswordResetComponent } from './pages/login/dialog-password-rese
     NavbarComponent,
     SignupComponent,
     LoginComponent,
-    HomeComponent,
     DashboardComponent,
     UserDashboardComponent,
     PasswordResetComponent,
@@ -54,6 +54,12 @@ import { DialogPasswordResetComponent } from './pages/login/dialog-password-rese
     MatIconModule,
     MatGridListModule,
     MatDialogModule,
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
