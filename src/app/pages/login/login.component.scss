@@ -1,28 +1,58 @@
-.full-width{
-  width: 100%;;
+.full-width {
+  width: 100%;
 }
 
-
-
-.background{
- background-color: #F9F3F3;
+.background {
+  background-color: #f9f3f3;
 }
 
 .container {
   display: flex;
   margin-top: 3%;
   justify-content: center;
-
 }
 
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: pink;
+}
 
+:host
+  ::ng-deep
+  .mat-form-field-appearance-outline:hover
+  .mat-form-field-outline {
+  color: #f25287;
+}
+
+:host {
+  ::ng-deep {
+    .mat-form-field {
+      &.mat-focused {
+        .mat-form-field-label {
+          color: #df5583;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+/* Ajusta el estilo de mat-dialog-actions */
+mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30px; /* Ajusta la altura mínima según tus necesidades */
+}
 
 @media (max-width: 500px) {
+}
 
+::ng-deep .mat-card {
+  border-radius: 20px !important;
+}
 
-
-
-
-
-
+@media (max-width: 768px) {
+  ::ng-deep .mat-card {
+    border-radius: 10px !important;
+  }
 }
