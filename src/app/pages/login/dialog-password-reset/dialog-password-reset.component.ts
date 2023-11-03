@@ -2,7 +2,7 @@ import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
+
 @Component({
   selector: 'app-dialog-password-reset',
   templateUrl: './dialog-password-reset.component.html',
@@ -16,8 +16,7 @@ export class DialogPasswordResetComponent implements OnInit {
   constructor(
     private snack: MatSnackBar,
     private userService: UserService,
-    private router: Router,
-    private matDialog:MatDialog
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
