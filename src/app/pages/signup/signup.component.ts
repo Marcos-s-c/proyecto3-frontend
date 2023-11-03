@@ -62,14 +62,39 @@ export class SignupComponent implements OnInit {
     this.userService.añadirUsuario(this.user).subscribe(
       (response) => {
         console.log(response);
-        Swal.fire('Usuario guardado', 'Usuario registrado con exito.');
+
+        Swal.fire({
+          title: 'Usuario guardado',
+          text: 'Usuario registrado con éxito.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+          }
+        });
+
         this.router.navigate(['/login']);
       },
       (error) => {
         console.log(error);
-        this.snack.open('Ha ocurrido un error en el sistema!', 'Aceptar', {
-          duration: 3000,
-        });
+        if (error.status === 400) {
+          // Error de credenciales incorrectos (Código de respuesta 400)
+          this.snack.open(
+            'Este correo ya esta en uso, por favor utilize otro',
+            'Aceptar',
+            {
+              duration: 3000,
+            }
+          );
+        } else {
+          // Error del sistema u otro tipo de error
+          this.snack.open('Ha ocurrido un error en el sistema.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
       }
     );
   }
