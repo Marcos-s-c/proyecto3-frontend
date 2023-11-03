@@ -22,12 +22,13 @@ export class DialogPasswordResetComponent implements OnInit {
   formSubmit() {
     if (
       this.dialogEmail.email.trim() == '' ||
-      this.dialogEmail.email.trim() == null
-    ) {
+      this.dialogEmail.email.trim() == null) {
       this.snack.open('El email es requerido!', 'Aceptar', {
-        duration: 3000,
-      });
+        duration: 3000,});
       return;
+    }else{
+      this.snack.open('El email fue enviado con éxito!', 'Aceptar', {
+        duration: 3000,});
     }
   
     // Expresión regular para validar correos electrónicos
