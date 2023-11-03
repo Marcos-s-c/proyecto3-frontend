@@ -2,6 +2,7 @@ import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 @Component({
   selector: 'app-dialog-password-reset',
   templateUrl: './dialog-password-reset.component.html',
@@ -15,7 +16,8 @@ export class DialogPasswordResetComponent implements OnInit {
   constructor(
     private snack: MatSnackBar,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private matDialog:MatDialog
   ) {}
 
   ngOnInit(): void {}
@@ -52,7 +54,13 @@ export class DialogPasswordResetComponent implements OnInit {
       .reiniciarContraseña(this.dialogEmail)
       .subscribe((data: any) => {
         console.log(data);
-        this.router.navigate(['/password_reset']);
+        this.snack.open(
+          'Se ha enviado un código a tú correo.',
+          'Aceptar',
+          {
+            duration: 3000,
+          }
+        );
       });
   }
 }
