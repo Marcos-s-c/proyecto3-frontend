@@ -54,10 +54,10 @@ export class PasswordResetComponent implements OnInit {
     }
 
     if (
-      this.passwordReset.newPassword.trim() == 
+      this.passwordReset.newPassword.trim() != 
       this.passwordReset.repeatPassword.trim() 
     ) {
-      this.snack.open('Debe repetir la nueva contraseña!', 'Aceptar', {
+      this.snack.open('Las contraseñas son distintas', 'Aceptar', {
         duration: 3000,
       });
       return;
