@@ -11,7 +11,7 @@ import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent {
+export class InputComponent implements onInit{
   @Input() name: string | undefined;
   @Input() placeholder: string | undefined;
 
@@ -23,5 +23,9 @@ export class InputComponent {
     }
 
     return this.input.hasError('input') ? 'Campo vacío' : '';
+  }
+
+  ngOnInit():void{
+    console.log(); 
   }
 }
