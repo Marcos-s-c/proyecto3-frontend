@@ -34,19 +34,15 @@ export class PasswordResetComponent implements OnInit {
   }
 
   formSubmit() {
-    if (
-      this.passwordReset.newPassword.trim() == '' ||
-      this.passwordReset.newPassword.trim() == null
-    ) {
+    console.log(this.passwordReset.newPassword)
+    console.log(this.passwordReset.repeatPassword)
+    if (!this.passwordReset.newPassword) {
       this.snack.open('La nueva contraseña es requerida!', 'Aceptar', {
         duration: 3000,
       });
       return;
     }
-    if (
-      this.passwordReset.repeatPassword.trim() == '' ||
-      this.passwordReset.repeatPassword.trim() == null
-    ) {
+    if (!this.passwordReset.repeatPassword) {
       this.snack.open('Debe repetir la nueva contraseña!', 'Aceptar', {
         duration: 3000,
       });
