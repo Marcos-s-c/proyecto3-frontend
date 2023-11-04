@@ -29,10 +29,20 @@ body{
   height: 700px;
 }
 
+.testimony{
+  margin:0;
+}
 
 p{
   @include paragraph_footer();
   text-align: center;
-  width: 75%;
   margin: 0 auto;
+}
+
+.carousel{
+
+  @media (min-width: 540px) {
+    width: 75%;
+
+  }
 }

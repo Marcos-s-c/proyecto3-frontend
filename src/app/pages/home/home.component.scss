@@ -1,3 +1,6 @@
+.landing-container{
+  background-color: #FFFFFF;
+}
 .venus-services {
   display: flex;
   flex-wrap: wrap;
@@ -24,6 +27,11 @@
   }
   div {
     flex: 1;
+  }
+  @media (max-width: 1000px) {
+      .contact-image {
+          display: none;
+      }
   }
 }
 .contact-image {

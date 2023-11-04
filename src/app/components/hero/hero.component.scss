@@ -2,6 +2,8 @@
 
 .hero-container {
   display: flex;
+  max-width: 1780px;
+  margin: 0 auto;
   .hero-section {
     flex: 1;
     p {
@@ -28,15 +30,12 @@
     text-align: center;
   }
 
-  image-container1 img {
-    width: 0% !important;
-    height: 0% !important;
-  }
 
-  @media (max-width: 768px) {
-    .image-container1 img {
-      width: 0% !important;
-      height: 0% !important;
+  @media (max-width: 1500px) {
+    .hero-section {
+      &.image-container1 {
+        display: none;
+      }
     }
   }
 }

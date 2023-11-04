@@ -59,12 +59,14 @@ export class CarouselComponent implements AfterViewInit {
       centeredSlidesBounds:true,
       navigation: {
         enabled: true},
-      slidesPerView: 1,
       breakpoints: {
         640: {
           slidesPerView: 1,
         },
-        1024: {
+        850: {
+          slidesPerView: 2,
+        },
+        1200: {
           slidesPerView: 3,
         },
       },

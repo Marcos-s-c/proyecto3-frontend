@@ -16,5 +16,17 @@
   }
 }
 
+.navbar-login{
+  display: flex;
+  gap: 5%;
+  a{
+    background-color: #F7D9D9;
+    font-size: xx-large;
+    font-family:Garamond;
+  }
 
+  @media (max-width: 1190px) {
+        display: none;
 
+  }
+}
