@@ -10,6 +10,9 @@ import {ButtonComponent} from "../../components/button/button.component";
 import {CarouselComponent} from "../../components/carousel/carousel.component";
 import {TextComponent} from "../../components/text/text.component";
 import {TextAreaComponent} from "../../components/text-area/text-area.component";
+import {FormsModule} from "@angular/forms";
+
+
 interface CardData{
   title: string,
   subtitle: string,
@@ -28,10 +31,15 @@ const data: CardData[]= [{title: "Registro de la menstruación", subtitle: "Podr
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MainNavLandingComponent, HeroComponent, CardComponent, TextComponent, FooterComponent, InputComponent, InputEmailComponent, ButtonComponent, TextAreaComponent, CarouselComponent],
+  imports: [CommonModule, MainNavLandingComponent, HeroComponent, CardComponent, TextComponent, FooterComponent, InputComponent, InputEmailComponent, ButtonComponent, TextAreaComponent, CarouselComponent, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
  cardData: CardData[] = data;
+
+  sendEmail(){
+
+  }
+
 }
