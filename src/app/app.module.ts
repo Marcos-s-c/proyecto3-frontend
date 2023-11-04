@@ -22,11 +22,24 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { authInterceptorProviders } from './services/auth.interceptor';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
+
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DialogPasswordResetComponent } from './pages/login/dialog-password-reset/dialog-password-reset.component';
 import { register } from 'swiper/element/bundle';
 // register Swiper custom elements
 register();
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSelectModule} from '@angular/material/select';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ReactiveFormsModule} from '@angular/forms';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSliderModule} from '@angular/material/slider';
+import {FormBuilder} from '@angular/forms';
+import {JsonPipe} from '@angular/common';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -60,6 +73,15 @@ register();
     MatIconModule,
     MatButtonModule,
     MatCardModule,
+    MatSidenavModule,
+    MatSelectModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatDividerModule,
+    MatRadioModule,
+    MatSliderModule,
+    ReactiveFormsModule,
+    MatCheckboxModule, 
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
