@@ -5,9 +5,9 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { LoginComponent } from './pages/login/login.component';
 import { PasswordResetComponent } from './pages/password-reset/password-reset.component';
 import { SignupComponent } from './pages/signup/signup.component';
-import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {HomeComponent} from "./pages/home/home.component";
 
 const routes: Routes = [
   {

@@ -24,8 +24,15 @@ export class UserService {
     return this.httpClient.post(
       `${baserUrl}/rest/auth/recuperarContra`,
       passcode
-
-      
     );
   }
+
+  public sendEmailLanding(contact: any){
+    return this.httpClient.post(
+      `https://formspree.io/f/meqbdkge`,
+      contact
+    );
+  }
+
+
 }
