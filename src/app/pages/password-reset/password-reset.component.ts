@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
 export class PasswordResetComponent implements OnInit {
   passwordReset = {
     newPassword: '',
+    repeatPassword: '',
     userCode: '',
   };
 
@@ -38,6 +39,25 @@ export class PasswordResetComponent implements OnInit {
       this.passwordReset.newPassword.trim() == null
     ) {
       this.snack.open('La nueva contraseña es requerida!', 'Aceptar', {
+        duration: 3000,
+      });
+      return;
+    }
+    if (
+      this.passwordReset.repeatPassword.trim() == '' ||
+      this.passwordReset.repeatPassword.trim() == null
+    ) {
+      this.snack.open('Debe repetir la nueva contraseña!', 'Aceptar', {
+        duration: 3000,
+      });
+      return;
+    }
+
+    if (
+      this.passwordReset.newPassword.trim() == 
+      this.passwordReset.repeatPassword.trim() 
+    ) {
+      this.snack.open('Debe repetir la nueva contraseña!', 'Aceptar', {
         duration: 3000,
       });
       return;
