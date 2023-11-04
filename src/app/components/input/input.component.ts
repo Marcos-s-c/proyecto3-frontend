@@ -13,16 +13,15 @@ import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 })
 export class InputComponent {
   @Input() name: string | undefined;
-  /*input= new FormControl('', [Validators.required]);
+  @Input() placeholder: string | undefined;
+
+  input = new FormControl('', [Validators.required, Validators.email]);
+
   getErrorMessage() {
     if (this.input.hasError('required')) {
-      return 'Debes digitar tu información personal.';
+      return 'Debes digitar tu información.';
     }
 
-    return this.input.hasError('email') ? 'Este campo no se puede enviar vacío' : '';
+    return this.input.hasError('input') ? 'Campo vacío' : '';
   }
-
-    <input matInput placeholder="pat@example.com"  [formControl]="input" required]>
-  <mat-error *ngIf="input.invalid">{{getErrorMessage()}}</mat-error>
-*/
 }
