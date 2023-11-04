@@ -33,10 +33,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   formSubmit() {
-    if (
-      this.loginData.email.trim() == '' ||
-      this.loginData.email.trim() == null
-    ) {
+    if (!this.loginData.email)
+     {
       this.snack.open('El email es requerido!', 'Aceptar', {
         duration: 3000,
       });
@@ -56,10 +54,7 @@ export class LoginComponent implements OnInit {
       );
       return;
     }
-    if (
-      this.loginData.password.trim() == '' ||
-      this.loginData.password.trim() == null
-    ) {
+    if (!this.loginData.password) {
       this.snack.open('La contraseña es requerida!', 'Aceptar', {
         duration: 3000,
       });
@@ -68,7 +63,6 @@ export class LoginComponent implements OnInit {
 
     this.loginService.generateToken(this.loginData).subscribe(
       (response: any) => {
-        console.log(response);
         this.loginService.loginUser(response.token);
         this.loginService.setUser(response.user);
         console.log(this.loginService.getUserRole());
@@ -79,10 +73,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
           this.loginService.loginStatusSubjec.next(true);
         } else if (this.loginService.getUserRole() == 'ROLE_USER') {
-          this.router.navigate(['/']);
+          this.router.navigate(['/user-dashboard']);
           this.loginService.loginStatusSubjec.next(true);
-        } else {
-          this.loginService.logout();
         }
       },
       (error) => {

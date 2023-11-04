@@ -29,13 +29,11 @@ const routes: Routes = [
     path: 'admin',
     component: DashboardComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuard],
   },
   {
     path: 'user-dashboard',
     component: UserDashboardComponent,
-    pathMatch: 'full',
-    canActivate: [NormalGuard],
+    pathMatch: 'full'
   },
   {
     path: 'password_reset/:userCode',

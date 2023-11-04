@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import baserUrl from './helper';
-
-type DataObject = {
-    userId: number,
-    fieldName: string;
-    value: any;
-    date: Date;
-};
+import { DataObject } from '../pages/user/user-dashboard/user-dashboard.component';
 
 @Injectable({
   providedIn: 'root'

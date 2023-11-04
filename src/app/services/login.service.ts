@@ -27,8 +27,7 @@ export class LoginService {
   }
 
   public isLoggedIn() {
-    let tokenStr = localStorage.getItem('token');
-    if (tokenStr == undefined || tokenStr == '' || tokenStr == null) {
+    if (!localStorage.getItem('token')) {
       return false;
     } else {
       return true;
@@ -37,8 +36,10 @@ export class LoginService {
 
   //cerranis sesion y eliminamos el token del localStorage
   public logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    this.http.get(`${baserUrl}/rest/users/logout`).subscribe(response =>{
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    })
     return true;
   }
 
