@@ -11,11 +11,11 @@ import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements onInit{
+export class InputComponent{
   @Input() name: string | undefined;
   @Input() placeholder: string | undefined;
 
-  input = new FormControl('', [Validators.required, Validators.email]);
+  input = new FormControl('', [Validators.required]);
 
   getErrorMessage() {
     if (this.input.hasError('required')) {
@@ -25,7 +25,4 @@ export class InputComponent implements onInit{
     return this.input.hasError('input') ? 'Campo vacío' : '';
   }
 
-  ngOnInit():void{
-    console.log(); 
-  }
 }

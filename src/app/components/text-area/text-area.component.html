@@ -1,5 +1,5 @@
 <mat-form-field class="container">
-  <mat-label>{{Name}}</mat-label>
-  <textarea matInput [formControl]="textArea" required></textarea>
+  <mat-label>{{name}}</mat-label>
+  <textarea name="{{name}}"matInput [formControl]="textArea" required></textarea>
   <mat-error *ngIf="textArea.invalid">{{getErrorMessage()}}</mat-error>
 </mat-form-field>

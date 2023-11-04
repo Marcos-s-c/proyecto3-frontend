@@ -71,12 +71,12 @@
             'Si quieres comunicarte con nosotros, no dudes en escribirnos.'
           "
         ></app-text>
-        <form action="https://formspree.io/f/meqbdkge"
+        <form ngNoForm  [action]="'https://formspree.io/f/meqbdkge'"
               method="POST">
           <app-input [name]="'Nombre'" [placeholder]="'Ana Sofía'"> </app-input>
           <app-input [name]="'Apellido'" [placeholder]="'Rodríguez'"></app-input>
           <app-input-email></app-input-email>
-          <app-text-area [Name]="'Asunto'" ></app-text-area>
+          <app-text-area [name]="'Asunto'" ></app-text-area>
           <app-button [name]="'Enviar'"></app-button>
         </form >
       </div>

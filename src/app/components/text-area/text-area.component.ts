@@ -12,7 +12,7 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angula
   styleUrls: ['./text-area.component.scss']
 })
 export class TextAreaComponent {
-  @Input() Name: string | undefined;
+  @Input() name: string | undefined;
   textArea = new FormControl('', [Validators.required]);
   getErrorMessage() {
     if (this.textArea.hasError('required')) {

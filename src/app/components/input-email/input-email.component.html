@@ -1,5 +1,5 @@
 <mat-form-field class="container">
   <mat-label>Correo electrónico</mat-label>
-  <input matInput placeholder="pat@example.com" [formControl]="email" required>
+  <input matInput name="email" placeholder="pat@example.com" [formControl]="email" required>
   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
 </mat-form-field>
