@@ -15,7 +15,12 @@ export class AppComponent {
     return (
       currentRoute !== '/signup' &&
       currentRoute !== '/login' &&
-      currentRoute !== '/'
+      currentRoute !== '/' &&
+      currentRoute !== '/#venus'  &&
+      currentRoute !== '/#services'  &&
+      currentRoute !== '/#testimonies' &&
+      currentRoute !== '/#science' &&
+      currentRoute !== '/#contact' 
     ); //
   }
 }
