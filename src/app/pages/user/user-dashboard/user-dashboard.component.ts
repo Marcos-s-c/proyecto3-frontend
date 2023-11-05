@@ -40,17 +40,17 @@ export class UserDashboardComponent implements OnInit {
   createDataArrayList() {
     //define date
     if(this.date == undefined) this.date = new Date();
-    this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodAmount,  date: this.date });
-    this.dataArrayList.push({ fieldName:"periodColor", value: this.periodColor,  date: this.date });
-    this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidAmount,  date: this.date });
-    this.dataArrayList.push({ fieldName:"fluidColor", value: this.fluidColor,  date: this.date});
-    this.dataArrayList.push({ fieldName:"emotionalState", value: this.emotionalState, date: this.date});
-    this.dataArrayList.push({ fieldName:"physicalState", value: this.physicalState,  date: this.date });
-    this.dataArrayList.push({ fieldName:"sleepHours", value: this.sleepHours,  date: this.date});
-    this.dataArrayList.push({ fieldName:"temperature", value: this.temperature,  date: this.date});
-    this.dataArrayList.push({ fieldName:"sexTimes", value: this.sexTimes, date: this.date});
-    this.dataArrayList.push({ fieldName:"painType", value: this.painType, date: this.date});
-    this.dataArrayList.push({ fieldName:"emotionType", value: this.emotionType, date: this.date});
+    this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodAmount?.toString(),  date: this.date });
+    this.dataArrayList.push({ fieldName:"periodColor", value: this.periodColor?.toString(),  date: this.date });
+    this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidAmount?.toString(),  date: this.date });
+    this.dataArrayList.push({ fieldName:"fluidColor", value: this.fluidColor?.toString(),  date: this.date});
+    this.dataArrayList.push({ fieldName:"emotionalState", value: this.emotionalState?.toString(), date: this.date});
+    this.dataArrayList.push({ fieldName:"physicalState", value: this.physicalState?.toString(),  date: this.date });
+    this.dataArrayList.push({ fieldName:"sleepHours", value: this.sleepHours?.toString(),  date: this.date});
+    this.dataArrayList.push({ fieldName:"temperature", value: this.temperature?.toString(),  date: this.date});
+    this.dataArrayList.push({ fieldName:"sexTimes", value: this.sexTimes?.toString(), date: this.date});
+    this.dataArrayList.push({ fieldName:"painType", value: this.painType?.toString(), date: this.date});
+    this.dataArrayList.push({ fieldName:"emotionType", value: this.emotionType?.toString(), date: this.date});
 
     this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
       (data:any) => {
@@ -102,6 +102,9 @@ export class UserDashboardComponent implements OnInit {
         this.physicalState = response.find((field: DataObject) => field.fieldName == 'physicalState').value;
         this.sleepHours = response.find((field: DataObject) => field.fieldName == 'sleepHours').value;
         this.temperature = response.find((field: DataObject) => field.fieldName == 'temperature').value;
+        this.sexTimes = response.find((field: DataObject) => field.fieldName == 'sexTimes').value;
+        this.emotionType = response.find((field: DataObject) => field.fieldName == 'emotionType').value;
+        this.painType = response.find((field: DataObject) => field.fieldName == 'painType').value;
       }
     })
   }
@@ -115,5 +118,8 @@ export class UserDashboardComponent implements OnInit {
         this.physicalState = null;
         this.sleepHours = null;
         this.temperature = null;
+        this.sexTimes = null;
+        this.emotionType = null;
+        this.painType = null;
   }
 }
