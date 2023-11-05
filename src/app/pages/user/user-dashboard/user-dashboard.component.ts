@@ -31,7 +31,7 @@ export class UserDashboardComponent implements OnInit {
   constructor(private dataService:DataService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.setFormValues(new Date().toISOString().split('T')[0])
+    this.setFormValues(new Date().toISOString().split('T')[0]);
   }
 
   createDataArrayList() {
