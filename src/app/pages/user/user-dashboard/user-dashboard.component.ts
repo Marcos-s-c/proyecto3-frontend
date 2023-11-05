@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/dataService.service';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { formatDate } from 'src/app/services/helper';
 
 export type DataObject = {
   fieldName: string;
@@ -15,21 +16,22 @@ export type DataObject = {
 })
 export class UserDashboardComponent implements OnInit {
 
-  date!: Date;
-  periodCuant!: String;
-  periodColor!: String;
-  fluidCuant!: String;
-  fluidColor!: String;
+  date!: any;
+  periodAmount!: String | null;
+  periodColor!: String | null;
+  fluidAmount!: String | null;
+  fluidColor!: String | null;
   openedForm: boolean = false;
-  emocionalState!: number;
-  fisicalState!: number;
-  sleepHours!: number;
-  temperature!: number;
+  emotionalState!: number | null;
+  physicalState!: number | null;
+  sleepHours!: number | null;
+  temperature!: number | null;
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
   constructor(private dataService:DataService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
+    this.setFormValues(new Date().toISOString().split('T')[0])
   }
 
   createDataArrayList() {
@@ -37,12 +39,12 @@ export class UserDashboardComponent implements OnInit {
       duration: 5 * 1000,
     });
     if(this.date == undefined) this.date = new Date();
-    this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodCuant,  date: this.date });
+    this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodAmount,  date: this.date });
     this.dataArrayList.push({ fieldName:"periodColor", value: this.periodColor,  date: this.date });
-    this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidCuant,  date: this.date });
+    this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidAmount,  date: this.date });
     this.dataArrayList.push({ fieldName:"fluidColor", value: this.fluidColor,  date: this.date});
-    this.dataArrayList.push({ fieldName:"emoctonalState", value: this.emocionalState, date: this.date});
-    this.dataArrayList.push({ fieldName:"physicalState", value: this.fisicalState,  date: this.date });
+    this.dataArrayList.push({ fieldName:"emotionalState", value: this.emotionalState, date: this.date});
+    this.dataArrayList.push({ fieldName:"physicalState", value: this.physicalState,  date: this.date });
     this.dataArrayList.push({ fieldName:"sleepHours", value: this.sleepHours,  date: this.date});
     this.dataArrayList.push({ fieldName:"temperature", value: this.temperature,  date: this.date});
     this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
@@ -50,6 +52,7 @@ export class UserDashboardComponent implements OnInit {
           this._snackBar.open("Sus Datos han sido guardados",undefined,{duration: 5 * 1000,
     });
       },(error:any) => {
+        console.log(error)
         this._snackBar.open("Ocurrio un problema con el guardado de sus datos",undefined,{ duration: 5 * 1000})
       }
     )
@@ -60,7 +63,6 @@ export class UserDashboardComponent implements OnInit {
   }
 
   send(): number { 
-    console.log(this.date);
     if(!this.isDateBeforeToday(this.date)){
       this._snackBar.open("No se pueden enviar datos en dias posteriores al actual",undefined,{duration: 5 * 1000});
      return 0;
@@ -75,5 +77,38 @@ export class UserDashboardComponent implements OnInit {
     const todayNumeric = Date.parse(today.toString());
     const dateToCheckNumeric = Date.parse(dateToCheck.toString());
     return dateToCheckNumeric < todayNumeric;
+  }
+
+  onDateChange(event:any):void {
+    this.clearValues();
+    if(event.target.value)this.setFormValues(event.target.value);
+  }
+
+  setFormValues(date:string){
+    this.dataService.getExistingData(date)
+    .subscribe((response:any)=>{
+      this.date = date;
+      if(response.length>0){
+        this.periodAmount = response.find((field: DataObject) => field.fieldName == 'periodAmount').value;
+        this.periodColor = response.find((field: DataObject) => field.fieldName == 'periodColor').value;
+        this.fluidAmount = response.find((field: DataObject) => field.fieldName == 'fluidAmount').value;
+        this.fluidColor = response.find((field: DataObject) => field.fieldName == 'fluidColor').value;
+        this.emotionalState = response.find((field: DataObject) => field.fieldName == 'emotionalState').value;
+        this.physicalState = response.find((field: DataObject) => field.fieldName == 'physicalState').value;
+        this.sleepHours = response.find((field: DataObject) => field.fieldName == 'sleepHours').value;
+        this.temperature = response.find((field: DataObject) => field.fieldName == 'temperature').value;
+      }
+    })
+  }
+
+  clearValues(){
+        this.periodAmount = null;
+        this.periodColor = null;
+        this.fluidAmount = null;
+        this.fluidColor = null;
+        this.emotionalState = null;
+        this.physicalState = null;
+        this.sleepHours = null;
+        this.temperature = null;
   }
 }
