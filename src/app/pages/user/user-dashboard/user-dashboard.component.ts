@@ -19,11 +19,14 @@ export class UserDashboardComponent implements OnInit {
   periodCuant!: String;
   periodColor!: String;
   fluidCuant!: String;
+  painType!: String;
+  emotionType!: String;
   fluidColor!: String;
   openedForm: boolean = false;
   emocionalState!: number;
   fisicalState!: number;
   sleepHours!: number;
+  sexTimes!: number;
   temperature!: number;
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
@@ -33,19 +36,22 @@ export class UserDashboardComponent implements OnInit {
   }
 
   createDataArrayList() {
-    this._snackBar.open("Sus Datos han sido guardados",undefined,{
-      duration: 5 * 1000,
-    });
+    //define date
     if(this.date == undefined) this.date = new Date();
-    this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodCuant,  date: this.date });
-    this.dataArrayList.push({ fieldName:"periodColor", value: this.periodColor,  date: this.date });
-    this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidCuant,  date: this.date });
-    this.dataArrayList.push({ fieldName:"fluidColor", value: this.fluidColor,  date: this.date});
-    this.dataArrayList.push({ fieldName:"emoctonalState", value: this.emocionalState, date: this.date});
-    this.dataArrayList.push({ fieldName:"physicalState", value: this.fisicalState,  date: this.date });
-    this.dataArrayList.push({ fieldName:"sleepHours", value: this.sleepHours,  date: this.date});
-    this.dataArrayList.push({ fieldName:"temperature", value: this.temperature,  date: this.date});
-    this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
+    //push data to array
+    this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodCuant.toString(),  date: this.date });
+    this.dataArrayList.push({ fieldName:"periodColor", value: this.periodColor.toString(),  date: this.date });
+    this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidCuant.toString(),  date: this.date });
+    this.dataArrayList.push({ fieldName:"fluidColor", value: this.fluidColor.toString(),  date: this.date});
+    this.dataArrayList.push({ fieldName:"emoctonalState", value: this.emocionalState.toString(), date: this.date});
+    this.dataArrayList.push({ fieldName:"physicalState", value: this.fisicalState.toString(),  date: this.date });
+    this.dataArrayList.push({ fieldName:"sleepHours", value: this.sleepHours.toString(), date: this.date});
+    this.dataArrayList.push({ fieldName:"temperature", value: this.temperature.toString(), date: this.date});
+    this.dataArrayList.push({ fieldName:"sexTimes", value: this.sexTimes.toString(), date: this.date});
+    this.dataArrayList.push({ fieldName:"painType", value: this.painType.toString(), date: this.date});
+    this.dataArrayList.push({ fieldName:"emotionType", value: this.emotionType.toString(), date: this.date});
+  //send to be
+    this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe( 
       (data:any) => {
           this._snackBar.open("Sus Datos han sido guardados",undefined,{duration: 5 * 1000,
     });
