@@ -9,7 +9,7 @@
       <mat-stepper orientation="vertical" #stepper>
         <mat-step>
           <ng-template matStepLabel>Fecha</ng-template>
-          <mat-form-field  class="example-full-width">
+          <mat-form-field style="padding-top: 30px; padding-bottom: -10px;" class="example-full-width">
             <mat-label>Fecha</mat-label>
             <input matInput [(ngModel)]="date" type="date" (change)="onDateChange($event)">
           </mat-form-field>
@@ -106,20 +106,74 @@
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Estado Fisico</ng-template>
-          <h4 style="padding-top: 10px;">Estado Emocional</h4>
+          <h4 style="padding-top: 10px;">Estado Emocional General</h4>
           <mat-icon style=" padding-left: 60px;">sentiment_very_dissatisfied</mat-icon>
           <mat-icon style=" padding-left: 90px;">sentiment_neutral</mat-icon>
           <mat-icon style=" padding-left: 90px;">sentiment_very_satisfied</mat-icon>
           <mat-slider [(ngModel)]="emotionalState" style="width: 350px;" max="10" min="0" step="1" discrete="false">
             <input matSliderThumb #slider>
           </mat-slider>
+
+          <h4 style="padding-top: 10px;">Tipo de Malestar Emocional</h4>
+          <mat-form-field>
+            <mat-label>Elige uno</mat-label>
+            <mat-select [(ngModel)]="emotionType" name="nombre">
+              <mat-option value="Cambios de humor">
+               Cambios de humor
+              </mat-option>
+              <mat-option value="Ansiedad">
+                Ansiedad
+              </mat-option>
+              <mat-option value="Depresión">
+                Depresión
+              </mat-option>
+              <mat-option value="Fatiga">
+                Fatiga
+              </mat-option>
+              <mat-option value="Irritabilidad">
+              Irritabilidad
+              </mat-option>
+              <mat-option value="Estrés">
+                Estrés
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <h4 style="padding-top: 10px;">Dolor Fisico</h4>
-          <mat-icon style=" padding-left: 60px;">sentiment_very_dissatisfied</mat-icon>
-          <mat-icon style=" padding-left: 90px;">sentiment_neutral</mat-icon>
+
           <mat-icon style=" padding-left: 90px;">sentiment_very_satisfied</mat-icon>
+          <mat-icon style=" padding-left: 90px;">sentiment_neutral</mat-icon>
+          <mat-icon style=" padding-left: 60px;">sentiment_very_dissatisfied</mat-icon>
           <mat-slider [(ngModel)]="physicalState" style="width: 350px;" max="10" min="0" step="1" discrete="false">
             <input matSliderThumb #slider>
           </mat-slider>
+          <h4 style="padding-top: 10px;">Tipo de Dolor</h4>
+          <mat-form-field>
+            <mat-label>Elige uno</mat-label>
+            <mat-select [(ngModel)]="painType" name="nombre">
+              <mat-option value="Dolor generalizado">
+               Dolor generalizado
+              </mat-option>
+              <mat-option value="Dolor pélvico">
+                Dolor pélvico
+              </mat-option>
+              <mat-option value="Dolor de cabeza">
+                Dolor de cabeza
+              </mat-option>
+              <mat-option value="Hinchazón abdominal">
+                Hinchazón abdominal
+              </mat-option>
+              <mat-option value="Cólicos menstruales">
+              Cólicos menstruales
+              </mat-option>
+              <mat-option value="Sensibilidad en mamas">
+              Sensibilidad en mamas
+              </mat-option>
+              <mat-option value="Dolor lumbar">
+              Dolor lumbar
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Sueño</ng-template>
@@ -143,6 +197,12 @@
               <mat-checkbox>Medicamento Ejemplo</mat-checkbox>
             </p>
           </section>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Vida Sexual</ng-template>
+          <mat-form-field  name="temp" class="example-full-width">
+            <input [(ngModel)]="sexTimes" matInput type="number" max="15" min="0" placeholder="Relaciones Sexuales">
+          </mat-form-field>
         </mat-step>
       </mat-stepper>
       <div style="position: absolute; bottom: 0; right: 0;">
