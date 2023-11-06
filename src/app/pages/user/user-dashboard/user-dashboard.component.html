@@ -51,12 +51,13 @@
                 <div class="color-example rojo">Rojo</div>
               </mat-option>
               <mat-option value="rojo palido">
-                <div class="color-example rojo-palido">Rojo pálido</div>
+                <div class="color-example rojo-palido">Rojo Palido</div>
+              </mat-option> 
+              <mat-option value="Otro">
+              <div>Otro Color</div>
               </mat-option>
             </mat-select>
-            <mat-option value="Otro">
-              <div class="color-example rojo-palido">Otro</div>
-            </mat-option>
+           
           </mat-form-field>
         </mat-step>
         <mat-step>
@@ -66,22 +67,16 @@
             <mat-label>Elige una</mat-label>
             <mat-select [(ngModel)]="fluidAmount">
               <mat-option value="ninguno">
-                Ninguno
+               Muy seco
+              </mat-option>
+              <mat-option value="ninguno">
+               Seco
               </mat-option>
               <mat-option value="Muy poco">
-                Muy poco
+               Húmedo
               </mat-option>
               <mat-option value="Poco">
-                Poco
-              </mat-option>
-              <mat-option value="Normal">
-                Normal
-              </mat-option>
-              <mat-option value="Abundante">
-                Abundante
-              </mat-option>
-              <mat-option value="Muy abundante">
-                Muy abundante
+                Muy húmedo
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -104,11 +99,15 @@
               <mat-option value="gris">
                 <div class="color-example gris"> Gris </div>
               </mat-option>
+              <mat-option value="Otro">
+                <div>Otro Color</div>
+                </mat-option>
+      
             </mat-select>
           </mat-form-field>
         </mat-step>
         <mat-step>
-          <ng-template matStepLabel>Estado físico</ng-template>
+          <ng-template matStepLabel>Estado físico y emocional</ng-template>
           <h4 style="padding-top: 10px;">Estado emocional general</h4>
           <mat-icon style=" padding-left: 60px;">sentiment_very_dissatisfied</mat-icon>
           <mat-icon style=" padding-left: 90px;">sentiment_neutral</mat-icon>
