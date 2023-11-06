@@ -2,7 +2,7 @@ export const baserUrl = () => {
     if(window.location.href.includes('localhost')){
         return 'http://localhost:8080';
     }
-    return 'http://venus-api.azurewebsites.net';
+    return 'https://venus-api.azurewebsites.net';
 }
 
 export const formatDate = (date:Date) => {
