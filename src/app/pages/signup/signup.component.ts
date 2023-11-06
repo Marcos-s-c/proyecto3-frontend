@@ -83,7 +83,7 @@ export class SignupComponent implements OnInit {
         if (error.status === 400) {
           // Error de credenciales incorrectos (Código de respuesta 400)
           this.snack.open(
-            'Este correo ya esta en uso, por favor utilize otro',
+            'Este correo ya esta en uso, por favor utilice otro',
             'Aceptar',
             {
               duration: 3000,

@@ -1,4 +1,9 @@
-let baserUrl = 'http://localhost:8080'
+export const baserUrl = () => {
+    if(window.location.href.includes('localhost')){
+        return 'http://localhost:8080';
+    }
+    return 'http://venus-api.azurewebsites.net';
+}
 
 export const formatDate = (date:Date) => {
     const year = date.getFullYear();
@@ -7,4 +12,3 @@ export const formatDate = (date:Date) => {
     return `${year}-${month}-${day}`;
 }
 
-export default baserUrl;

@@ -1,23 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import baserUrl from './helper';
+import {baserUrl} from './helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   public loginStatusSubjec = new Subject<boolean>();
-
   constructor(private http: HttpClient) {}
 
   //generamos el token
   public generateToken(loginData: any) {
-    return this.http.post(`${baserUrl}/rest/auth/login`, loginData);
+    return this.http.post(`${baserUrl()}/rest/auth/login`, loginData);
   }
 
   public getCurrentUser() {
-    return this.http.get(`${baserUrl}/actual-usuario`);
+    return this.http.get(`${baserUrl()}/actual-usuario`);
   }
 
   //iniciamos sesión y establecemos el token en el localStorage
@@ -36,7 +35,7 @@ export class LoginService {
 
   //cerranis sesion y eliminamos el token del localStorage
   public logout() {
-    this.http.get(`${baserUrl}/rest/users/logout`).subscribe(response =>{
+    this.http.get(`${baserUrl()}/rest/users/logout`).subscribe(response =>{
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     })
