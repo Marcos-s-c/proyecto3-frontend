@@ -89,7 +89,6 @@ export class PasswordResetComponent implements OnInit {
           }).then((result) => {
             if (result.isConfirmed) {
               this.dialog.closeAll();
-              this.router.navigate(['/']);
             }
           });
         } else {
