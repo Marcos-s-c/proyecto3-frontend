@@ -34,23 +34,25 @@ export class UserDashboardComponent implements OnInit {
   constructor(private dataService:DataService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.setFormValues(new Date().toISOString().split('T')[0]);
+    const today = new Date();
+    today.setHours(today.getHours() - 6);
+    this.setFormValues(today.toISOString().split('T')[0]);
   }
 
   createDataArrayList() {
     //define date
     if(this.date == undefined) this.date = new Date();
-    this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodAmount?.toString(),  date: this.date });
-    this.dataArrayList.push({ fieldName:"periodColor", value: this.periodColor?.toString(),  date: this.date });
-    this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidAmount?.toString(),  date: this.date });
-    this.dataArrayList.push({ fieldName:"fluidColor", value: this.fluidColor?.toString(),  date: this.date});
-    this.dataArrayList.push({ fieldName:"emotionalState", value: this.emotionalState?.toString(), date: this.date});
-    this.dataArrayList.push({ fieldName:"physicalState", value: this.physicalState?.toString(),  date: this.date });
-    this.dataArrayList.push({ fieldName:"sleepHours", value: this.sleepHours?.toString(),  date: this.date});
-    this.dataArrayList.push({ fieldName:"temperature", value: this.temperature?.toString(),  date: this.date});
-    this.dataArrayList.push({ fieldName:"sexTimes", value: this.sexTimes?.toString(), date: this.date});
-    this.dataArrayList.push({ fieldName:"painType", value: this.painType?.toString(), date: this.date});
-    this.dataArrayList.push({ fieldName:"emotionType", value: this.emotionType?.toString(), date: this.date});
+    if(this.periodAmount)this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodAmount?.toString(),  date: this.date });
+    if(this.periodColor)this.dataArrayList.push({ fieldName:"periodColor", value: this.periodColor?.toString(),  date: this.date });
+    if(this.fluidAmount)this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidAmount?.toString(),  date: this.date });
+    if(this.fluidColor)this.dataArrayList.push({ fieldName:"fluidColor", value: this.fluidColor?.toString(),  date: this.date});
+    if(this.emotionalState)this.dataArrayList.push({ fieldName:"emotionalState", value: this.emotionalState?.toString(), date: this.date});
+    if(this.physicalState)this.dataArrayList.push({ fieldName:"physicalState", value: this.physicalState?.toString(),  date: this.date });
+    if(this.sleepHours)this.dataArrayList.push({ fieldName:"sleepHours", value: this.sleepHours?.toString(),  date: this.date});
+    if(this.temperature)this.dataArrayList.push({ fieldName:"temperature", value: this.temperature?.toString(),  date: this.date});
+    if(this.sexTimes)this.dataArrayList.push({ fieldName:"sexTimes", value: this.sexTimes?.toString(), date: this.date});
+    if(this.painType)this.dataArrayList.push({ fieldName:"painType", value: this.painType?.toString(), date: this.date});
+    if(this.emotionType)this.dataArrayList.push({ fieldName:"emotionType", value: this.emotionType?.toString(), date: this.date});
 
     this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
       (data:any) => {
@@ -69,7 +71,7 @@ export class UserDashboardComponent implements OnInit {
 
   send(): number { 
     if(!this.isDateBeforeToday(this.date)){
-      this._snackBar.open("No se pueden enviar datos en dias posteriores al actual",undefined,{duration: 5 * 1000});
+      this._snackBar.open("No se pueden enviar datos en días posteriores al actual",undefined,{duration: 5 * 1000});
      return 0;
     }
     this.createDataArrayList();
@@ -87,6 +89,7 @@ export class UserDashboardComponent implements OnInit {
   onDateChange(event:any):void {
     this.clearValues();
     if(event.target.value)this.setFormValues(event.target.value);
+    
   }
 
   setFormValues(date:string){
