@@ -1,0 +1,32 @@
+
+.main-navbar{
+  justify-content: space-between;
+  background-color: #F7D9D9;
+  padding: 2.5% 1%;
+}
+
+.navbar{
+  display: flex;
+  gap: 5%;
+  a{
+    background-color: #F7D9D9;
+    font-size: xx-large;
+    font-family:Garamond;
+
+  }
+}
+
+.navbar-login{
+  display: flex;
+  gap: 5%;
+  a{
+    background-color: #F7D9D9;
+    font-size: xx-large;
+    font-family:Garamond;
+  }
+
+  @media (max-width: 1190px) {
+        display: none;
+
+  }
+}

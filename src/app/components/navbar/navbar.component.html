@@ -1,0 +1,52 @@
+<mat-toolbar style="background-color: #f7d9d9; color: #df5583;
+          font-weight: 400;">
+  <a
+    [routerLink]="'/'"
+    mat-icon-button
+    class="example-icon"
+    arial-label="Example icon-button with menu icon"
+  >
+    <mat-icon>female</mat-icon>
+  </a>
+  <span>Venus</span>
+  <span class="example-spacer"></span>
+  <a
+    *ngIf="!isLoggedIn"
+    [routerLink]="'/login'"
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    Iniciar sesión
+  </a>
+  <div style="margin-right: 10px; ">
+    <a
+      *ngIf="!isLoggedIn"
+      [routerLink]="'/signup'"
+      mat-icon-button
+      class="example-icon favorite-icon mr20 ml70"
+      aria-label="Example icon-button with heart icon"
+    >
+      Registrarme
+    </a>
+  </div>
+  <a
+    *ngIf="isLoggedIn"
+    (click)="logout()"
+    style="margin-right: 50px"
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    Cerrar sesión
+  </a>
+  <button
+    *ngIf="isLoggedIn && user"
+    mat-button
+    style="margin-right: 10px"
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    {{ user.username }}
+  </button>
+</mat-toolbar>
