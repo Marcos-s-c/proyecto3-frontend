@@ -1,32 +1,32 @@
+.profile-tabs {
+  /* Add styles for the mat-tab-group here */
+}
+
+.bootstrap-wrapper {
+  /* Add styles for the bootstrap-wrapper here */
+}
+
 .container {
   display: flex;
   margin-top: 3%;
   justify-content: center;
 }
 
-.image-container {
-  text-align: center;
-  width: 100%;
-  height: 100%; /* Centrar horizontalmente la imagen */
-}
-
-.image-container img {
-  width: 100%;
-  height: 100%;
-}
-
 .left-section {
   flex: 1;
-  align-items: center; /* Centrar verticalmente la imagen */
+  align-items: center;
   background-color: #f0f0f0;
-  max-width: 50%; /* Cambia este valor según tus necesidades */
-  text-align: center; /* Centra la imagen horizontalmente */
+  max-width: 50%;
+  text-align: center;
 }
 
 .right-section {
   flex: 1;
   padding: 20px;
   background-color: white;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .rcorners1 {
@@ -40,6 +40,9 @@
 
   .right-section {
     padding-top: 40px;
+    border-width: 1px;
+    border-color: #dddddd;
+    border-style: solid;
   }
 
   .container {
@@ -56,17 +59,68 @@
     flex: none;
   }
 
-  .right-section {
-    border-width: 1px;
-    border-color: #dddddd;
-    border-style: solid;
-  }
-
   .rcorners1 {
     border-radius: 10px;
   }
-  .text-center{
-    border: seagreen 3px solid;
-  }
+}
 
+
+.password-reset-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3%;
+}
+
+.password-reset-form {
+  background-color: white;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.password-reset-form h2 {
+  font-weight: 400;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.custom-button {
+  width: 250px;
+  background-color: #2196F3; /* Change the color as needed */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.custom-button:hover {
+  background-color: #1976D2; /* Change the hover color as needed */
+}
+
+::ng-deep .preferencias-wr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep .pref-cajon {
+  width: 40%;
+  height: 300px;
+  border: #2196F3 solid 1px;
+  flex: 1;
 }

@@ -37,6 +37,21 @@ export class PerfilUsuarioComponent implements OnInit {
 
   }
 
+  currentPassword: string = '';
+  newPassword: string = '';
+  confirmPassword: string = '';
+
+  resetPassword() {
+
+    if (this.newPassword === this.confirmPassword) {
+
+
+    } else {
+
+
+    }
+  }
+
   formSubmit() {
     console.log(this.user);
 
