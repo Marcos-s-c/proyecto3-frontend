@@ -12,6 +12,11 @@ body{
   position:relative;
   width: 50%;
 }
+
+.swiper-container img{
+  object-fit: cover;
+}
+
 .swiper-container > .swiper-slide__content {
   position:absolute;
   top:0;
