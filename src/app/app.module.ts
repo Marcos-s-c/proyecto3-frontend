@@ -28,18 +28,24 @@ import { DialogPasswordResetComponent } from './pages/login/dialog-password-rese
 import { register } from 'swiper/element/bundle';
 // register Swiper custom elements
 register();
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatSelectModule} from '@angular/material/select';
-import {MatStepperModule} from '@angular/material/stepper';
-import { ReactiveFormsModule} from '@angular/forms';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSliderModule} from '@angular/material/slider';
-import {FormBuilder} from '@angular/forms';
-import {JsonPipe} from '@angular/common';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSliderModule } from '@angular/material/slider';
+import { FormBuilder } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
+// calendar
+import { CalendarComponent } from './components/user/calendar/calendar.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
+import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +57,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     UserDashboardComponent,
     PasswordResetComponent,
     DialogPasswordResetComponent,
+    CalendarComponent,
+    UserCalendarComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,7 +90,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatRadioModule,
     MatSliderModule,
     ReactiveFormsModule,
-    MatCheckboxModule, 
+    MatCheckboxModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
