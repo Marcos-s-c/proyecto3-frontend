@@ -1,0 +1,127 @@
+<mat-tab-group class="profile-tabs">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>
+        <p>Información personal</p>
+      </div>
+
+    </ng-template>
+    <div class="bootstrap-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="container ">
+            <div
+              class="right-section rcorners1"
+              style="
+            box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+              0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+              0px 1px 3px 0px rgba(0, 0, 0, 0.12);"
+            >
+              <div class="text-center" style="padding-top: 25px">
+                <h1 style="font-weight: 400">Información de tu cuenta</h1>
+                <form (ngSubmit)="formSubmit()">
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input
+                      required
+                      [(ngModel)]="user.name"
+                      name="nombre"
+                      matInput
+                      placeholder="Digite su nombre"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Apellido</mat-label>
+                    <input
+                      required
+                      [(ngModel)]="user.surname"
+                      name="apellido"
+                      matInput
+                      placeholder="Digite su apellido"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input
+                      required
+                      [(ngModel)]="user.email"
+                      name="email"
+                      type="email"
+                      matInput
+                      placeholder="Digite su email"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Teléfono</mat-label>
+                    <input
+                      required
+                      [(ngModel)]="user.phone"
+                      name="telefono"
+                      matInput
+                      placeholder="Digite su telefono"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input
+                      required
+                      [(ngModel)]="user.password"
+                      name="password"
+                      type="password"
+                      matInput
+                      placeholder="Digite su contraseña"
+                    />
+                  </mat-form-field>
+                  <div class="container">
+                    <div class="vertical-center">
+                      <button
+                        mat-raised-button
+                        class="full-width-button button-color custom-button"
+                        style="width: 250px"
+                        onclick="myFunction()"
+                      >
+                        Salvar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <br /><br /><br />
+        </div>
+      </div>
+    </div>
+
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>
+        <p>Seguridad</p>
+      </div>
+    </ng-template>
+    Content 2
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>
+        <p>Preferencias</p>
+      </div>
+    </ng-template>
+
+    Content 3
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>
+        <p>Medicamentos</p>
+      </div>
+    </ng-template>
+
+    Content 3
+  </mat-tab>
+</mat-tab-group>

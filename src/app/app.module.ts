@@ -39,6 +39,7 @@ import {FormBuilder} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBar} from '@angular/material/snack-bar';
+//mport { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     UserDashboardComponent,
     PasswordResetComponent,
     DialogPasswordResetComponent,
+    //PerfilUsuarioComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,7 +83,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatRadioModule,
     MatSliderModule,
     ReactiveFormsModule,
-    MatCheckboxModule, 
+    MatCheckboxModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
