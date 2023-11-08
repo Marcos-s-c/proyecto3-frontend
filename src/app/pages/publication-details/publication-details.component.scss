@@ -1,0 +1,49 @@
+.post-container {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+}
+
+.page-container {
+    padding-top: 50px;
+}
+
+.container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 250px;
+    flex-direction: column;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+
+.image-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-button{
+    padding-top: 10px;
+}

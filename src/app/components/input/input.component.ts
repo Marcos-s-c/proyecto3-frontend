@@ -14,6 +14,7 @@ import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 export class InputComponent{
   @Input() name: string | undefined;
   @Input() placeholder: string | undefined;
+  @Input() ngModel: string | undefined;
 
   input = new FormControl('', [Validators.required]);
 

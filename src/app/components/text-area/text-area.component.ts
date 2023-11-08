@@ -13,6 +13,7 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angula
 })
 export class TextAreaComponent {
   @Input() name: string | undefined;
+  @Input() ngModel: string | undefined;
   textArea = new FormControl('', [Validators.required]);
   getErrorMessage() {
     if (this.textArea.hasError('required')) {
