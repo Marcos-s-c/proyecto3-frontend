@@ -26,8 +26,8 @@ export class UserDashboardComponent implements OnInit {
   physicalState!: number | null;
   sleepHours!: number | null;
   temperature!: number | null;
-  sexTimes!: number | null; 
-  emotionType!: String | null; 
+  sexTimes!: number | null;
+  emotionType!: String | null;
   painType!: String | null;
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
@@ -69,7 +69,7 @@ export class UserDashboardComponent implements OnInit {
     this.openedForm = false;
   }
 
-  send(): number { 
+  send(): number {
     if(!this.isDateBeforeToday(this.date)){
       this._snackBar.open("No se pueden enviar datos en días posteriores al actual",undefined,{duration: 5 * 1000});
      return 0;
@@ -89,7 +89,7 @@ export class UserDashboardComponent implements OnInit {
   onDateChange(event:any):void {
     this.clearValues();
     if(event.target.value)this.setFormValues(event.target.value);
-    
+
   }
 
   setFormValues(date:string){
