@@ -6,16 +6,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './user-calendar.component.html',
   styleUrls: ['./user-calendar.component.scss'],
 })
-export class UserCalendarComponent implements OnInit {
-  constructor(private dataService: DataService) {}
-
-  ngOnInit(): void {
-    const data = this.getDataById();
-  }
-
-  getDataById() {
-    this.dataService.getExistingDataById().subscribe((response: any) => {
-      console.log(response);
-    });
-  }
-}
+export class UserCalendarComponent {}

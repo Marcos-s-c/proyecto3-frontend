@@ -17,7 +17,6 @@ export class DataService {
   }
 
   public getExistingData(today: string) {
-    console.log(today);
     return this.http.get(
       `${baserUrl()}/rest/period-criteria/getPeriodCriteriaByDate?date=${today}`
     );

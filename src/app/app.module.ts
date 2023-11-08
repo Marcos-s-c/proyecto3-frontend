@@ -39,13 +39,14 @@ import { FormBuilder } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { DialogService } from 'src/app/services/dialog.service';
 // calendar
 import { CalendarComponent } from './components/user/calendar/calendar.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
+import { DialogDataComponent } from './components/dialog-data/dialog-data.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.
     CalendarComponent,
     UserCalendarComponent,
     CalendarComponent,
+    DialogDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,7 +98,7 @@ import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.
       useFactory: adapterFactory,
     }),
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
