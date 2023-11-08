@@ -8,13 +8,31 @@ import {Router, RouterModule} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import Swal from "sweetalert2";
+import {ThemePalette} from "@angular/material/core";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { CommonModule } from '@angular/common';
+import {MatSelectModule} from "@angular/material/select";
+
+export interface Task {
+  name: string;
+  completed: boolean;
+  color: ThemePalette;
+  subtasks?: Task[];
+}
+
+interface Medicamento{
+  nombre: string;
+  administracion: string;
+  dosis: string;
+  frecuencia: string;
+}
 
 @Component({
   selector: 'app-perfil-usuario',
   templateUrl: './perfil-usuario.component.html',
   styleUrls: ['./perfil-usuario.component.scss'],
   standalone: true,
-  imports: [MatTabsModule, MatIconModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule, RouterModule],
+  imports: [MatTabsModule, MatIconModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule, RouterModule, MatCheckboxModule, CommonModule, MatSelectModule],
 })
 export class PerfilUsuarioComponent implements OnInit {
 
@@ -126,4 +144,63 @@ export class PerfilUsuarioComponent implements OnInit {
     );
   }
 
+  // PREFERENCIAS
+
+  task: Task = {
+    name: 'Seleccionar todas',
+    completed: false,
+    color: 'primary',
+    subtasks: [
+      {name: 'Mensaje de texto SMS', completed: false, color: 'primary'},
+      {name: 'Mensaje de Whatsapp', completed: false, color: 'primary'},
+      {name: 'Correo electrónico', completed: false, color: 'primary'},
+    ],
+  };
+
+  allComplete: boolean = false;
+
+  /*
+  * updateAllComplete() es un método que calcula el valor de allComplete en función del estado de finalización de las subtareas:
+    Comprueba si la propiedad de subtareas del objeto de tarea no es nula.
+    Si las subtareas no son nulas, utiliza el método every para verificar si todas las subtareas tienen su propiedad completada establecida en true. Si lo hacen, establece this.allComplete en true;sino en false.*/
+  updateAllComplete(){
+    this.allComplete = this.task.subtasks != null && this.task.subtasks.every(task => task.completed);
+  }
+
+  someComplete(): boolean{
+    if(this.task.subtasks == null){
+      return false
+    }
+    return this.task.subtasks.filter(task => task.completed).length > 0 && !this.allComplete;
+  }
+
+  setAll(completed: boolean){
+    this.allComplete = completed;
+    if(this.task.subtasks == null){
+      return;
+    }
+    this.task.subtasks.forEach((task => (task.completed = completed)))
+  }
+
+  ////MEDICAMENTOS
+  medicamentos: Medicamento[] = [
+    {nombre: "krokodile", administracion:"inyeccion", dosis:"1ml", frecuencia:"2 veces por dia"},
+    {nombre: "Aspirina", administracion: "Tableta", dosis: "3mg", frecuencia: "1 vez al dia"} ,
+    {nombre: "Amoxicilina", administracion: "Líquido", dosis: "10ml", frecuencia: "1 vez al dia"},
+    {nombre: "krokodile", administracion:"inyeccion", dosis:"3ml", frecuencia:"1 vez a la semana"},
+    {nombre: "Loratadina", administracion: "Tableta", dosis: "3mg", frecuencia: "2 veces por dia"}
+  ]
+
+  medicamentoSeleccionado: string = "";
+  dosis: string = ""
+  frecuancia: string = "";
+
+  printToConsole(event:any){
+    console.log(event.target.value)
+  }
+  onSeleccionMedicamento(event: any){
+
+  }
+
+  salvarMedicamento(){}
 }

@@ -86,8 +86,32 @@
       </div>
     </ng-template>
     <div class="preferencias-wr">
+      <p class="prefTitulo">Selecciona los métodos por los cuales deseas recibir notificaciones</p>
       <div class="pref-cajon">
-        asdsadsd
+        <section class="example-section">
+  <span class="example-list-section">
+    <mat-checkbox class="example-margin"
+                  [checked]="allComplete"
+                  [color]="task.color"
+                  [indeterminate]="someComplete()"
+                  (change)="setAll($event.checked)">
+      {{task.name}}
+    </mat-checkbox>
+  </span>
+          <span class="example-list-section">
+    <ul>
+      <li *ngFor="let subtask of task.subtasks">
+        <mat-checkbox [(ngModel)]="subtask.completed"
+                      [color]="subtask.color"
+                      (ngModelChange)="updateAllComplete()"
+                      class="notificaciones">
+          {{subtask.name}}
+        </mat-checkbox>
+      </li>
+    </ul>
+  </span>
+        </section>
+
       </div>
     </div>
   </mat-tab>
@@ -97,6 +121,48 @@
         <p>Medicamentos</p>
       </div>
     </ng-template>
-    Content 3
+      <div class="medicamentosWr">
+        <p>Pantalla de selección de medicamentos</p>
+        <div class="formWr">
+          <mat-form-field>
+            <mat-label>Seleccione medicamento a añadir</mat-label>
+            <mat-select [(ngModel)]="medicamentoSeleccionado" (selectionChange)="onSeleccionMedicamento($event)">
+                <mat-option *ngFor="let medi of medicamentos" [value]="medi.nombre" >
+                  {{medi.nombre}}
+                </mat-option>
+            </mat-select>
+
+          </mat-form-field>
+        </div>
+        <div class="dosisWr">
+          <div class="dosis-form-group">
+            <label for="dosis">Dosis</label>
+            <input
+              type="text"
+              class="form-control"
+              id="dosis"
+              required
+              [(ngModel)]="dosis"
+              name="title"
+              (change)="printToConsole($event)"
+            />
+          </div>
+        </div>
+        <div class="frecuenciWr">
+          <div class="frec-form-group">
+            <label for="frec">Dosis</label>
+            <input
+              type="text"
+              class="form-control"
+              id="frec"
+              required
+              [(ngModel)]="frecuancia"
+              name="title"
+              (change)="printToConsole($event)"
+            />
+          </div>
+        </div>
+        <button (click)="salvarMedicamento()" class="btn btn-success">Salvar</button>
+      </div>
   </mat-tab>
 </mat-tab-group>
