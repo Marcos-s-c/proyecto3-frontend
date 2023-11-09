@@ -1,4 +1,4 @@
-<div class="row text-center">
+<div class="row text-center" id="calendar">
   <div class="col-md-4">
     <div class="btn-group">
       <div
@@ -29,32 +29,6 @@
 
   <div class="col-md-4">
     <h3>{{ viewDate | calendarDate : view + "ViewTitle" : "en" }}</h3>
-  </div>
-
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        (click)="setView(CalendarView.Month)"
-        [class.active]="view === CalendarView.Month"
-      >
-        Month
-      </div>
-      <div
-        class="btn btn-primary"
-        (click)="setView(CalendarView.Week)"
-        [class.active]="view === CalendarView.Week"
-      >
-        Week
-      </div>
-      <div
-        class="btn btn-primary"
-        (click)="setView(CalendarView.Day)"
-        [class.active]="view === CalendarView.Day"
-      >
-        Day
-      </div>
-    </div>
   </div>
 </div>
 

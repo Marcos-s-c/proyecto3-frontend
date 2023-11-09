@@ -98,7 +98,7 @@ import { DialogDataComponent } from './components/dialog-data/dialog-data.compon
       useFactory: adapterFactory,
     }),
   ],
-  providers: [authInterceptorProviders,DialogService],
+  providers: [authInterceptorProviders, DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

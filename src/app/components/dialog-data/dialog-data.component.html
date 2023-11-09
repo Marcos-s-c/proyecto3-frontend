@@ -1,5 +1,5 @@
 <div class="dialog-content">
-  <h2>Día {{ selectedData?.date }}</h2>
+  <h2>Día {{ selectedData?.date | date : "dd/MM/yyyy" }}</h2>
 
   <ng-container *ngIf="!isEditMode; else editMode">
     <form *ngIf="periodDataForm" [formGroup]="periodDataForm">
