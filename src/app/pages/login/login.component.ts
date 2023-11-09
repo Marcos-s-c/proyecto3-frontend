@@ -65,14 +65,13 @@ export class LoginComponent implements OnInit {
       (response: any) => {
         this.loginService.loginUser(response.token);
         this.loginService.setUser(response.user);
-        console.log(this.loginService.getUserRole());
 
-        if (this.loginService.getUserRole() == 'ROLE_ADMIN') {
+        if (this.loginService.getUserRole() == 'ADMIN') {
           //dashboard admin
           //window.location.href = '/admin';
           this.router.navigate(['/']);
           this.loginService.loginStatusSubjec.next(true);
-        } else if (this.loginService.getUserRole() == 'ROLE_USER') {
+        } else if (this.loginService.getUserRole() == 'USER') {
           this.router.navigate(['/user-dashboard']);
           this.loginService.loginStatusSubjec.next(true);
         }

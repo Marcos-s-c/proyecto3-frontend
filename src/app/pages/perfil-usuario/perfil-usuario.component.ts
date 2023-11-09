@@ -45,6 +45,8 @@ export interface User{
 })
 export class PerfilUsuarioComponent implements OnInit {
 
+  public editar:boolean = false;
+
   public user = {
     name: '',
     surname: '',
@@ -53,18 +55,38 @@ export class PerfilUsuarioComponent implements OnInit {
     phone: '',
   };
 
+  private user1 = this.loginService.getUser();
+
   constructor(    private userService: UserService,
                   private loginService: LoginService,
                   private snack: MatSnackBar,
                   private router: Router) { }
 
   ngOnInit(): void {
-    console.log("Usuario: ",this.loginService.getEmailUsuario());
+    console.log(this.loginService.getUser())
+    this.user.name = this.user1.name;
+    this.user.surname = "No esta implementado en backend";
+    this.user.surname = "No esta implementado en backend";
+    this.user.email = this.user1.email;
+    this.user.password = '*************';
+    this.user.phone = this.user1.phone;
   }
 
-  editar(){
-
+  onEditar(clickEvent: any) {
+    this.editar = true;
+    clickEvent.stopPropagation();
   }
+
+  onSalvarCambios(clickEvent: any) {
+    // Handle the "Salvar Cambios" button click
+    //clickEvent.stopPropagation();
+  }
+
+  onCancelar(clickEvent: any) {
+    this.editar = false;
+    clickEvent.stopPropagation();
+  }
+
 
   //DATOS DE USUARIO
 
@@ -86,8 +108,6 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   formSubmit() {
-    console.log(this.user);
-
     if (
       !this.user.name ||
       !this.user.surname ||
@@ -119,13 +139,13 @@ export class PerfilUsuarioComponent implements OnInit {
       return;
     }
 
-    this.userService.añadirUsuario(this.user).subscribe(
+    this.userService.actualizarUsuraio(this.user).subscribe(
       (response) => {
         console.log(response);
 
         Swal.fire({
-          title: 'Usuario guardado',
-          text: 'Usuario registrado con éxito.',
+          title: 'Usuario actualizado',
+          text: 'Usuario actualizado con éxito.',
           showCancelButton: false,
           showConfirmButton: true,
           confirmButtonText: 'Aceptar',
@@ -135,11 +155,9 @@ export class PerfilUsuarioComponent implements OnInit {
             // El usuario hizo clic en "Aceptar"
           }
         });
-
-        this.router.navigate(['/login']);
-      },
+        },
       (error) => {
-        console.log(error);
+        console.log("Error actualizar",error);
         if (error.status === 400) {
           // Error de credenciales incorrectos (Código de respuesta 400)
           this.snack.open(
@@ -218,4 +236,5 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   salvarMedicamento(){}
+
 }

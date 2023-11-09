@@ -74,9 +74,6 @@ export class LoginService {
 
   public getUserRole() {
     let user = this.getUser();
-
-    console.log(user.rol);
-
     return user.rol;
   }
 }

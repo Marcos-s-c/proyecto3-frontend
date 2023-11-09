@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {baserUrl} from './helper';
+import {User} from "../pages/perfil-usuario/perfil-usuario.component";
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,10 @@ export class UserService {
 
   public añadirUsuario(user: any) {
     return this.httpClient.post(`${baserUrl()}/rest/auth/register`, user);
+  }
+
+  public actualizarUsuraio(user:User){
+    return this.httpClient.put(`${baserUrl()}/rest/users/actualizar`, user);
   }
 
   public reiniciarContraseña(email: any) {
@@ -33,5 +38,8 @@ export class UserService {
     );
   }
 
+  public getUser(email:string){
+    return this.httpClient.get(`${baserUrl()}/rest/auth/recuperarContra`, )
+  }
 
 }
