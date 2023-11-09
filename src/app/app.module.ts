@@ -35,6 +35,11 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {CheckboxComponent} from "./components/checkbox/checkbox.component";
+import {MatBadgeModule} from '@angular/material/badge';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+
+
 
 @NgModule({
   declarations: [
@@ -45,7 +50,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     DashboardComponent,
     UserDashboardComponent,
     PasswordResetComponent,
-    DialogPasswordResetComponent
+    DialogPasswordResetComponent,
+    NotificationsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatRadioModule,
     MatSliderModule,
     ReactiveFormsModule,
-    MatCheckboxModule, 
+    CheckboxComponent,
+    MatCheckboxModule,
+    MatBadgeModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
