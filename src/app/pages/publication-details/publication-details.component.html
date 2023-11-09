@@ -1,21 +1,23 @@
 <div class="page-container">
-    <div class="post-container">
-        <div class="container">
-            <div class="image-container">
-                <div class="image">
-                    <img [src]="previewUrl ? previewUrl:imageUrl" alt="">
-                </div>
-                <div class="upload-button">
-                    <app-upload-button [onFileUpload]="onFileUpload"></app-upload-button>
+    <form (submit)="submit($event)">
+        <div class="post-container">
+            <div class="container">
+                <div class="image-container">
+                    <div class="image">
+                        <img [src]="previewUrl ? previewUrl:imageUrl" alt="">
+                    </div>
+                    <div class="upload-button">
+                        <app-upload-button [onFileUpload]="onFileUpload"></app-upload-button>
+                    </div>
                 </div>
             </div>
+            <div class="container">
+                <app-input #subject id="subject" (onChange)="onChangeSubject($event)" [name]="'Asunto'"></app-input>
+                <app-text-area #content (onChange)="onChangeContent($event)" [name]="'Contenido'"></app-text-area>
+            </div>
         </div>
-        <div class="container">
-            <app-input [ngModel]='subject' [name]="'Asunto'"></app-input>
-            <app-text-area [ngModel]='content' [name]="'Contenido'" ></app-text-area>
+        <div class="button-container">
+            <app-button [name]="'Enviar'"></app-button>
         </div>
-    </div>
-    <div class="button-container">
-        <app-button [name]="'Enviar'"></app-button>
-    </div>
+    </form>
 </div>

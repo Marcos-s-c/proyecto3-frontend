@@ -2,9 +2,11 @@ import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { TextAreaComponent } from 'src/app/components/text-area/text-area.component';
 import { ButtonComponent } from 'src/app/components/button/button.component';
 import { InputComponent } from 'src/app/components/input/input.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UploadButtonComponent } from 'src/app/components/upload-button/upload-button.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { PostService } from 'src/app/services/post.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-publication-details',
@@ -22,12 +24,12 @@ export class PublicationDetailsComponent implements OnInit {
   public content: string;
   private file: any;
 
-  constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
+  constructor(private route: ActivatedRoute, private router:Router ,private cdr: ChangeDetectorRef, private postService:PostService) { }
 
   ngOnInit(): void {
       this.route.params.subscribe((params) => {
-        this.postId = params['postId'];
-      });
+      this.postId = params['postId'];
+  });
 
       if(this.postId){
         //apiCall to populate
@@ -36,11 +38,35 @@ export class PublicationDetailsComponent implements OnInit {
       this.imageUrl = '../../assets/noImage.jpg';
   }
 
-  submit = () =>{
-    const formData = new FormData();
-    formData.append('file', this.file);              
-    formData.append('subject', 'text');
-    formData.append('content','text')
+  public submit = (event: Event) => {
+    event.preventDefault();
+    console.log(event)
+    if(this.subject && this.content){
+      const formData = new FormData();
+      if(this.file)formData.append('file', this.file);              
+      formData.append('subject', this.subject);
+      formData.append('content',this.content);
+      this.postService.crearPost(formData).subscribe({
+        next: (response) => Swal.fire({
+          title: 'Creación del post',
+          text: 'Creación del post exitosa',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }),
+        //.then(response => this.router.navigate(['/community/publication-details'])),
+        error: (error) => 
+        Swal.fire({
+          title: 'Creación del post',
+          text: 'Ha ocurrido un error salvando el post',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        })
+      })
+    }
   }
 
   public onFileUpload = (file:Blob) =>{
@@ -51,5 +77,13 @@ export class PublicationDetailsComponent implements OnInit {
     };
     fileReader.readAsDataURL(file);
     this.file = file;
+  }
+
+  public onChangeContent(text:string){
+    this.content = text;
+  }
+
+  public onChangeSubject(text:string){
+    this.subject = text;
   }
 }

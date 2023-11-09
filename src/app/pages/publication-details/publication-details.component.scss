@@ -2,6 +2,9 @@
     width: 100vw;
     display: flex;
     align-items: center;
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 }
 
 .page-container {
@@ -13,6 +16,10 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding: 5px;
+    @media (max-width: 768px) {
+        width: 90%;
+    }
 }
 
 .image {
