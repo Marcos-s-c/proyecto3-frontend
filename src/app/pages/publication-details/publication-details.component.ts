@@ -7,6 +7,7 @@ import { UploadButtonComponent } from 'src/app/components/upload-button/upload-b
 import { ChangeDetectorRef } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
 import Swal from 'sweetalert2';
+import { noImagePath } from 'src/app/services/helper';
 
 @Component({
   selector: 'app-publication-details',
@@ -20,7 +21,7 @@ export class PublicationDetailsComponent implements OnInit {
   private postId: string;
   public imageUrl: string;
   public previewUrl: any;
-  public subject: string = '';
+  public subject: string;
   public content: string;
   private file: any;
 
@@ -32,17 +33,31 @@ export class PublicationDetailsComponent implements OnInit {
   });
 
       if(this.postId){
-        //apiCall to populate
+        this.postService.getPost(this.postId).subscribe({
+        next: (response:any) => {
+          this.imageUrl = response.imageUrl ? response.imageUrl : noImagePath;
+          this.subject = response.subject;
+          this.content = response.content;
+        },
+        error: (error) => 
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un problema obteniendo la información del post',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        })});
         return;
       }
-      this.imageUrl = '../../assets/noImage.jpg';
+      this.imageUrl = noImagePath;
   }
 
   public submit = (event: Event) => {
     event.preventDefault();
-    console.log(event)
     if(this.subject && this.content){
       const formData = new FormData();
+      if(this.postId)formData.append('postId', this.postId);
       if(this.file)formData.append('file', this.file);              
       formData.append('subject', this.subject);
       formData.append('content',this.content);
@@ -65,7 +80,7 @@ export class PublicationDetailsComponent implements OnInit {
           confirmButtonText: 'Aceptar',
           confirmButtonColor: 'pink',
         })
-      })
+      });
     }
   }
 
