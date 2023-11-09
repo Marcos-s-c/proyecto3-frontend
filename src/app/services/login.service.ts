@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import {baserUrl} from './helper';
-import {User} from "../pages/perfil-usuario/perfil-usuario.component";
+import { baserUrl } from './helper';
+import { User } from '../pages/perfil-usuario/perfil-usuario.component';
 
 @Injectable({
   providedIn: 'root',
@@ -36,10 +36,10 @@ export class LoginService {
 
   //cerranis sesion y eliminamos el token del localStorage
   public logout() {
-    this.http.get(`${baserUrl()}/rest/users/logout`).subscribe(response =>{
+    this.http.get(`${baserUrl()}/rest/users/logout`).subscribe((response) => {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-    })
+    });
     return true;
   }
 
@@ -55,29 +55,28 @@ export class LoginService {
   public getUser() {
     let userStr = localStorage.getItem('user');
     if (userStr != null) {
-      console.log("userStr ",userStr)
-      return JSON.parse(userStr).value;
+      return JSON.parse(userStr);
     } else {
       this.logout();
       return JSON.parse(<string>{});
     }
   }
 
-  public getEmailUsuario():string{
+  public getEmailUsuario(): string {
     let userStr = localStorage.getItem('user');
     if (userStr != null) {
-      return userStr
+      return userStr;
     } else {
       this.logout();
-      return "-1"
+      return '-1';
     }
   }
 
   public getUserRole() {
     let user = this.getUser();
-    let {email} = user;
-    console.log("user", user)
 
-    return user.role;
+    console.log(user.rol);
+
+    return user.rol;
   }
 }
