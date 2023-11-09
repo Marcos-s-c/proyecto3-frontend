@@ -12,6 +12,7 @@ import {ThemePalette} from "@angular/material/core";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { CommonModule } from '@angular/common';
 import {MatSelectModule} from "@angular/material/select";
+import {LoginService} from "../../services/login.service";
 
 export interface Task {
   name: string;
@@ -20,11 +21,19 @@ export interface Task {
   subtasks?: Task[];
 }
 
-interface Medicamento{
+export interface Medicamento{
   nombre: string;
   administracion: string;
   dosis: string;
   frecuencia: string;
+}
+
+export interface User{
+  name: string,
+  surname: string,
+  email: string,
+  password: string,
+  phone: string,
 }
 
 @Component({
@@ -45,20 +54,26 @@ export class PerfilUsuarioComponent implements OnInit {
   };
 
   constructor(    private userService: UserService,
+                  private loginService: LoginService,
                   private snack: MatSnackBar,
                   private router: Router) { }
 
   ngOnInit(): void {
+    console.log("Usuario: ",this.loginService.getEmailUsuario());
   }
 
   editar(){
 
   }
 
+  //DATOS DE USUARIO
+
+
+  //REESTABLECER CONTRASENA
+
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
-
   resetPassword() {
 
     if (this.newPassword === this.confirmPassword) {
