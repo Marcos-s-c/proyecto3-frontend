@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainNavLandingComponent } from '../../components/main-nav-landing/main-nav-landing.component';
+
 import { HeroComponent } from '../../components/hero/hero.component';
 import { CardComponent } from '../../components/card/card.component';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -60,7 +60,7 @@ const data: CardData[] = [
 @Component({
   selector: 'app-home',
   standalone: true,
-  
+
   imports: [
     CommonModule,
     HeroComponent,
@@ -73,7 +73,6 @@ const data: CardData[] = [
     TextAreaComponent,
     CarouselComponent,
     FormsModule,
-    MainNavLandingComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
