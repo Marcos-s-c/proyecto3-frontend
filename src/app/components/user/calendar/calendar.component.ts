@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { startOfDay } from 'date-fns';
+
 import { CalendarView, CalendarEvent } from 'angular-calendar';
 import { DataService } from 'src/app/services/dataService.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { parseISO } from 'date-fns';
-import { PeriodData } from 'src/app/interface/period-data';
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
