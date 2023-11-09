@@ -17,6 +17,7 @@ export type DataObject = {
 export class UserDashboardComponent implements OnInit {
 
   date!: any;
+  opened = false;
   periodAmount!: String | null;
   periodColor!: String | null;
   fluidAmount!: String | null;
