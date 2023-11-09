@@ -18,6 +18,7 @@ export class UserDashboardComponent implements OnInit {
 
   date!: any;
   periodCycle!: String | null;
+  opened = false;
   periodAmount!: String | null;
   periodColor!: String | null;
   fluidAmount!: String | null;

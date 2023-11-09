@@ -40,6 +40,9 @@ import {JsonPipe} from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CheckboxComponent} from "./components/checkbox/checkbox.component";
+import {MatBadgeModule} from '@angular/material/badge';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+
 
 
 @NgModule({
@@ -52,6 +55,8 @@ import {CheckboxComponent} from "./components/checkbox/checkbox.component";
     UserDashboardComponent,
     PasswordResetComponent,
     DialogPasswordResetComponent,
+    NotificationsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -82,8 +87,9 @@ import {CheckboxComponent} from "./components/checkbox/checkbox.component";
     MatRadioModule,
     MatSliderModule,
     ReactiveFormsModule,
-    MatCheckboxModule,
     CheckboxComponent,
+    MatCheckboxModule,
+    MatBadgeModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
