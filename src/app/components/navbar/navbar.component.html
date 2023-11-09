@@ -49,6 +49,6 @@
   >
     {{ user.username }}
   </button>
-  <button type="button" (click)="openDialog()"><mat-icon class="material-icons color_grey"  matBadge="1" matBadgeColor="accent">notifications</mat-icon></button>
+  <button type="button" (click)="openDialog()" (click)="notificationsVisibility()"><mat-icon [ngStyle]="{'color':'#df5583'}"  matBadge="1" [matBadgeHidden]="visibility" matBadgeColor="accent">notifications</mat-icon></button>
   
 </mat-toolbar>

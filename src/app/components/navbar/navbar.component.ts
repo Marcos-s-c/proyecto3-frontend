@@ -11,7 +11,7 @@ import { NotificationsComponent } from '../notifications/notifications.component
 export class NavbarComponent implements OnInit {
   isLoggedIn = false;
   user: any = null;
-
+  visibility = false;
   constructor(public login: LoginService,private router: Router, private dialog:MatDialog) {}
 
   ngOnInit(): void {
@@ -28,6 +28,9 @@ export class NavbarComponent implements OnInit {
   })
   }
 
+  notificationsVisibility(){
+    this.visibility = true;
+  }
   public logout() {
     this.login.logout();
     this.router.navigate(['/']);
