@@ -39,8 +39,10 @@ import {FormBuilder} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {CheckboxComponent} from "./components/checkbox/checkbox.component";
 import {MatBadgeModule} from '@angular/material/badge';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+
 
 
 @NgModule({
@@ -54,7 +56,7 @@ import { NotificationsComponent } from './components/notifications/notifications
     PasswordResetComponent,
     DialogPasswordResetComponent,
     NotificationsComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -85,7 +87,8 @@ import { NotificationsComponent } from './components/notifications/notifications
     MatRadioModule,
     MatSliderModule,
     ReactiveFormsModule,
-    MatCheckboxModule, 
+    CheckboxComponent,
+    MatCheckboxModule,
     MatBadgeModule
   ],
   providers: [authInterceptorProviders],
