@@ -12,8 +12,8 @@
                 </div>
             </div>
             <div class="container">
-                <app-input #subject id="subject" (onChange)="onChangeSubject($event)" [name]="'Asunto'"></app-input>
-                <app-text-area #content (onChange)="onChangeContent($event)" [name]="'Contenido'"></app-text-area>
+                <app-input [ngModel]="subject" (onChange)="onChangeSubject($event)" [name]="'Asunto'"></app-input>
+                <app-text-area [ngModel]="content" (onChange)="onChangeContent($event)" [name]="'Contenido'"></app-text-area>
             </div>
         </div>
         <div class="button-container">

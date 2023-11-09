@@ -15,6 +15,7 @@ import { EventEmitter } from '@angular/core';
 })
 export class TextAreaComponent {
   @Input() name: string | undefined;
+  @Input() ngModel: string | undefined;
   @Output() onChange = new EventEmitter<string>();
   textArea = new FormControl('', [Validators.required]);
   getErrorMessage() {

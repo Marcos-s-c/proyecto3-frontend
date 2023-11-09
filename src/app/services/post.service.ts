@@ -12,4 +12,8 @@ export class PostService {
   public crearPost(data:any) {
     return this.http.post(`${baserUrl()}/rest/post/create`,data);
   }
+
+  public getPost(postId:any) {
+    return this.http.get(`${baserUrl()}/rest/post/getPost?postId=${postId}`);
+  }
 }

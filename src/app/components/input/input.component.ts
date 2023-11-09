@@ -16,6 +16,7 @@ import { EventEmitter } from '@angular/core';
 export class InputComponent{
   @Input() name: string | undefined;
   @Input() placeholder: string | undefined;
+  @Input() ngModel: string | undefined;
   @Output() onChange = new EventEmitter<string>();
 
   input = new FormControl('', [Validators.required]);

@@ -44,6 +44,10 @@ const routes: Routes = [
     path: 'community/publication-details',
     component: PublicationDetailsComponent,
   },
+  {
+    path: 'community/publication-details/:postId',
+    component: PublicationDetailsComponent,
+  },
 ];
 
 @NgModule({
