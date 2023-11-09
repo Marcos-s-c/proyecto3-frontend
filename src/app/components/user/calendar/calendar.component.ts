@@ -3,7 +3,7 @@ import { startOfDay } from 'date-fns';
 import { CalendarView, CalendarEvent } from 'angular-calendar';
 import { DataService } from 'src/app/services/dataService.service';
 import { DialogService } from 'src/app/services/dialog.service';
-
+import { parseISO } from 'date-fns';
 import { PeriodData } from 'src/app/interface/period-data';
 @Component({
   selector: 'app-calendar',
@@ -31,7 +31,6 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.getDataById().subscribe((data) => {
       this.groupedData = this.groupAndCombineFieldsByDate(data);
-      console.log(this.groupedData);
     });
   }
 
@@ -64,23 +63,23 @@ export class CalendarComponent implements OnInit {
           date: date,
         };
       }
+
       grouped[date][fieldName] = value;
     });
 
-    // Crea el objeto consolidado y ajusta las fechas al comienzo del día
+    // Crea el objeto consolidado y ajusta las fechas al formato "día/mes/año"
     const consolidatedData = [];
-
     for (const date in grouped) {
       const consolidatedItem: Record<string, any> = {
-        date: startOfDay(new Date(date)), // Ajusta la fecha al comienzo del día
+        date: parseISO(date), // Ajusta la fecha al comienzo del día
       };
-
       for (const fieldName in grouped[date]) {
         if (fieldName !== 'date') {
           consolidatedItem[fieldName] = grouped[date][fieldName];
         }
       }
       consolidatedData.push(consolidatedItem);
+      console.log(consolidatedItem);
     }
 
     // Transforma los datos consolidados en objetos CalendarEvent
