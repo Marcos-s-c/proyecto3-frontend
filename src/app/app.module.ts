@@ -39,6 +39,7 @@ import {FormBuilder} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {CheckboxComponent} from "./components/checkbox/checkbox.component";
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatRadioModule,
     MatSliderModule,
     ReactiveFormsModule,
-    MatCheckboxModule, 
+    MatCheckboxModule,
+    CheckboxComponent,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
