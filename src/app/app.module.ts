@@ -26,7 +26,6 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DialogPasswordResetComponent } from './pages/login/dialog-password-reset/dialog-password-reset.component';
 import { register } from 'swiper/element/bundle';
-// register Swiper custom elements
 register();
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';

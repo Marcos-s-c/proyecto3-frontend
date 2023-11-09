@@ -1,3 +1,4 @@
+<script src="user-dashboard.component.ts"></script>
 <mat-drawer-container class="example-container">
     <mat-drawer class="side-form"  [(opened)]="openedForm" #drawer position="end" mode="over">
       <div class="form-title">
@@ -16,6 +17,11 @@
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Menstruación</ng-template>
+          <mat-radio-group [(ngModel)]="periodCycle" aria-label="Select an option" class="mat-radio-button">
+            <mat-radio-button value="inicio">Inicio de menstruación</mat-radio-button>
+            <mat-radio-button value="fin">Final de menstruación</mat-radio-button>
+            <mat-radio-button value="NA">No aplica</mat-radio-button>
+          </mat-radio-group>
           <h4 style="padding-top: 10px;">Cantidad</h4>
           <mat-form-field>
             <mat-label>Elige una</mat-label>
@@ -52,12 +58,11 @@
               </mat-option>
               <mat-option value="rojo palido">
                 <div class="color-example rojo-palido">Rojo pálido</div>
-              </mat-option> 
+              </mat-option>
               <mat-option value="Otro">
               <div>Otro Color</div>
               </mat-option>
             </mat-select>
-           
           </mat-form-field>
         </mat-step>
         <mat-step>
@@ -102,7 +107,7 @@
               <mat-option value="Otro">
                 <div>Otro Color</div>
                 </mat-option>
-      
+
             </mat-select>
           </mat-form-field>
         </mat-step>
@@ -219,4 +224,11 @@
         (click)="drawer.toggle()">+</button>
     </mat-drawer-content>
   </mat-drawer-container>
-  
+  <mat-sidenav-container>
+    <mat-sidenav [(opened)] = "opened">
+      alo
+    </mat-sidenav>
+    <mat-sidenav-content >
+
+    </mat-sidenav-content>
+</mat-sidenav-container>
