@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { startOfDay } from 'date-fns';
 import { CalendarView, CalendarEvent } from 'angular-calendar';
 import { DataService } from 'src/app/services/dataService.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { DialogDataComponent } from '../../dialog-data/dialog-data.component';
-import { MatDialog } from '@angular/material/dialog';
+
+import { PeriodData } from 'src/app/interface/period-data';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -13,8 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class CalendarComponent implements OnInit {
   constructor(
     private dataService: DataService,
-    private dialogService: DialogService,
-    private dialog: MatDialog
+    private dialogService: DialogService
   ) {}
 
   public periodCriteria = {
@@ -45,18 +44,15 @@ export class CalendarComponent implements OnInit {
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    console.log(events);
     const clickedDate = date.toISOString().split('T')[0];
     const selectedData = this.groupedData.find(
       (data) => data.date.toISOString().split('T')[0] === clickedDate
     );
-
     if (selectedData) {
       // Abre el diálogo utilizando tu servicio de diálogo
       this.dialogService.openDialog(selectedData);
     }
   }
-
   groupAndCombineFieldsByDate(data: any) {
     const grouped: Record<string, Record<string, any>> = {};
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import {baserUrl} from './helper';
+import { baserUrl } from './helper';
 
 @Injectable({
   providedIn: 'root',
@@ -35,10 +35,10 @@ export class LoginService {
 
   //cerranis sesion y eliminamos el token del localStorage
   public logout() {
-    this.http.get(`${baserUrl()}/rest/users/logout`).subscribe(response =>{
+    this.http.get(`${baserUrl()}/rest/users/logout`).subscribe((response) => {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-    })
+    });
     return true;
   }
 
@@ -63,6 +63,7 @@ export class LoginService {
 
   public getUserRole() {
     let user = this.getUser();
-    return user.authorities[0].authority;
+    console.log(user.rol);
+    return user;
   }
 }
