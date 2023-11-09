@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
+import { Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -14,6 +16,7 @@ import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 export class InputComponent{
   @Input() name: string | undefined;
   @Input() placeholder: string | undefined;
+  @Output() onChange = new EventEmitter<string>();
 
   input = new FormControl('', [Validators.required]);
 
@@ -25,4 +28,7 @@ export class InputComponent{
     return this.input.hasError('input') ? 'Campo vacío' : '';
   }
 
+  public onChangeField(event:any){
+    this.onChange.emit(event?.target.value);
+  }
 }

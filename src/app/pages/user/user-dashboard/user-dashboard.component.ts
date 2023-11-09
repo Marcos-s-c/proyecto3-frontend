@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/dataService.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { formatDate } from 'src/app/services/helper';
 
 export type DataObject = {
   fieldName: string;

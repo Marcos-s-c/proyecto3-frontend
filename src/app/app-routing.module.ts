@@ -8,6 +8,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
+import { PublicationDetailsComponent } from './pages/publication-details/publication-details.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'password_reset/:userCode',
     component: PasswordResetComponent,
+  },
+  {
+    path: 'community/publication-details',
+    component: PublicationDetailsComponent,
   },
 ];
 
