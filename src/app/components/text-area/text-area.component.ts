@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import { Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-text-area',
@@ -13,12 +15,17 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angula
 })
 export class TextAreaComponent {
   @Input() name: string | undefined;
+  @Input() ngModel: string | undefined;
+  @Output() onChange = new EventEmitter<string>();
   textArea = new FormControl('', [Validators.required]);
   getErrorMessage() {
     if (this.textArea.hasError('required')) {
-      return 'Debes digitar un asunto.';
+      return 'Campo requerido';
     }
+    return ''
+  }
 
-    return this.textArea.hasError('email') ? 'El campo no puede ser vacío' : '';
+  public onChangeField(event:any){
+    this.onChange.emit(event?.target.value);
   }
 }

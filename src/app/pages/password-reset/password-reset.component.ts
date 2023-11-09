@@ -23,11 +23,10 @@ export class PasswordResetComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private dialog: MatDialog // Inyecta MatDialog
+    private dialog: MatDialog 
   ) {}
 
   ngOnInit(): void {
-    //  parámetro 'userCode' en el método 'ngOnInit'
     this.route.params.subscribe((params) => {
       this.passwordReset.userCode = params['userCode'];
     });
@@ -76,7 +75,6 @@ export class PasswordResetComponent implements OnInit {
         });
       },
       (error) => {
-        //manejar los errores de manera más efectiva
         if (error.status === 500) {
           Swal.fire({
             title: 'Error del servidor',
