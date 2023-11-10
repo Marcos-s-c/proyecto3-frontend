@@ -3,17 +3,20 @@ import { Injectable } from '@angular/core';
 import { baserUrl } from './helper';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  public crearPost(data:any) {
-    return this.http.post(`${baserUrl()}/rest/post/create`,data);
+  public crearPost(data: any) {
+    return this.http.post(`${baserUrl()}/rest/post/create`, data);
   }
 
-  public getPost(postId:any) {
+  public getPost(postId: any) {
     return this.http.get(`${baserUrl()}/rest/post/getPost?postId=${postId}`);
+  }
+
+  public getAllPosts() {
+    return this.http.get(`${baserUrl()}/rest/post/getAllPosts`);
   }
 }
