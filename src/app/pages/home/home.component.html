@@ -82,7 +82,11 @@
           ></app-input>
           <app-input-email></app-input-email>
           <app-text-area [name]="'Asunto'"></app-text-area>
-          <app-button [name]="'Enviar'"></app-button>
+          <div class="control-container">
+            <div class="button-container">
+              <app-button [name]="'Enviar'"></app-button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
