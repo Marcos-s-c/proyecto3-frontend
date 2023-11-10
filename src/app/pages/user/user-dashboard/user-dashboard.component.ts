@@ -38,6 +38,12 @@ export class UserDashboardComponent implements OnInit {
     const today = new Date();
     today.setHours(today.getHours() - 6);
     this.setFormValues(today.toISOString().split('T')[0]);
+    this.dataService.getAveragePeriod().subscribe(
+        (data:any) =>{
+          console.log(data);
+
+        }
+    );
   }
 
   createDataArrayList() {
