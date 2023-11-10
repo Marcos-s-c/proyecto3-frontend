@@ -7,10 +7,8 @@ import { PasswordResetComponent } from './pages/password-reset/password-reset.co
 import { SignupComponent } from './pages/signup/signup.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {HomeComponent} from "./pages/home/home.component";
 import {PerfilUsuarioComponent} from "./pages/perfil-usuario/perfil-usuario.component";
-import { HomeComponent } from './pages/home/home.component';
-import { PublicationDetailsComponent } from './pages/publication-details/publication-details.component';
-import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
 
 const routes: Routes = [
   {
@@ -36,12 +34,7 @@ const routes: Routes = [
   {
     path: 'user-dashboard',
     component: UserDashboardComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: 'user-calendar',
-    component: UserCalendarComponent,
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: 'password_reset/:userCode',

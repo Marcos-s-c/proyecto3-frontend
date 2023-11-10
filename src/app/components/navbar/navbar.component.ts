@@ -1,55 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
 import { LoginService } from './../../services/login.service';
-import { MatDialog } from '@angular/material/dialog';
-import { NotificationsComponent } from '../notifications/notifications.component';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  visibility = false;
   isLoggedIn = false;
   user: any = null;
-  currentRoute: string = '';
 
-  constructor(
-    public login: LoginService,
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-    // Suscríbete al evento NavigationEnd para obtener la URL una vez que la navegación se completa
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.currentRoute = event.url;
-      }
-    });
-  }
+  constructor(public login: LoginService,private router: Router) {}
 
   ngOnInit(): void {
     this.isLoggedIn = this.login.isLoggedIn();
     this.user = this.login.getUser();
     this.login.loginStatusSubjec.asObservable().subscribe((data) => {
+      this.isLoggedIn = this.login.isLoggedIn();
       this.user = this.login.getUser();
     });
-  }
-
-  notificationsVisibility() {
-    this.visibility = true;
   }
 
   public logout() {
     this.login.logout();
     this.router.navigate(['/']);
-    this.isLoggedIn = false;
-    this.user = null;
-  }
-
-  openDialog() {
-    this.dialog.open(NotificationsComponent, {
-      width: '500px',
-      position: { right: '1px', top: '63px' },
-    });
   }
 }
