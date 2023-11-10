@@ -27,20 +27,26 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { DialogPasswordResetComponent } from './pages/login/dialog-password-reset/dialog-password-reset.component';
 import { register } from 'swiper/element/bundle';
 register();
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatSelectModule} from '@angular/material/select';
-import {MatStepperModule} from '@angular/material/stepper';
-import { ReactiveFormsModule} from '@angular/forms';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {CheckboxComponent} from "./components/checkbox/checkbox.component";
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSliderModule } from '@angular/material/slider';
+
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
+import { DialogService } from 'src/app/services/dialog.service';
+// calendar
+import { CalendarComponent } from './components/user/calendar/calendar.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
+import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
+import { DialogDataComponent } from './components/dialog-data/dialog-data.component';
+import { MatBadgeModule } from '@angular/material/badge';
 import { NotificationsComponent } from './components/notifications/notifications.component';
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,9 +57,11 @@ import { NotificationsComponent } from './components/notifications/notifications
     UserDashboardComponent,
     PasswordResetComponent,
     DialogPasswordResetComponent,
-    //PerfilUsuarioComponent,
+    CalendarComponent,
+    UserCalendarComponent,
+    CalendarComponent,
+    DialogDataComponent,
     NotificationsComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -73,7 +81,6 @@ import { NotificationsComponent } from './components/notifications/notifications
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatIconModule,
     MatButtonModule,
     MatCardModule,
     MatSidenavModule,
@@ -85,11 +92,13 @@ import { NotificationsComponent } from './components/notifications/notifications
     MatSliderModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    CheckboxComponent,
-    MatCheckboxModule,
-    MatBadgeModule
+    MatBadgeModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
