@@ -34,10 +34,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
-import { FormBuilder } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { DialogService } from 'src/app/services/dialog.service';
 // calendar
 import { CalendarComponent } from './components/user/calendar/calendar.component';
@@ -46,7 +45,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
 import { DialogDataComponent } from './components/dialog-data/dialog-data.component';
-
+import { MatBadgeModule } from '@angular/material/badge';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +61,7 @@ import { DialogDataComponent } from './components/dialog-data/dialog-data.compon
     UserCalendarComponent,
     CalendarComponent,
     DialogDataComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +81,6 @@ import { DialogDataComponent } from './components/dialog-data/dialog-data.compon
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatIconModule,
     MatButtonModule,
     MatCardModule,
     MatSidenavModule,
@@ -92,6 +92,7 @@ import { DialogDataComponent } from './components/dialog-data/dialog-data.compon
     MatSliderModule,
     ReactiveFormsModule,
     MatCheckboxModule,
+    MatBadgeModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

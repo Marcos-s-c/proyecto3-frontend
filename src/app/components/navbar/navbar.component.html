@@ -14,6 +14,7 @@
       >Venus</a
     >
   </span>
+
   <ng-container
     *ngIf="
       isLoggedIn &&
@@ -78,6 +79,7 @@
     </button>
   </ng-container>
   <!-- Mostrar diferentes opciones según la URL y el estado de inicio de sesión -->
+
   <ng-container
     *ngIf="
       isLoggedIn &&
@@ -123,6 +125,19 @@
       aria-label="Example icon-button with heart icon"
     >
       {{ user.username }}
+    </button>
+    <button
+      type="button"
+      (click)="openDialog()"
+      (click)="notificationsVisibility()"
+    >
+      <mat-icon
+        [ngStyle]="{ color: '#df5583' }"
+        matBadge="1"
+        [matBadgeHidden]="visibility"
+        matBadgeColor="accent"
+        >notifications</mat-icon
+      >
     </button>
   </ng-container>
 
