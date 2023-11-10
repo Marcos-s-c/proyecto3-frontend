@@ -13,7 +13,7 @@ export class UserService {
     return this.httpClient.post(`${baserUrl()}/rest/auth/register`, user);
   }
 
-  public actualizarUsuraio(user:User){
+  public actualizarUsuario(user:User){
     return this.httpClient.put(`${baserUrl()}/rest/users/actualizar`, user);
   }
 

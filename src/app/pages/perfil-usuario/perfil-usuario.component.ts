@@ -1,18 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatTabsModule} from "@angular/material/tabs";
-import {MatIconModule} from "@angular/material/icon";
-import {MatInputModule} from "@angular/material/input";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatButtonModule} from "@angular/material/button";
-import {Router, RouterModule} from "@angular/router";
-import {UserService} from "../../services/user.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import Swal from "sweetalert2";
-import {ThemePalette} from "@angular/material/core";
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import { Component, Input, OnInit } from '@angular/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
+import { ThemePalette } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
-import {MatSelectModule} from "@angular/material/select";
-import {LoginService} from "../../services/login.service";
+import { MatSelectModule } from '@angular/material/select';
+import { LoginService } from '../../services/login.service';
 
 export interface Task {
   name: string;
@@ -21,19 +21,19 @@ export interface Task {
   subtasks?: Task[];
 }
 
-export interface Medicamento{
+export interface Medicamento {
   nombre: string;
   administracion: string;
   dosis: string;
   frecuencia: string;
 }
 
-export interface User{
-  name: string,
-  surname: string,
-  email: string,
-  password: string,
-  phone: string,
+export interface User {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  phone: string;
 }
 
 @Component({
@@ -41,11 +41,21 @@ export interface User{
   templateUrl: './perfil-usuario.component.html',
   styleUrls: ['./perfil-usuario.component.scss'],
   standalone: true,
-  imports: [MatTabsModule, MatIconModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule, RouterModule, MatCheckboxModule, CommonModule, MatSelectModule],
+  imports: [
+    MatTabsModule,
+    MatIconModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatCheckboxModule,
+    CommonModule,
+    MatSelectModule,
+  ],
 })
 export class PerfilUsuarioComponent implements OnInit {
-
-  public editar:boolean = false;
+  public editar: boolean = false;
 
   public user = {
     name: '',
@@ -57,16 +67,18 @@ export class PerfilUsuarioComponent implements OnInit {
 
   private user1 = this.loginService.getUser();
 
-  constructor(    private userService: UserService,
-                  private loginService: LoginService,
-                  private snack: MatSnackBar,
-                  private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private loginService: LoginService,
+    private snack: MatSnackBar,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.loginService.getUser())
+    console.log(this.loginService.getUser());
     this.user.name = this.user1.name;
-    this.user.surname = "No esta implementado en backend";
-    this.user.surname = "No esta implementado en backend";
+    this.user.surname = 'No esta implementado en backend';
+    this.user.surname = 'No esta implementado en backend';
     this.user.email = this.user1.email;
     this.user.password = '*************';
     this.user.phone = this.user1.phone;
@@ -78,6 +90,9 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   onSalvarCambios(clickEvent: any) {
+    this.userService.actualizarUsuario(this.user).subscribe((response) => {
+      console.log(response);
+    });
     // Handle the "Salvar Cambios" button click
     //clickEvent.stopPropagation();
   }
@@ -87,9 +102,7 @@ export class PerfilUsuarioComponent implements OnInit {
     clickEvent.stopPropagation();
   }
 
-
   //DATOS DE USUARIO
-
 
   //REESTABLECER CONTRASENA
 
@@ -97,13 +110,25 @@ export class PerfilUsuarioComponent implements OnInit {
   newPassword: string = '';
   confirmPassword: string = '';
   resetPassword() {
-
     if (this.newPassword === this.confirmPassword) {
-
-
+      this.user.password = this.confirmPassword;
+      console.log(this.user);
+      this.userService.actualizarUsuario(this.user).subscribe((response) => {
+        console.log(response);
+        Swal.fire({
+          title: 'Usuario actualizado',
+          text: 'Usuario actualizado con éxito.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+          }
+        });
+      });
     } else {
-
-
     }
   }
 
@@ -139,8 +164,8 @@ export class PerfilUsuarioComponent implements OnInit {
       return;
     }
 
-    this.userService.actualizarUsuraio(this.user).subscribe(
-      (response) => {
+    this.userService.actualizarUsuario(this.user).subscribe(
+      (response: any) => {
         console.log(response);
 
         Swal.fire({
@@ -155,9 +180,9 @@ export class PerfilUsuarioComponent implements OnInit {
             // El usuario hizo clic en "Aceptar"
           }
         });
-        },
-      (error) => {
-        console.log("Error actualizar",error);
+      },
+      (error: any) => {
+        console.log('Error actualizar', error);
         if (error.status === 400) {
           // Error de credenciales incorrectos (Código de respuesta 400)
           this.snack.open(
@@ -184,9 +209,9 @@ export class PerfilUsuarioComponent implements OnInit {
     completed: false,
     color: 'primary',
     subtasks: [
-      {name: 'Mensaje de texto SMS', completed: false, color: 'primary'},
-      {name: 'Mensaje de Whatsapp', completed: false, color: 'primary'},
-      {name: 'Correo electrónico', completed: false, color: 'primary'},
+      { name: 'Mensaje de texto SMS', completed: false, color: 'primary' },
+      { name: 'Mensaje de Whatsapp', completed: false, color: 'primary' },
+      { name: 'Correo electrónico', completed: false, color: 'primary' },
     ],
   };
 
@@ -196,45 +221,72 @@ export class PerfilUsuarioComponent implements OnInit {
   * updateAllComplete() es un método que calcula el valor de allComplete en función del estado de finalización de las subtareas:
     Comprueba si la propiedad de subtareas del objeto de tarea no es nula.
     Si las subtareas no son nulas, utiliza el método every para verificar si todas las subtareas tienen su propiedad completada establecida en true. Si lo hacen, establece this.allComplete en true;sino en false.*/
-  updateAllComplete(){
-    this.allComplete = this.task.subtasks != null && this.task.subtasks.every(task => task.completed);
+  updateAllComplete() {
+    this.allComplete =
+      this.task.subtasks != null &&
+      this.task.subtasks.every((task) => task.completed);
   }
 
-  someComplete(): boolean{
-    if(this.task.subtasks == null){
-      return false
+  someComplete(): boolean {
+    if (this.task.subtasks == null) {
+      return false;
     }
-    return this.task.subtasks.filter(task => task.completed).length > 0 && !this.allComplete;
+    return (
+      this.task.subtasks.filter((task) => task.completed).length > 0 &&
+      !this.allComplete
+    );
   }
 
-  setAll(completed: boolean){
+  setAll(completed: boolean) {
     this.allComplete = completed;
-    if(this.task.subtasks == null){
+    if (this.task.subtasks == null) {
       return;
     }
-    this.task.subtasks.forEach((task => (task.completed = completed)))
+    this.task.subtasks.forEach((task) => (task.completed = completed));
   }
 
   ////MEDICAMENTOS
   medicamentos: Medicamento[] = [
-    {nombre: "krokodile", administracion:"inyeccion", dosis:"1ml", frecuencia:"2 veces por dia"},
-    {nombre: "Aspirina", administracion: "Tableta", dosis: "3mg", frecuencia: "1 vez al dia"} ,
-    {nombre: "Amoxicilina", administracion: "Líquido", dosis: "10ml", frecuencia: "1 vez al dia"},
-    {nombre: "krokodile", administracion:"inyeccion", dosis:"3ml", frecuencia:"1 vez a la semana"},
-    {nombre: "Loratadina", administracion: "Tableta", dosis: "3mg", frecuencia: "2 veces por dia"}
-  ]
+    {
+      nombre: 'krokodile',
+      administracion: 'inyeccion',
+      dosis: '1ml',
+      frecuencia: '2 veces por dia',
+    },
+    {
+      nombre: 'Aspirina',
+      administracion: 'Tableta',
+      dosis: '3mg',
+      frecuencia: '1 vez al dia',
+    },
+    {
+      nombre: 'Amoxicilina',
+      administracion: 'Líquido',
+      dosis: '10ml',
+      frecuencia: '1 vez al dia',
+    },
+    {
+      nombre: 'krokodile',
+      administracion: 'inyeccion',
+      dosis: '3ml',
+      frecuencia: '1 vez a la semana',
+    },
+    {
+      nombre: 'Loratadina',
+      administracion: 'Tableta',
+      dosis: '3mg',
+      frecuencia: '2 veces por dia',
+    },
+  ];
 
-  medicamentoSeleccionado: string = "";
-  dosis: string = ""
-  frecuancia: string = "";
+  medicamentoSeleccionado: string = '';
+  dosis: string = '';
+  frecuancia: string = '';
 
-  printToConsole(event:any){
-    console.log(event.target.value)
+  printToConsole(event: any) {
+    console.log(event.target.value);
   }
-  onSeleccionMedicamento(event: any){
+  onSeleccionMedicamento(event: any) {}
 
-  }
-
-  salvarMedicamento(){}
-
+  salvarMedicamento() {}
 }
