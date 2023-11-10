@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { baserUrl } from './helper';
-import { User } from '../pages/perfil-usuario/perfil-usuario.component';
 
 @Injectable({
   providedIn: 'root',
