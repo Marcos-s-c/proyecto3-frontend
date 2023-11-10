@@ -26,7 +26,6 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DialogPasswordResetComponent } from './pages/login/dialog-password-reset/dialog-password-reset.component';
 import { register } from 'swiper/element/bundle';
-// register Swiper custom elements
 register();
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSelectModule} from '@angular/material/select';
@@ -35,11 +34,11 @@ import { ReactiveFormsModule} from '@angular/forms';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSliderModule} from '@angular/material/slider';
-import {FormBuilder} from '@angular/forms';
-import {JsonPipe} from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatSnackBar} from '@angular/material/snack-bar';
-//mport { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.component';
+import {CheckboxComponent} from "./components/checkbox/checkbox.component";
+import {MatBadgeModule} from '@angular/material/badge';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+
 
 
 @NgModule({
@@ -53,6 +52,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     PasswordResetComponent,
     DialogPasswordResetComponent,
     //PerfilUsuarioComponent,
+    NotificationsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -84,6 +85,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatSliderModule,
     ReactiveFormsModule,
     MatCheckboxModule,
+    CheckboxComponent,
+    MatCheckboxModule,
+    MatBadgeModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
