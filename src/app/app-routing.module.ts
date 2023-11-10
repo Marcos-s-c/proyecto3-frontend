@@ -9,7 +9,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
 import {PerfilUsuarioComponent} from "./pages/perfil-usuario/perfil-usuario.component";
-import { PublicationDetailsComponent } from './pages/publication-details/publication-details.component';
 
 const routes: Routes = [
   {
@@ -44,13 +43,6 @@ const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuarioComponent,
-  },{
-    path: 'community/publication-details',
-    component: PublicationDetailsComponent,
-  },
-  {
-    path: 'community/publication-details/:postId',
-    component: PublicationDetailsComponent,
   },
 ];
 

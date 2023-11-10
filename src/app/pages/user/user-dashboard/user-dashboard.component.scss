@@ -2,7 +2,7 @@
     width: 100%;
     height: 94vh;
   }
-
+  
   mat-drawer-content {
     padding: 12px;
     display: flex;
@@ -52,12 +52,4 @@
 }
 .rojo-palido{
   background-color: lightcoral;
-}
-.mat-radio-button {
-  display: flex;
-  flex-direction: column;
-  line-height: normal;
-  mat-radio-button {
-      line-height: 30px;
-  }
 }
