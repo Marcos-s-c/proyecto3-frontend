@@ -41,7 +41,11 @@ export class UserDashboardComponent implements OnInit {
     this.dataService.getAveragePeriod().subscribe(
         (data:any) =>{
           console.log(data);
-
+        }
+    );
+    this.dataService.getNextPeriodDate().subscribe(
+        (data:any) =>{
+          console.log(data);
         }
     );
   }
