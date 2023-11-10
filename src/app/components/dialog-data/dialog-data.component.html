@@ -57,6 +57,7 @@
       </mat-form-field>
     </form>
     <button mat-raised-button (click)="enterEditMode()">Edit</button>
+    <button mat-raised-button (click)="closeDialog()">Cerrar</button>
   </ng-container>
   <ng-template #editMode>
     <form *ngIf="periodDataForm" [formGroup]="periodDataForm">

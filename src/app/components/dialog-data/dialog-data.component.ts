@@ -241,4 +241,9 @@ export class DialogDataComponent implements OnInit {
     this.isEditMode = false;
     this.initializeForm(); // Restablece el formulario con los valores originales
   }
+
+  closeDialog() {
+ 
+    this.dialogService.closeDialog();
+  }
 }
