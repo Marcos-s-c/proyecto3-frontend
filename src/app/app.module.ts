@@ -47,6 +47,8 @@ import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.
 import { DialogDataComponent } from './components/dialog-data/dialog-data.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { PostsComponent } from './pages/publications/posts/posts.component';
+import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +64,8 @@ import { NotificationsComponent } from './components/notifications/notifications
     CalendarComponent,
     DialogDataComponent,
     NotificationsComponent,
+    PostsComponent,
+    DialogPostsComponent,
   ],
   imports: [
     BrowserModule,

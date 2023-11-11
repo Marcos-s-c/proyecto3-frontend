@@ -12,6 +12,7 @@ import { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.co
 import { HomeComponent } from './pages/home/home.component';
 import { PublicationDetailsComponent } from './pages/publication-details/publication-details.component';
 import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
+import { PostsComponent } from './pages/publications/posts/posts.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,11 @@ const routes: Routes = [
   {
     path: 'community/publication-details/:postId',
     component: PublicationDetailsComponent,
+  },
+  {
+    path: 'community/publication-posts',
+    component: PostsComponent,
+    pathMatch: 'full',
   },
 ];
 
