@@ -13,9 +13,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { LoginService } from '../../services/login.service';
-import {ResetContraRequestBody} from "../../interface/ResetContraRequestBody";
-import {PreferenciasPostBody} from "../../interface/PreferenciasPostBody";
-import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
+import { ResetContraRequestBody } from '../../interface/ResetContraRequestBody';
+import { PreferenciasPostBody } from '../../interface/PreferenciasPostBody';
+import { MedicineService } from 'src/app/services/medicine.service';
 
 export interface Task {
   name: string;
@@ -76,7 +76,8 @@ export class PerfilUsuarioComponent implements OnInit {
     private userService: UserService,
     private loginService: LoginService,
     private snack: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private medicineService: MedicineService
   ) {}
 
   ngOnInit(): void {
@@ -109,25 +110,32 @@ export class PerfilUsuarioComponent implements OnInit {
 
   //REESTABLECER CONTRASENA
 
-  currenPasswordMatch:boolean = false;
+  currenPasswordMatch: boolean = false;
 
-  clearFields():void{
+  clearFields(): void {
     this.currentPassword = '';
     this.newPassword = '';
     this.confirmPassword = '';
   }
 
-  confirmaContraActual(event:any){
-    this.body = {string:this.currentPassword, email:this.user.email}
+  confirmaContraActual(event: any) {
+    this.body = { string: this.currentPassword, email: this.user.email };
   }
 
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
   resetPassword() {
-    this.body = {string:this.currentPassword, email:this.user.email}
+    this.body = { string: this.currentPassword, email: this.user.email };
 
-    if (this.newPassword === "" || this.newPassword === null || this.confirmPassword === "" || this.confirmPassword === null || this.currentPassword === "" || this.currentPassword === null){
+    if (
+      this.newPassword === '' ||
+      this.newPassword === null ||
+      this.confirmPassword === '' ||
+      this.confirmPassword === null ||
+      this.currentPassword === '' ||
+      this.currentPassword === null
+    ) {
       Swal.fire({
         title: 'Todos los campos son requeridos',
         text: 'Favor digitar la información requerida',
@@ -145,30 +153,30 @@ export class PerfilUsuarioComponent implements OnInit {
     }
 
     this.userService.compara(this.body).subscribe(
-      ((response: any) => {
-        if (response){
-
+      (response: any) => {
+        if (response) {
           if (this.newPassword === this.confirmPassword) {
             this.user.password = this.confirmPassword;
-            this.userService.actualizarUsuario(this.user).subscribe((response) => {
-              Swal.fire({
-                title: 'Usuario actualizado',
-                text: 'Usuario actualizado con éxito.',
-                showCancelButton: false,
-                showConfirmButton: true,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: 'pink',
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  // El usuario hizo clic en "Aceptar"
-                }
+            this.userService
+              .actualizarUsuario(this.user)
+              .subscribe((response) => {
+                Swal.fire({
+                  title: 'Usuario actualizado',
+                  text: 'Usuario actualizado con éxito.',
+                  showCancelButton: false,
+                  showConfirmButton: true,
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: 'pink',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    // El usuario hizo clic en "Aceptar"
+                  }
+                });
               });
-            });
             this.clearFields();
           } else {
           }
-
-        }else{
+        } else {
           Swal.fire({
             title: 'Error en contraseña actual',
             text: 'Favor verificar la contraseña actual',
@@ -184,10 +192,11 @@ export class PerfilUsuarioComponent implements OnInit {
           this.clearFields();
           return;
         }
-      }),(error:any) => {
-        console.error(error)
+      },
+      (error: any) => {
+        console.error(error);
       }
-    )
+    );
   }
 
   formSubmit() {
@@ -224,7 +233,6 @@ export class PerfilUsuarioComponent implements OnInit {
 
     this.userService.actualizarUsuario(this.user).subscribe(
       (response: any) => {
-
         Swal.fire({
           title: 'Usuario actualizado',
           text: 'Usuario actualizado con éxito.',
@@ -263,13 +271,28 @@ export class PerfilUsuarioComponent implements OnInit {
 
   task: Task = {
     name: 'Seleccionar todas',
-    value:'todas',
+    value: 'todas',
     completed: false,
     color: 'primary',
     subtasks: [
-      { name: 'Mensaje de texto SMS', value:"sms", completed: false, color: 'primary' },
-      { name: 'Mensaje de Whatsapp',value: "wapp", completed: false, color: 'primary' },
-      { name: 'Correo electrónico', value:"email", completed: false, color: 'primary' },
+      {
+        name: 'Mensaje de texto SMS',
+        value: 'sms',
+        completed: false,
+        color: 'primary',
+      },
+      {
+        name: 'Mensaje de Whatsapp',
+        value: 'wapp',
+        completed: false,
+        color: 'primary',
+      },
+      {
+        name: 'Correo electrónico',
+        value: 'email',
+        completed: false,
+        color: 'primary',
+      },
     ],
   };
 
@@ -321,77 +344,95 @@ export class PerfilUsuarioComponent implements OnInit {
     return subtask.completed;
   }
 
-  salvarOpciones():void {
-    if (!(this.task.subtasks) || this.task.subtasks[0].completed){
-      this.smsSelected = "true";
-    }else{
-      this.smsSelected = "false";
+  salvarOpciones(): void {
+    if (!this.task.subtasks || this.task.subtasks[0].completed) {
+      this.smsSelected = 'true';
+    } else {
+      this.smsSelected = 'false';
     }
-    if(!(this.task.subtasks) || this.task.subtasks[1].completed){
-      this.wappSelected = "true";
-    }else{
-      this.wappSelected = "false";
+    if (!this.task.subtasks || this.task.subtasks[1].completed) {
+      this.wappSelected = 'true';
+    } else {
+      this.wappSelected = 'false';
     }
-    if(!(this.task.subtasks) || this.task.subtasks[2].completed){
-      this.emailSelected = "true";
-    }else{
-      this.emailSelected = "false";
+    if (!this.task.subtasks || this.task.subtasks[2].completed) {
+      this.emailSelected = 'true';
+    } else {
+      this.emailSelected = 'false';
     }
 
-    this.prefBody = {emailId:this.user.email, sms: this.smsSelected, wapp: this.wappSelected, email: this.emailSelected}
+    this.prefBody = {
+      emailId: this.user.email,
+      sms: this.smsSelected,
+      wapp: this.wappSelected,
+      email: this.emailSelected,
+    };
 
     this.userService.addPreferencia(this.prefBody).subscribe(
-      (response:any) => {
-        console.log("userService.addPreferencia ",response)
-      },(error:any) => {
-        console.error("userService.addPreferencia ",error)
+      (response: any) => {
+        console.log('userService.addPreferencia ', response);
+      },
+      (error: any) => {
+        console.error('userService.addPreferencia ', error);
       }
-    )
-
+    );
   }
 
-  ////MEDICAMENTOS
-  medicamentos: Medicamento[] = [
-    {
-      nombre: 'krokodile',
-      administracion: 'inyeccion',
-      dosis: '1ml',
-      frecuencia: '2 veces por dia',
-    },
-    {
-      nombre: 'Aspirina',
-      administracion: 'Tableta',
-      dosis: '3mg',
-      frecuencia: '1 vez al dia',
-    },
-    {
-      nombre: 'Amoxicilina',
-      administracion: 'Líquido',
-      dosis: '10ml',
-      frecuencia: '1 vez al dia',
-    },
-    {
-      nombre: 'krokodile',
-      administracion: 'inyeccion',
-      dosis: '3ml',
-      frecuencia: '1 vez a la semana',
-    },
-    {
-      nombre: 'Loratadina',
-      administracion: 'Tableta',
-      dosis: '3mg',
-      frecuencia: '2 veces por dia',
-    },
-  ];
-
-  medicamentoSeleccionado: string = '';
-  dosis: string = '';
-  frecuancia: string = '';
+  formDosis: string = '';
+  formFrecuencia: string = '';
+  formName: string = '';
 
   printToConsole(event: any) {
     console.log(event.target.value);
   }
   onSeleccionMedicamento(event: any) {}
+  public medicine = {
+    name: '',
+    frecuencia: '',
+    dosis: '',
+  };
+  salvarMedicamento() {
+    this.medicine.name = this.formName;
+    this.medicine.frecuencia = this.formFrecuencia;
+    this.medicine.dosis = this.formDosis;
 
-  salvarMedicamento() {}
+    console.log(this.medicine);
+    this.medicineService.saveMedicine(this.medicine).subscribe(
+      (response: any) => {
+        Swal.fire({
+          title: 'Medicamento Agregado',
+          text: 'Medicamento Agregado con éxito.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+            this.formName = '';
+            this.formFrecuencia = '';
+            this.formDosis = '';
+          }
+        });
+      },
+      (error: any) => {
+        console.log('Error agregar medicamento', error);
+        if (error.status === 400) {
+          // Error de credenciales incorrectos (Código de respuesta 400)
+          this.snack.open(
+            'Este correo ya esta en uso, por favor utilice otro',
+            'Aceptar',
+            {
+              duration: 3000,
+            }
+          );
+        } else {
+          // Error del sistema u otro tipo de error
+          this.snack.open('Ha ocurrido un error en el sistema.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+      }
+    );
+  }
 }
