@@ -85,6 +85,9 @@ export class PerfilUsuarioComponent implements OnInit {
     this.user.email = this.user1.email;
     this.user.password = '';
     this.user.phone = this.user1.phone;
+
+
+    this.cargarPreferenciasActuales();
   }
 
   onEditar(clickEvent: any) {
@@ -330,15 +333,31 @@ export class PerfilUsuarioComponent implements OnInit {
 
   allComplete: boolean = false;
 
-  // opcionesChecked: any[] = [];
-  // opcionesSeleccionadas(opcion:any): void {
-  //   if(opcion.completed){
-  //     this.opcionesChecked.push(opcion);
-  //   }else{
-  //     this.opcionesChecked = this.opcionesChecked.filter(task => {task != opcion});
-  //   }
-  //   console.log('sselected ', this.opcionesChecked);
-  // }
+
+  cargarPreferenciasActuales(){
+    this.userService.getPreferenciasByEmail(this.user1.email).subscribe(
+      (response:any) => {
+        console.log("preferencias response", response)
+        this.task.subtasks?.forEach((task) => {
+          if(task.value === 'sms' && response.sms === 'true'){
+            task.completed = true;
+          }
+          if(task.value === 'wapp' && response.wapp === 'true'){
+            task.completed = true;
+          }
+          if(task.value === 'email' && response.email === 'true'){
+            task.completed = true;
+          }
+        })
+        console.log(this.task.subtasks);
+      }, (error) => {
+        console.error("error: ", error)
+      }
+    )
+  }
+
+  //cargarPreferenciasActuales();
+
 
   /*
   * updateAllComplete() es un método que calcula el valor de allComplete en función del estado de finalización de las subtareas:

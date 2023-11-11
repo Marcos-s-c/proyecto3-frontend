@@ -59,4 +59,8 @@ export class UserService {
       );
   }
 
+  public getPreferenciasByEmail(email:string){
+    return this.httpClient.get(`${baserUrl()}/rest/users/preferencias/${email}`, )
+  }
+
 }
