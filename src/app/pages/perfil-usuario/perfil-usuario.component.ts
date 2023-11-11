@@ -81,15 +81,19 @@ export class PerfilUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.user.name = this.user1.name;
-    this.user.surname = 'No esta implementado en backend';
+    this.user.surname = '';
     this.user.email = this.user1.email;
-    this.user.password = '*************';
+    this.user.password = '';
     this.user.phone = this.user1.phone;
   }
 
   onEditar(clickEvent: any) {
     this.editar = true;
     clickEvent.stopPropagation();
+  }
+
+  onEditarOff() {
+    this.editar = false;
   }
 
   onSalvarCambios(clickEvent: any) {
@@ -163,9 +167,25 @@ export class PerfilUsuarioComponent implements OnInit {
                   // El usuario hizo clic en "Aceptar"
                 }
               });
+              this.clearFields();
+              return;
             });
             this.clearFields();
           } else {
+            Swal.fire({
+              title: 'Contraseñas no concuerdan',
+              text: 'Verificar nueva contraseña en ambos campos.',
+              showCancelButton: false,
+              showConfirmButton: true,
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: 'pink',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // El usuario hizo clic en "Aceptar"
+              }
+            });
+            this.clearFields();
+            return;
           }
 
         }else{
@@ -190,21 +210,45 @@ export class PerfilUsuarioComponent implements OnInit {
     )
   }
 
-  formSubmit() {
+  formSubmit(clickEvent: any) {
+
     if (
       !this.user.name ||
-      !this.user.surname ||
       !this.user.email ||
-      !this.user.phone ||
-      !this.user.password
+      !this.user.phone
     ) {
-      this.snack.open(
-        'Todos los campos del formulario son obligatorios.',
-        'Aceptar',
-        {
-          duration: 3000,
+      Swal.fire({
+        title: 'Todos los campos son requeridos',
+        text: 'Favor digitar la información requerida',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
         }
-      );
+      });
+      this.clearFields();
+      return;
+    }
+
+    if (
+      this.user.name === this.user1.name && this.user.email === this.user1.email && this.user.phone === this.user1.phone
+    ) {
+      Swal.fire({
+        title: 'Valores iguales',
+        text: 'Favor actualizar información',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+      this.clearFields();
       return;
     }
 
@@ -212,13 +256,19 @@ export class PerfilUsuarioComponent implements OnInit {
     const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
 
     if (!emailRegex.test(this.user.email)) {
-      this.snack.open(
-        'El email no es válido. Ingresa un correo válido.',
-        'Aceptar',
-        {
-          duration: 3000,
+      Swal.fire({
+        title: 'Error con el correo electrónico',
+        text: 'Correo electrónico debe estar en formato de correo',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
         }
-      );
+      });
+      this.clearFields();
       return;
     }
 
@@ -237,6 +287,11 @@ export class PerfilUsuarioComponent implements OnInit {
             // El usuario hizo clic en "Aceptar"
           }
         });
+        this.user1.name = this.user.name;
+        this.user1.email = this.user.email;
+        this.user1.phone = this.user.phone;
+        this.onEditarOff()
+        return;
       },
       (error: any) => {
         console.log('Error actualizar', error);
