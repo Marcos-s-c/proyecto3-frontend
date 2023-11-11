@@ -27,4 +27,21 @@ export class DataService {
       `${baserUrl()}/rest/period-criteria/getPeriodCriteriaByUser`
     );
   }
+
+  public getAveragePeriod() {
+    return this.http.get(
+        `${baserUrl()}/rest/period-criteria/periodDuration`
+    );
+  }
+
+  public getNextPeriodDate() {
+    return this.http.get(
+        `${baserUrl()}/rest/period-criteria/nextPeriodDate`
+    );
+  }
+  public getAverageVariationCycle() {
+    return this.http.get(
+        `${baserUrl()}/rest/period-criteria/averageVariationCycle`
+    );
+  }
 }

@@ -1,0 +1,27 @@
+<div fxLayout="row wrap" fxLayoutGap="10px"></div>
+<div *ngFor="let post of posts" class="card-container">
+  <mat-card class="post-card">
+    <img mat-card-image [src]="post.imageUrl" alt="Post Image" />
+    <mat-card-content>
+      <h2>{{ post.subject }}</h2>
+      <p>{{ post.content }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <!-- Dentro de tu plantilla HTML -->
+      <button
+        mat-icon-button
+        (click)="toggleLike(post)"
+        [class.active]="post.active"
+      >
+        <mat-icon>{{ post.liked ? "favorite" : "favorite_border" }}</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="openPost(post)">
+        <mat-icon>open_in_new</mat-icon>
+      </button>
+      <span class="time-reading"
+        >Tiempo de lectura: {{ calculateReadingTime(post.content) }} min</span
+      >
+    </mat-card-actions>
+  </mat-card>
+</div>
