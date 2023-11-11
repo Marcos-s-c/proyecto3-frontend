@@ -108,18 +108,18 @@
         <h2>Password Reset</h2>
         <form (ngSubmit)="resetPassword()">
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Current Password</mat-label>
+            <mat-label>Contraseña actual</mat-label>
             <input
               type="password"
               [(ngModel)]="currentPassword"
               name="currentPassword"
               matInput
-              placeholder="Enter current password"
+              placeholder="Digite la contraseña actual"
               required
             />
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label>New Password</mat-label>
+            <mat-label>Nueva contraseña</mat-label>
             <input
               type="password"
               [(ngModel)]="newPassword"
@@ -127,10 +127,11 @@
               matInput
               placeholder="Enter new password"
               required
+
             />
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Confirm New Password</mat-label>
+            <mat-label>Confirmar nueva contraseña</mat-label>
             <input
               type="password"
               [(ngModel)]="confirmPassword"
@@ -141,7 +142,7 @@
             />
           </mat-form-field>
           <div class="button-container">
-            <button type="submit" class="custom-button">Reset Password</button>
+            <button type="submit" class="custom-button">Reestablecer contraseña</button>
           </div>
         </form>
       </div>

@@ -13,6 +13,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { LoginService } from '../../services/login.service';
+import {ResetContraRequestBody} from "../../interface/ResetContraRequestBody";
 
 export interface Task {
   name: string;
@@ -56,6 +57,7 @@ export interface User {
 })
 export class PerfilUsuarioComponent implements OnInit {
   public editar: boolean = false;
+  public body?: ResetContraRequestBody;
 
   public user = {
     name: '',
@@ -75,9 +77,7 @@ export class PerfilUsuarioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.loginService.getUser());
     this.user.name = this.user1.name;
-    this.user.surname = 'No esta implementado en backend';
     this.user.surname = 'No esta implementado en backend';
     this.user.email = this.user1.email;
     this.user.password = '*************';
@@ -106,30 +106,85 @@ export class PerfilUsuarioComponent implements OnInit {
 
   //REESTABLECER CONTRASENA
 
+  currenPasswordMatch:boolean = false;
+
+  clearFields():void{
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+  }
+
+  confirmaContraActual(event:any){
+    this.body = {string:this.currentPassword, email:this.user.email}
+  }
+
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
   resetPassword() {
-    if (this.newPassword === this.confirmPassword) {
-      this.user.password = this.confirmPassword;
-      console.log(this.user);
-      this.userService.actualizarUsuario(this.user).subscribe((response) => {
-        console.log(response);
-        Swal.fire({
-          title: 'Usuario actualizado',
-          text: 'Usuario actualizado con éxito.',
-          showCancelButton: false,
-          showConfirmButton: true,
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: 'pink',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // El usuario hizo clic en "Aceptar"
-          }
-        });
+    this.body = {string:this.currentPassword, email:this.user.email}
+
+    if (this.newPassword === "" || this.newPassword === null || this.confirmPassword === "" || this.confirmPassword === null || this.currentPassword === "" || this.currentPassword === null){
+      Swal.fire({
+        title: 'Todos los campos son requeridos',
+        text: 'Favor digitar la información requerida',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
       });
-    } else {
+      this.clearFields();
+      return;
     }
+
+    this.userService.compara(this.body).subscribe(
+      ((response: any) => {
+        if (response){
+
+          if (this.newPassword === this.confirmPassword) {
+            this.user.password = this.confirmPassword;
+            this.userService.actualizarUsuario(this.user).subscribe((response) => {
+              Swal.fire({
+                title: 'Usuario actualizado',
+                text: 'Usuario actualizado con éxito.',
+                showCancelButton: false,
+                showConfirmButton: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'pink',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  // El usuario hizo clic en "Aceptar"
+                }
+              });
+            });
+            this.clearFields();
+          } else {
+          }
+
+        }else{
+          Swal.fire({
+            title: 'Error en contraseña actual',
+            text: 'Favor verificar la contraseña actual',
+            showCancelButton: false,
+            showConfirmButton: true,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: 'pink',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // El usuario hizo clic en "Aceptar"
+            }
+          });
+          this.clearFields();
+          return;
+        }
+      }),(error:any) => {
+        console.error(error)
+      }
+    )
   }
 
   formSubmit() {
@@ -166,7 +221,6 @@ export class PerfilUsuarioComponent implements OnInit {
 
     this.userService.actualizarUsuario(this.user).subscribe(
       (response: any) => {
-        console.log(response);
 
         Swal.fire({
           title: 'Usuario actualizado',

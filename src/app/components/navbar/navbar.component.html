@@ -118,13 +118,12 @@
       Cerrar sesión
     </a>
     <button
-      *ngIf="user"
       mat-button
       style="margin-right: 10px"
       class="example-icon favorite-icon"
       aria-label="Example icon-button with heart icon"
     >
-      {{ user.username }}
+    <a [routerLink]="'/perfil'">{{ user.username || 'Perfil'}}</a>
     </button>
     <button
       type="button"
