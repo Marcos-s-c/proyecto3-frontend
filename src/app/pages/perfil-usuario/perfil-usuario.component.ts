@@ -14,9 +14,12 @@ import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { LoginService } from '../../services/login.service';
 import {ResetContraRequestBody} from "../../interface/ResetContraRequestBody";
+import {PreferenciasPostBody} from "../../interface/PreferenciasPostBody";
+import {getXHRResponse} from "rxjs/internal/ajax/getXHRResponse";
 
 export interface Task {
   name: string;
+  value: string;
   completed: boolean;
   color: ThemePalette;
   subtasks?: Task[];
@@ -260,16 +263,27 @@ export class PerfilUsuarioComponent implements OnInit {
 
   task: Task = {
     name: 'Seleccionar todas',
+    value:'todas',
     completed: false,
     color: 'primary',
     subtasks: [
-      { name: 'Mensaje de texto SMS', completed: false, color: 'primary' },
-      { name: 'Mensaje de Whatsapp', completed: false, color: 'primary' },
-      { name: 'Correo electrónico', completed: false, color: 'primary' },
+      { name: 'Mensaje de texto SMS', value:"sms", completed: false, color: 'primary' },
+      { name: 'Mensaje de Whatsapp',value: "wapp", completed: false, color: 'primary' },
+      { name: 'Correo electrónico', value:"email", completed: false, color: 'primary' },
     ],
   };
 
   allComplete: boolean = false;
+
+  // opcionesChecked: any[] = [];
+  // opcionesSeleccionadas(opcion:any): void {
+  //   if(opcion.completed){
+  //     this.opcionesChecked.push(opcion);
+  //   }else{
+  //     this.opcionesChecked = this.opcionesChecked.filter(task => {task != opcion});
+  //   }
+  //   console.log('sselected ', this.opcionesChecked);
+  // }
 
   /*
   * updateAllComplete() es un método que calcula el valor de allComplete en función del estado de finalización de las subtareas:
@@ -297,6 +311,43 @@ export class PerfilUsuarioComponent implements OnInit {
       return;
     }
     this.task.subtasks.forEach((task) => (task.completed = completed));
+  }
+
+  wappSelected: string = 'false';
+  smsSelected: string = 'false';
+  emailSelected: string = 'false';
+  prefBody: PreferenciasPostBody;
+  isOptionSelected(subtask: any): boolean {
+    return subtask.completed;
+  }
+
+  salvarOpciones():void {
+    if (!(this.task.subtasks) || this.task.subtasks[0].completed){
+      this.smsSelected = "true";
+    }else{
+      this.smsSelected = "false";
+    }
+    if(!(this.task.subtasks) || this.task.subtasks[1].completed){
+      this.wappSelected = "true";
+    }else{
+      this.wappSelected = "false";
+    }
+    if(!(this.task.subtasks) || this.task.subtasks[2].completed){
+      this.emailSelected = "true";
+    }else{
+      this.emailSelected = "false";
+    }
+
+    this.prefBody = {emailId:this.user.email, sms: this.smsSelected, wapp: this.wappSelected, email: this.emailSelected}
+
+    this.userService.addPreferencia(this.prefBody).subscribe(
+      (response:any) => {
+        console.log("userService.addPreferencia ",response)
+      },(error:any) => {
+        console.error("userService.addPreferencia ",error)
+      }
+    )
+
   }
 
   ////MEDICAMENTOS

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import {baserUrl} from './helper';
 import {User} from "../pages/perfil-usuario/perfil-usuario.component";
 import {ResetContraRequestBody} from "../interface/ResetContraRequestBody";
+import {PreferenciasPostBody} from "../interface/PreferenciasPostBody";
+import {tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +49,14 @@ export class UserService {
   public compara(body: ResetContraRequestBody):any{
     return this.httpClient.post(`${baserUrl()}/rest/users/concordar`, body)
 }
+
+  public addPreferencia(prefBody: PreferenciasPostBody):any{
+    console.log(prefBody)
+    return this.httpClient.post(`${baserUrl()}/rest/users/preferencias`, prefBody)
+      .pipe(
+        tap(response => console.log('Response:', response)),
+        tap(null, error => console.error('Error:', error))
+      );
+  }
 
 }

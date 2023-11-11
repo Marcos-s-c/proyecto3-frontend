@@ -175,10 +175,12 @@
             <ul>
               <li *ngFor="let subtask of task.subtasks">
                 <mat-checkbox
+                  [value]="subtask.value"
                   [(ngModel)]="subtask.completed"
                   [color]="subtask.color"
                   (ngModelChange)="updateAllComplete()"
                   class="notificaciones"
+                  [checked]="isOptionSelected(subtask)"
                 >
                   {{ subtask.name }}
                 </mat-checkbox>
@@ -186,6 +188,7 @@
             </ul>
           </span>
         </section>
+        <button (click)="salvarOpciones()" type="submit" class="custom-button">Actualizar preferencias</button>
       </div>
     </div>
   </mat-tab>
