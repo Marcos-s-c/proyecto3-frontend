@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/dataService.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { NotificationDataService } from 'src/app/services/notificationDataService';
 
 export type DataObject = {
   fieldName: string;
@@ -32,7 +33,7 @@ export class UserDashboardComponent implements OnInit {
   painType!: String | null;
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
-  constructor(private dataService:DataService, private _snackBar: MatSnackBar) {}
+  constructor(private dataService:DataService, private _snackBar: MatSnackBar, private notificationDataService : NotificationDataService) {}
 
   ngOnInit(): void {
     const today = new Date();
@@ -76,6 +77,7 @@ export class UserDashboardComponent implements OnInit {
           (data:any) => {
             this._snackBar.open(data.Message,undefined,{duration: 5 * 1000});
             this.dataArrayList = [];
+            this.notificationDataService.getNotifications();
           },(error:any) => {
             if(error.error.Message){
               this._snackBar.open(error.error.Message,undefined,{ duration: 5 * 1000});

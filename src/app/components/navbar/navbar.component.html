@@ -141,8 +141,8 @@
     >
       <mat-icon
         [ngStyle]="{ color: '#df5583' }"
-        matBadge="1"
-        [matBadgeHidden]="visibility"
+        [matBadge]="getUnreadNotifications"
+        [matBadgeHidden]="getUnreadNotifications == 0"
         matBadgeColor="accent"
         >notifications</mat-icon
       >
