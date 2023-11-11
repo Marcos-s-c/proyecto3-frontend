@@ -37,6 +37,7 @@ export class UserDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     const today = new Date();
+    const notEnoughData = false;
     today.setHours(today.getHours() - 6);
     this.setFormValues(today.toISOString().split('T')[0]);
     this.dataService.getAveragePeriod().subscribe(
@@ -44,6 +45,7 @@ export class UserDashboardComponent implements OnInit {
           console.log("periodaverage", data);
         }
     );
+
     this.dataService.getNextPeriodDate().subscribe(
         (data:any) =>{
           console.log(data);
@@ -52,6 +54,11 @@ export class UserDashboardComponent implements OnInit {
     this.dataService.getAverageVariationCycle().subscribe(
         (data:any) =>{
           console.log("variationCycle",data);
+        }
+    );
+    this.dataService.getFertileDays().subscribe(
+        (data:any) =>{
+          console.log("fertileDays",data);
         }
     );
   }
