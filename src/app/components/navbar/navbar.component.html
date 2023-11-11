@@ -14,6 +14,7 @@
       >Venus</a
     >
   </span>
+
   <ng-container
     *ngIf="
       isLoggedIn &&
@@ -78,6 +79,7 @@
     </button>
   </ng-container>
   <!-- Mostrar diferentes opciones según la URL y el estado de inicio de sesión -->
+
   <ng-container
     *ngIf="
       isLoggedIn &&
@@ -105,6 +107,14 @@
     >
       Calendario
     </a>
+    <a
+      [routerLink]="'/community/publication-posts'"
+      mat-icon-button
+      class="example-icon favorite-icon mr20 ml70"
+      aria-label="Example icon-button with heart icon"
+    >
+      Publicaciones
+    </a>
     <span class="example-spacer"></span>
     <a
       (click)="logout()"
@@ -123,6 +133,19 @@
       aria-label="Example icon-button with heart icon"
     >
       {{ user.username }}
+    </button>
+    <button
+      type="button"
+      (click)="openDialog()"
+      (click)="notificationsVisibility()"
+    >
+      <mat-icon
+        [ngStyle]="{ color: '#df5583' }"
+        matBadge="1"
+        [matBadgeHidden]="visibility"
+        matBadgeColor="accent"
+        >notifications</mat-icon
+      >
     </button>
   </ng-container>
 
