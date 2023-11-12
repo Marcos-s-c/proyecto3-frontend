@@ -201,8 +201,10 @@
           <ng-template matStepLabel>Medicamentos</ng-template>
           <section class="example-section">
             <h4>Seleccione sus medicamentos:</h4>
-            <p>
-              <mat-checkbox>Medicamento ejemplo</mat-checkbox>
+            <p *ngFor="let medication of medications">
+              <mat-checkbox>
+                {{ medication.name }}
+              </mat-checkbox>
             </p>
           </section>
         </mat-step>

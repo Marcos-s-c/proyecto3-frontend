@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/dataService.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MedicineService } from 'src/app/services/medicine.service';
 import { NotificationDataService } from 'src/app/services/notificationDataService';
 
 
@@ -14,7 +15,7 @@ export type DataObject = {
 @Component({
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.component.html',
-  styleUrls: ['./user-dashboard.component.css'],
+  styleUrls: ['./user-dashboard.component.scss'],
 })
 export class UserDashboardComponent implements OnInit {
   date!: any;
@@ -213,11 +214,11 @@ export class UserDashboardComponent implements OnInit {
   panelOpenState:boolean = true;
   constructor(
     private dataService: DataService,
-    private _snackBar: MatSnackBar
-  , private notificationDataService : NotificationDataService) {}
+    private _snackBar: MatSnackBar, 
+    private notificationDataService : NotificationDataService,    
+    private medicineService: MedicineService) {}
 
   ngOnInit():void {
-  
     const today = new Date();
     today.setHours(today.getHours() - 6);
     this.setFormValues(today.toISOString().split('T')[0]);
@@ -228,22 +229,21 @@ export class UserDashboardComponent implements OnInit {
         console.log("periodaverage", data);
       }
   );
-
-  this.dataService.getNextPeriodDate().subscribe(
-      (data:any) =>{
-        console.log(data);
-      }
-  );
-  this.dataService.getAverageVariationCycle().subscribe(
-      (data:any) =>{
-        console.log("variationCycle",data);
-      }
-  );
+    this.dataService.getAveragePeriod().subscribe((data: any) => {
+      console.log('periodaverage', data);
+    });
+    this.dataService.getNextPeriodDate().subscribe((data: any) => {
+      console.log(data);
+    });
+    this.dataService.getAverageVariationCycle().subscribe((data: any) => {
+      console.log('variationCycle', data);
+    });
+    this.fetchMedications();
   this.dataService.getFertileDays().subscribe(
       (data:any) =>{
         console.log("fertileDays",data);
       })
-    }
+  }
 
   getChartsData() {
     this.loading = true;
@@ -316,36 +316,105 @@ export class UserDashboardComponent implements OnInit {
     }
   createDataArrayList() {
     //define date
-    if(this.date == undefined) this.date = new Date();
-    if(this.periodAmount)this.dataArrayList.push({ fieldName:"periodAmount", value: this.periodAmount?.toString(),  date: this.date });
-    if(this.periodColor)this.dataArrayList.push({ fieldName:"periodColor", value: this.periodColor?.toString(),  date: this.date });
-    if(this.fluidAmount)this.dataArrayList.push({ fieldName:"fluidAmount", value: this.fluidAmount?.toString(),  date: this.date });
-    if(this.fluidColor)this.dataArrayList.push({ fieldName:"fluidColor", value: this.fluidColor?.toString(),  date: this.date});
-    if(this.emotionalState)this.dataArrayList.push({ fieldName:"emotionalState", value: this.emotionalState?.toString(), date: this.date});
-    if(this.physicalState)this.dataArrayList.push({ fieldName:"physicalState", value: this.physicalState?.toString(),  date: this.date });
-    if(this.sleepHours)this.dataArrayList.push({ fieldName:"sleepHours", value: this.sleepHours?.toString(),  date: this.date});
-    if(this.temperature)this.dataArrayList.push({ fieldName:"temperature", value: this.temperature?.toString(),  date: this.date});
-    if(this.sexTimes)this.dataArrayList.push({ fieldName:"sexTimes", value: this.sexTimes?.toString(), date: this.date});
-    if(this.painType)this.dataArrayList.push({ fieldName:"painType", value: this.painType?.toString(), date: this.date});
-    if(this.emotionType)this.dataArrayList.push({ fieldName:"emotionType", value: this.emotionType?.toString(), date: this.date});
+    if (this.date == undefined) this.date = new Date();
+    if (this.periodCycle)
+      this.dataArrayList.push({
+        fieldName: 'periodCycle',
+        value: this.periodCycle?.toString(),
+        date: this.date,
+      });
+    if (this.periodAmount)
+      this.dataArrayList.push({
+        fieldName: 'periodAmount',
+        value: this.periodAmount?.toString(),
+        date: this.date,
+      });
+    if (this.periodColor)
+      this.dataArrayList.push({
+        fieldName: 'periodColor',
+        value: this.periodColor?.toString(),
+        date: this.date,
+      });
+    if (this.fluidAmount)
+      this.dataArrayList.push({
+        fieldName: 'fluidAmount',
+        value: this.fluidAmount?.toString(),
+        date: this.date,
+      });
+    if (this.fluidColor)
+      this.dataArrayList.push({
+        fieldName: 'fluidColor',
+        value: this.fluidColor?.toString(),
+        date: this.date,
+      });
+    if (this.emotionalState)
+      this.dataArrayList.push({
+        fieldName: 'emotionalState',
+        value: this.emotionalState?.toString(),
+        date: this.date,
+      });
+    if (this.physicalState)
+      this.dataArrayList.push({
+        fieldName: 'physicalState',
+        value: this.physicalState?.toString(),
+        date: this.date,
+      });
+    if (this.sleepHours)
+      this.dataArrayList.push({
+        fieldName: 'sleepHours',
+        value: this.sleepHours?.toString(),
+        date: this.date,
+      });
+    if (this.temperature)
+      this.dataArrayList.push({
+        fieldName: 'temperature',
+        value: this.temperature?.toString(),
+        date: this.date,
+      });
+    if (this.sexTimes)
+      this.dataArrayList.push({
+        fieldName: 'sexTimes',
+        value: this.sexTimes?.toString(),
+        date: this.date,
+      });
+    if (this.painType)
+      this.dataArrayList.push({
+        fieldName: 'painType',
+        value: this.painType?.toString(),
+        date: this.date,
+      });
+    if (this.emotionType)
+      this.dataArrayList.push({
+        fieldName: 'emotionType',
+        value: this.emotionType?.toString(),
+        date: this.date,
+      });
 
-    if(this.dataArrayList.length > 0){
+    if (this.dataArrayList.length > 0) {
       this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
-          (data:any) => {
-            this._snackBar.open(data.Message,undefined,{duration: 5 * 1000});
-            this.dataArrayList = [];
-            this.notificationDataService.getNotifications();
-          },(error:any) => {
-            if(error.error.Message){
-              this._snackBar.open(error.error.Message,undefined,{ duration: 5 * 1000});
-            }else{
-              this._snackBar.open("Ocurrió un problema al guardar sus datos.",undefined,{ duration: 5 * 1000});
-            }
-            this.dataArrayList = [];
+        (data: any) => {
+          this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
+          this.dataArrayList = [];
+        },
+        (error: any) => {
+          if (error.error.Message) {
+            this._snackBar.open(error.error.Message, undefined, {
+              duration: 5 * 1000,
+            });
+          } else {
+            this._snackBar.open(
+              'Ocurrió un problema al guardar sus datos.',
+              undefined,
+              { duration: 5 * 1000 }
+            );
           }
-      )
-    }else{
-      this._snackBar.open("No hay datos por enviar.",undefined,{ duration: 5 * 1000});
+          this.dataArrayList = [];
+        }
+      );
+    } else {
+      this._snackBar.open('No hay datos por enviar.', undefined, {
+        duration: 5 * 1000,
+      });
     }
   }
 
@@ -353,12 +422,14 @@ export class UserDashboardComponent implements OnInit {
     this.openedForm = false;
   }
 
- 
-
-  send(): number { 
-    if(!this.isDateBeforeToday(this.date)){
-      this._snackBar.open("No se pueden enviar datos en días posteriores al actual",undefined,{duration: 5 * 1000});
-     return 0;
+  send(): number {
+    if (!this.isDateBeforeToday(this.date)) {
+      this._snackBar.open(
+        'No se pueden enviar datos en días posteriores al actual.',
+        undefined,
+        { duration: 5 * 1000 }
+      );
+      return 0;
     }
     this.createDataArrayList();
     this.closeForm();
@@ -374,8 +445,7 @@ export class UserDashboardComponent implements OnInit {
 
   onDateChange(event: any): void {
     this.clearValues();
-    if(event.target.value)this.setFormValues(event.target.value);
-    
+    if (event.target.value) this.setFormValues(event.target.value);
   }
 
   setFormValues(date: string) {
@@ -422,20 +492,31 @@ export class UserDashboardComponent implements OnInit {
     });
   }
 
-  clearValues(){
-        this.periodAmount = null;
-        this.periodColor = null;
-        this.fluidAmount = null;
-        this.fluidColor = null;
-        this.emotionalState = null;
-        this.physicalState = null;
-        this.sleepHours = null;
-        this.temperature = null;
-        this.sexTimes = null;
-        this.emotionType = null;
-        this.painType = null;
-        this.periodCycle = null;
+  clearValues() {
+    this.periodAmount = null;
+    this.periodColor = null;
+    this.fluidAmount = null;
+    this.fluidColor = null;
+    this.emotionalState = null;
+    this.physicalState = null;
+    this.sleepHours = null;
+    this.temperature = null;
+    this.sexTimes = null;
+    this.emotionType = null;
+    this.painType = null;
+    this.periodCycle = null;
   }
-
-
+  medications: any[] = [];
+  fetchMedications() {
+    console.log(this.medications);
+    this.medicineService.getMedicines(this.medications).subscribe(
+      (medications: any) => {
+        this.medications = medications;
+        console.log('after', this.medications);
+      },
+      (error: any) => {
+        console.error('Error fetching medications:', error);
+      }
+    );
+  }
 }
