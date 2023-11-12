@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@carbon/charts/styles.css';
+@import "@carbon/charts/styles.css";
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -89,3 +89,14 @@ body {
 
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+.cal-month-view .cal-event {
+  background-color: transparent !important;
+  border-color: black;
+  color: #fff;
+}
+
+.cal-month-view .cal-day-badge {
+  background-color: #df5583;
+  color: #fff;
+}
