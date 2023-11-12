@@ -58,12 +58,12 @@
               </mat-option>
               <mat-option value="rojo palido">
                 <div class="color-example rojo-palido">Rojo pálido</div>
-              </mat-option> 
+              </mat-option>
               <mat-option value="Otro">
               <div>Otro Color</div>
               </mat-option>
             </mat-select>
-           
+
           </mat-form-field>
         </mat-step>
         <mat-step>
@@ -108,7 +108,7 @@
               <mat-option value="Otro">
                 <div>Otro Color</div>
                 </mat-option>
-      
+
             </mat-select>
           </mat-form-field>
         </mat-step>
@@ -225,38 +225,40 @@
     <mat-drawer-content>
       <div style="display: flex; width: 100%; align-content: center; justify-content: center;">
         <div style="width: 20%; align-items: end;">
+            <mat-card class="data-card">
+              <mat-card-content>
+                <h2>
+                  Duración promedio de menstruación
+                </h2>
+                <div class="divider"></div>
+                <p>{{periodAverageDuration}}</p>
+              </mat-card-content>
+            </mat-card>
+            <mat-card class="data-card">
+              <mat-card-content>
+                <h2>
+                  Variación promedio del ciclo femenino
+                </h2>
+                <div class="divider"></div>
+                <p>{{averagePeriodVariation}}</p>
+              </mat-card-content>
+            </mat-card>
           <mat-card class="data-card">
             <mat-card-content>
-              <h2>Inicio de Proxima Menstruación</h2>
+              <h2>Inicio de próxima menstruación</h2>
               <div class="divider"></div>
-              <p>01/01/2024</p>
+              <p *ngIf="nextPeriod">{{nextPeriod | date }}</p>
+              <p *ngIf="!nextPeriod"> No hay suficientes datos.</p>
             </mat-card-content>
           </mat-card>
           <mat-card class="data-card">
             <mat-card-content>
               <h2>
-                Finalizacion de proxima Menstruación
+                Próximos posibles días fértiles
               </h2>
               <div class="divider"></div>
-              <p>01/01/2024</p>
-            </mat-card-content>
-          </mat-card>
-          <mat-card class="data-card">
-            <mat-card-content>
-              <h2>
-                Duracion Promedio de Menstruación
-              </h2>
-              <div class="divider"></div>
-              <p>6-7 Dias</p>
-            </mat-card-content>
-          </mat-card>
-          <mat-card class="data-card">
-            <mat-card-content>
-              <h2>
-                Variacion Promedio de Menstruación
-              </h2>
-              <div class="divider"></div>
-              <p>5 Dias</p>
+              <p *ngIf="firstFertileDay">{{firstFertileDay | date}} - {{lastFertileDay | date}} </p>
+              <p *ngIf="noFertileDays">{{noFertileDays}} </p>
             </mat-card-content>
           </mat-card>
         </div>
@@ -283,7 +285,7 @@
             <mat-expansion-panel [expanded]="true"  style="justify-content: center;"  (opened)="panelOpenState == true" (closed)="panelOpenState == false">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  Estado Fisico
+                  Estado físico
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <ibm-radar-chart *ngIf="!loading" [data]="dataRadarPain" [options]="optionsRadar"></ibm-radar-chart>
@@ -291,7 +293,7 @@
             <mat-expansion-panel (opened)="panelOpenState ==  false" (closed)="panelOpenState == true">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  Estado Emocional
+                  Estado emocional
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <ibm-radar-chart *ngIf="!loading" [data]="dataRadarEmotion" [options]="optionsRadar"></ibm-radar-chart>
@@ -300,7 +302,7 @@
         </div>
       </div>
       <button
-      style="position: fixed; width: 60px; height: 60px; color: white; font-size: 40px; background-color: #f25287; border-radius: 50%; bottom: 20px; right: 20px;"
+      style="position: fixed; width: 60px; height: 60px; color: white; font-size: 40px; background-color: #f25287; border-radius: 50%; bottom: 20px; right: 60px;"
       mat-raised-button (click)="drawer.toggle()">+</button>
     </mat-drawer-content>
   </mat-drawer-container>
