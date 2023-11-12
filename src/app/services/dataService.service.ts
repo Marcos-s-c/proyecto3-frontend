@@ -7,7 +7,8 @@ import { DataObject } from '../pages/user/user-dashboard/user-dashboard.componen
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,) { }
+ 
 
   public addPeriodCriteriaList(dataArrayList: Array<DataObject>){
     return this.http.post(`${baserUrl()}/rest/period-criteria/create`, dataArrayList);
@@ -15,6 +16,9 @@ export class DataService {
 
   public getExistingData(today:string){
     return this.http.get(`${baserUrl()}/rest/period-criteria/getPeriodCriteriaByDate?date=${today}`);
+  }
+  public getPeriodCritiriaLastMonth(){
+    return this.http.get(`${baserUrl()}/rest/period-criteria/getPeriodCriteriaLastMonth`);
   }
 }
 

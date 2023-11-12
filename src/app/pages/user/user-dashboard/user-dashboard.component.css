@@ -53,3 +53,19 @@
 .rojo-palido{
   background-color: lightcoral;
 }
+.data-card{
+  padding: 10px;
+  margin: 40px;
+}
+
+
+.divider{
+width: 120px;
+background-color: gray;
+height: 1px;
+}
+
+.data-card p{
+  padding-top: 23px;
+  font-size: large;
+}

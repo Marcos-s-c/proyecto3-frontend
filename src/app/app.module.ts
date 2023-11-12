@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +22,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { authInterceptorProviders } from './services/auth.interceptor';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
-
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DialogPasswordResetComponent } from './pages/login/dialog-password-reset/dialog-password-reset.component';
 import { register } from 'swiper/element/bundle';
@@ -39,7 +38,9 @@ import {FormBuilder} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBar} from '@angular/material/snack-bar';
-
+import { ChartsModule } from '@carbon/charts-angular'
+import {Component} from '@angular/core';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     DialogPasswordResetComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -82,6 +84,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatSliderModule,
     ReactiveFormsModule,
     MatCheckboxModule, 
+    ChartsModule,
+    MatExpansionModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
