@@ -216,7 +216,7 @@ export class UserDashboardComponent implements OnInit {
     private _snackBar: MatSnackBar
   , private notificationDataService : NotificationDataService) {}
 
-  async ngOnInit():Primise<void> {
+  ngOnInit():void {
   
     const today = new Date();
     today.setHours(today.getHours() - 6);
@@ -242,8 +242,8 @@ export class UserDashboardComponent implements OnInit {
   this.dataService.getFertileDays().subscribe(
       (data:any) =>{
         console.log("fertileDays",data);
-      }
-  }
+      })
+    }
 
   getChartsData() {
     this.loading = true;
