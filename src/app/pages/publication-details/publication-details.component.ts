@@ -53,8 +53,9 @@ export class PublicationDetailsComponent implements OnInit {
         }),
         //.then(response => this.router.navigate(['/community/publication-details'])),
         error: (error) => {
+        console.log(error)
         Swal.fire({
-          title: 'Creación del post',
+          title: 'Error',
           text: error.error.message,
           showCancelButton: false,
           showConfirmButton: true,
@@ -65,7 +66,7 @@ export class PublicationDetailsComponent implements OnInit {
     })
   }else{
     Swal.fire({
-      title: 'Creación del post',
+      title: 'Validación',
       text: 'La imagen es requerida para el post',
       showCancelButton: false,
       showConfirmButton: true,

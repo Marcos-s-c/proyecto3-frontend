@@ -131,7 +131,7 @@
       class="example-icon favorite-icon"
       aria-label="Example icon-button with heart icon"
     >
-    <a [routerLink]="'/perfil'">{{ user.username || 'Perfil'}}</a>
+    <a [routerLink]="'/perfil'">{{ user.email || 'Perfil'}}</a>
     </button>
     <button
       type="button"
@@ -140,8 +140,8 @@
     >
       <mat-icon
         [ngStyle]="{ color: '#df5583' }"
-        matBadge="1"
-        [matBadgeHidden]="visibility"
+        [matBadge]="getUnreadNotifications"
+        [matBadgeHidden]="getUnreadNotifications == 0"
         matBadgeColor="accent"
         >notifications</mat-icon
       >

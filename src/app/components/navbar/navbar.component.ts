@@ -3,6 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { LoginService } from './../../services/login.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationsComponent } from '../notifications/notifications.component';
+import { NotificationDataService } from 'src/app/services/notificationDataService';
+import { NotificationService } from 'src/app/services/notifications.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -17,7 +19,9 @@ export class NavbarComponent implements OnInit {
   constructor(
     public login: LoginService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public notificationDataService : NotificationDataService,
+    private notificationService : NotificationService
   ) {
     // Suscríbete al evento NavigationEnd para obtener la URL una vez que la navegación se completa
     this.router.events.subscribe((event) => {
@@ -30,13 +34,14 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn = this.login.isLoggedIn();
     this.user = this.login.getUser();
+    this.notificationDataService.getNotifications();
     this.login.loginStatusSubjec.asObservable().subscribe((data) => {
       this.user = this.login.getUser();
     });
   }
 
   notificationsVisibility() {
-    this.visibility = true;
+    this.notificationService.readAllNotifications().subscribe(data => this.notificationDataService.getNotifications());
   }
 
   public logout() {
@@ -51,5 +56,9 @@ export class NavbarComponent implements OnInit {
       width: '500px',
       position: { right: '1px', top: '63px' },
     });
+  }
+
+  get getUnreadNotifications():number{
+    return this.notificationDataService.notifications.filter(notification => !notification.open).length;
   }
 }

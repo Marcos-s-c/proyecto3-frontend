@@ -44,4 +44,10 @@ export class DataService {
         `${baserUrl()}/rest/period-criteria/averageVariationCycle`
     );
   }
+
+  public getFertileDays() {
+    return this.http.get(
+        `${baserUrl()}/rest/period-criteria/fertileDays`
+    );
+  }
 }
