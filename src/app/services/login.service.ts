@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { baserUrl } from './helper';
+import { User } from '../pages/perfil-usuario/perfil-usuario.component';
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +58,17 @@ export class LoginService {
       return JSON.parse(userStr);
     } else {
       this.logout();
-      return null;
+      return JSON.parse(<string>{});
+    }
+  }
+
+  public getEmailUsuario(): string {
+    let userStr = localStorage.getItem('user');
+    if (userStr != null) {
+      return userStr;
+    } else {
+      this.logout();
+      return '-1';
     }
   }
 

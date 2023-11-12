@@ -65,9 +65,8 @@ export class LoginComponent implements OnInit {
       (response: any) => {
         this.loginService.loginUser(response.token);
         this.loginService.setUser(response.user);
-        console.log(this.loginService.getUserRole());
 
-        if (this.loginService.getUserRole() == 'ROLE_ADMIN') {
+        if (this.loginService.getUserRole() == 'ADMIN') {
           //dashboard admin
           //window.location.href = '/admin';
           this.router.navigate(['/']);
