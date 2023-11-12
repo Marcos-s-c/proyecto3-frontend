@@ -12,7 +12,8 @@ export class DialogPostService {
   openPostDialog(post: any): void {
     this.dialog.open(DialogPostsComponent, {
       data: { post },
-      width: '70%',
+      width: '80%', // Ajusta el ancho según tus necesidades
+      height: '80%',
     });
   }
 }

@@ -1,3 +1,4 @@
+// posts.component.ts
 import { Component, OnInit } from '@angular/core';
 import { DialogPostService } from '../../../services/dialogPost.service';
 import { PostService } from 'src/app/services/post.service';
@@ -14,10 +15,11 @@ export class PostsComponent implements OnInit {
     private postService: PostService,
     private dialogPostService: DialogPostService,
     private router: Router,
-    public login: LoginService,
+    public login: LoginService
   ) {}
 
   posts: any[] = [];
+  maxWordsToShow = 50;
 
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe((response: any) => {
@@ -27,33 +29,39 @@ export class PostsComponent implements OnInit {
   }
 
   toggleLike(post: any): void {
-    // Supongamos que tienes un servicio para manejar el cambio de like en el backend
-    // En este ejemplo, solo cambiaremos la propiedad localmente
     post.liked = !post.liked;
     post.active = true;
   }
 
   openPost(post: any): void {
     this.dialogPostService.openPostDialog(post);
-    // Puedes implementar la lógica para abrir la publicación aquí
-    // Puede ser una redirección a una nueva página, un modal, etc.
     console.log('Abriendo la publicación:', post);
   }
 
   calculateReadingTime(content: string): number {
-    // Esta función es un ejemplo simple para calcular el tiempo de lectura en minutos
-    // Puedes mejorar la lógica según tus necesidades específicas
-    const wordsPerMinute = 200; // Ajusta este valor según tu contenido
+    const wordsPerMinute = 200;
     const words = content.split(' ').length;
     const minutes = Math.ceil(words / wordsPerMinute);
     return minutes;
   }
 
-  newPostRoute(){
-    this.router.navigate(['/community/publication-details'])
+  newPostRoute() {
+    this.router.navigate(['/community/publication-details']);
   }
 
-  editPostRoute(param:number){
-    this.router.navigate([`/community/publication-details/${param}`])
+  editPostRoute(param: number) {
+    this.router.navigate([`/community/publication-details/${param}`]);
+  }
+
+  // Propiedad computada para el contenido truncado.
+  getTruncatedContent(post: any): string {
+    if (post && post.content) {
+      const words = post.content.split(' ');
+      const truncatedWords = words.slice(0, this.maxWordsToShow).join(' ');
+      return words.length > this.maxWordsToShow
+        ? truncatedWords + '...'
+        : truncatedWords;
+    }
+    return '';
   }
 }
