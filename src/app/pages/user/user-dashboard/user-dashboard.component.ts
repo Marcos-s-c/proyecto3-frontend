@@ -36,7 +36,7 @@ export class UserDashboardComponent implements OnInit {
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
   optionsLineal: any = {
-    title: 'Temperatura (Cº',
+    title: 'Temperatura (Cº)',
     axes: {
       left: {
         title: 'Grados (Cº)',
@@ -111,7 +111,7 @@ export class UserDashboardComponent implements OnInit {
     },
   ];
   optionsSpike: any = {
-    title: 'Flujo Cervical',
+    title: 'Flujo cervical',
     toolbar: {
       enabled: false,
     },
@@ -214,8 +214,8 @@ export class UserDashboardComponent implements OnInit {
   panelOpenState:boolean = true;
   constructor(
     private dataService: DataService,
-    private _snackBar: MatSnackBar, 
-    private notificationDataService : NotificationDataService,    
+    private _snackBar: MatSnackBar,
+    private notificationDataService : NotificationDataService,
     private medicineService: MedicineService) {}
 
   ngOnInit():void {
@@ -226,23 +226,36 @@ export class UserDashboardComponent implements OnInit {
     this.getChartsData();
     this.dataService.getAveragePeriod().subscribe(
       (data:any) =>{
-        console.log("periodaverage", data);
+        if(data.average != null){
+          this.periodAverageDuration = data.average + " días";
+        }else{
+          this.periodAverageDuration = "No hay suficientes datos.";
+        }
       }
   );
-    this.dataService.getAveragePeriod().subscribe((data: any) => {
-      console.log('periodaverage', data);
+    this.dataService.getAverageVariationCycle().subscribe((data: any) => {
+      if(data.average != null) {
+        this.averagePeriodVariation = data.average + " días";
+      }else{
+        this.averagePeriodVariation = "No hay suficientes datos.";
+      }
     });
     this.dataService.getNextPeriodDate().subscribe((data: any) => {
-      console.log(data);
+      if(data.date != null){
+        this.nextPeriod = data.date;
+      }
     });
-    this.dataService.getAverageVariationCycle().subscribe((data: any) => {
-      console.log('variationCycle', data);
+    this.dataService.getFertileDays().subscribe((data: any) => {
+      if(data.firstDate != null && data.lastDate != ""){
+        this.firstFertileDay = data.firstDate ;
+        this.lastFertileDay = data.lastDate;
+      }else{
+        this.noFertileDays = "No hay suficientes datos.";
+      }
     });
+
     this.fetchMedications();
-  this.dataService.getFertileDays().subscribe(
-      (data:any) =>{
-        console.log("fertileDays",data);
-      })
+
   }
 
   getChartsData() {
@@ -267,7 +280,7 @@ export class UserDashboardComponent implements OnInit {
                 group: 'Flujo Cervical',
                 key: item.date.replace(/-/g, '/').toString(),
                 value: item.value,
-              });   
+              });
               }
             break;
             case 'sexTimes':
@@ -280,14 +293,14 @@ export class UserDashboardComponent implements OnInit {
           break;
             case 'emotionType':
             /*
-              this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {   
+              this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
                 console.log(objeto.feature == item.value);
                 if (objeto.feature == item.value) {
                   return { ...objeto, feature: objeto.feature + 1 };
                 }
                 return objeto;
               });
-               */ 
+               */
                for (let i = 0; i < this.dataRadarEmotion.length; i++) {
                 if (this.dataRadarEmotion[i].feature == item.value) {
                   this.dataRadarEmotion[i].score = this.dataRadarEmotion[i].score + 1;
@@ -296,13 +309,13 @@ export class UserDashboardComponent implements OnInit {
             break;
             case 'painType':
               /*
-                this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {   
+                this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
                   if (objeto.feature == item.value) {
                     return { ...objeto, feature: objeto.feature + 1 };
                   }
                   return objeto;
                 });
-                 */ 
+                 */
                  for (let i = 0; i < this.dataRadarPain.length; i++) {
                   if (this.dataRadarPain[i].feature == item.value) {
                     this.dataRadarPain[i].score = this.dataRadarPain[i].score + 1;
@@ -507,6 +520,12 @@ export class UserDashboardComponent implements OnInit {
     this.periodCycle = null;
   }
   medications: any[] = [];
+  periodAverageDuration: any;
+  averagePeriodVariation: any;
+  nextPeriod: any;
+  firstFertileDay: any;
+  lastFertileDay: any;
+  noFertileDays: any;
   fetchMedications() {
     console.log(this.medications);
     this.medicineService.getMedicines(this.medications).subscribe(
