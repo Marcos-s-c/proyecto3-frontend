@@ -22,12 +22,16 @@ export class DataService {
     );
   }
 
+  public getPeriodCritiriaLastMonth(){
+    return this.http.get(`${baserUrl()}/rest/period-criteria/getPeriodCriteriaLastMonth`);
+  }
+  
   public getExistingDataById() {
     return this.http.get(
       `${baserUrl()}/rest/period-criteria/getPeriodCriteriaByUser`
     );
   }
-
+  
   public getAveragePeriod() {
     return this.http.get(
         `${baserUrl()}/rest/period-criteria/periodDuration`
@@ -51,3 +55,4 @@ export class DataService {
     );
   }
 }
+
