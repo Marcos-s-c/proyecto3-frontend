@@ -10,6 +10,11 @@
       <!-- Dentro de tu plantilla HTML -->
       <button
         mat-icon-button
+      >
+        <mat-icon *ngIf="login.getUserRole()=='ADMIN'" (click)="editPostRoute(post.postId)" fontIcon="edit"></mat-icon>
+      </button>
+      <button
+        mat-icon-button
         (click)="toggleLike(post)"
         [class.active]="post.active"
       >
@@ -24,4 +29,8 @@
       >
     </mat-card-actions>
   </mat-card>
+  <button
+  *ngIf="login.getUserRole()=='ADMIN'"
+  style="position: fixed; width: 60px; height: 60px; color: white; font-size: 40px; background-color: #f25287; border-radius: 50%; bottom: 20px; right: 20px;"
+  mat-raised-button (click)="newPostRoute()" >+</button>
 </div>

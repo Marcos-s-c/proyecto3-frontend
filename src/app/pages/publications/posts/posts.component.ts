@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogPostService } from '../../../services/dialogPost.service';
 import { PostService } from 'src/app/services/post.service';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-posts',
@@ -10,7 +12,9 @@ import { PostService } from 'src/app/services/post.service';
 export class PostsComponent implements OnInit {
   constructor(
     private postService: PostService,
-    private dialogPostService: DialogPostService
+    private dialogPostService: DialogPostService,
+    private router: Router,
+    public login: LoginService,
   ) {}
 
   posts: any[] = [];
@@ -43,5 +47,13 @@ export class PostsComponent implements OnInit {
     const words = content.split(' ').length;
     const minutes = Math.ceil(words / wordsPerMinute);
     return minutes;
+  }
+
+  newPostRoute(){
+    this.router.navigate(['/community/publication-details'])
+  }
+
+  editPostRoute(param:number){
+    this.router.navigate([`/community/publication-details/${param}`])
   }
 }

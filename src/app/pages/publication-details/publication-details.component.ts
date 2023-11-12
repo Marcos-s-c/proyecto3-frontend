@@ -50,8 +50,8 @@ export class PublicationDetailsComponent implements OnInit {
           showConfirmButton: true,
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#f25287',
-        }),
-        //.then(response => this.router.navigate(['/community/publication-details'])),
+        })
+        .then(response => this.router.navigate(['/community/publication-posts'])),
         error: (error) => {
         console.log(error)
         Swal.fire({
