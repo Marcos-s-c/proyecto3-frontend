@@ -127,7 +127,6 @@
               matInput
               placeholder="Enter new password"
               required
-
             />
           </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">
@@ -142,7 +141,9 @@
             />
           </mat-form-field>
           <div class="button-container">
-            <button type="submit" class="custom-button">Reestablecer contraseña</button>
+            <button type="submit" class="custom-button">
+              Reestablecer contraseña
+            </button>
           </div>
         </form>
       </div>
@@ -188,61 +189,61 @@
             </ul>
           </span>
         </section>
-        <button (click)="salvarOpciones()" type="submit" class="custom-button">Actualizar preferencias</button>
+        <button (click)="salvarOpciones()" type="submit" class="custom-button">
+          Actualizar preferencias
+        </button>
       </div>
     </div>
   </mat-tab>
+
   <mat-tab>
     <ng-template mat-tab-label>
       <div>
         <p>Medicamentos</p>
       </div>
     </ng-template>
+
     <div class="medicamentosWr">
-      <p>Pantalla de selección de medicamentos</p>
+      <h1 class="title">Agrega tus medicamentos</h1>
       <div class="formWr">
-        <mat-form-field>
-          <mat-label>Seleccione medicamento a añadir</mat-label>
-          <mat-select
-            [(ngModel)]="medicamentoSeleccionado"
-            (selectionChange)="onSeleccionMedicamento($event)"
-          >
-            <mat-option *ngFor="let medi of medicamentos" [value]="medi.nombre">
-              {{ medi.nombre }}
-            </mat-option>
-          </mat-select>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="formName"
+            name="title"
+            (change)="printToConsole($event)"
+          />
+          <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Dosis</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="formDosis"
+            name="title"
+            (change)="printToConsole($event)"
+          />
+          <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Frecuencia</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="formFrecuencia"
+            name="title"
+            (change)="printToConsole($event)"
+          />
+          <mat-hint></mat-hint>
         </mat-form-field>
       </div>
-      <div class="dosisWr">
-        <div class="dosis-form-group">
-          <label for="dosis">Dosis</label>
-          <input
-            type="text"
-            class="form-control"
-            id="dosis"
-            required
-            [(ngModel)]="dosis"
-            name="title"
-            (change)="printToConsole($event)"
-          />
-        </div>
-      </div>
-      <div class="frecuenciWr">
-        <div class="frec-form-group">
-          <label for="frec">Frecuencia</label>
-          <input
-            type="text"
-            class="form-control"
-            id="frec"
-            required
-            [(ngModel)]="frecuancia"
-            name="title"
-            (change)="printToConsole($event)"
-          />
-        </div>
-      </div>
-      <button (click)="salvarMedicamento()" class="btn btn-success">
-        Salvar
+      <button mat-raised-button (click)="salvarMedicamento()" color="primary">
+        Guardar
       </button>
     </div>
   </mat-tab>
