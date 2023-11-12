@@ -7,9 +7,6 @@
     }
 }
 
-.page-container {
-    padding-top: 50px;
-}
 
 .container {
     width: 50%;
@@ -53,4 +50,17 @@ img {
 
 .upload-button{
     padding-top: 10px;
+}
+
+.back-container{
+    font-size: small;
+    width: 100px;
+    background-color: #f25287;
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+
+.back-div{
+    padding: 20px 30px 20px 30px;
 }

@@ -7,13 +7,14 @@ import { UploadButtonComponent } from 'src/app/components/upload-button/upload-b
 import { ChangeDetectorRef } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
 import Swal from 'sweetalert2';
+import { MatButtonModule } from '@angular/material/button';
 
 const noImagePath = '../../assets/noImage.jpg'
 @Component({
   selector: 'app-publication-details',
   templateUrl: './publication-details.component.html',
   styleUrls: ['./publication-details.component.scss'],
-  imports: [TextAreaComponent,ButtonComponent,InputComponent,UploadButtonComponent],
+  imports: [TextAreaComponent,ButtonComponent,MatButtonModule,InputComponent,UploadButtonComponent],
   standalone: true,
 })
 export class PublicationDetailsComponent implements OnInit {
@@ -114,5 +115,9 @@ export class PublicationDetailsComponent implements OnInit {
       return;
     }
     this.imageUrl = noImagePath;
+  }
+
+  navigateToPostPage(){
+    this.router.navigate(['/community/publication-posts']);
   }
 }
