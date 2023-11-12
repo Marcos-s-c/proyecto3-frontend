@@ -86,8 +86,8 @@ export class CalendarComponent implements OnInit {
     const calendarEvents: CalendarEvent[] = consolidatedData.map(
       (consolidatedItem: Record<string, any>) => {
         return {
-          start: consolidatedItem['date'], // Utiliza la fecha ajustada
-          title: consolidatedItem['date'], // Puedes personalizar el título como desees
+          start: consolidatedItem['date'],
+          title: consolidatedItem['date'],
         };
       }
     );
