@@ -21,5 +21,38 @@ export class DataService {
       `${baserUrl()}/rest/period-criteria/getPeriodCriteriaByDate?date=${today}`
     );
   }
+
+  public getPeriodCritiriaLastMonth(){
+    return this.http.get(`${baserUrl()}/rest/period-criteria/getPeriodCriteriaLastMonth`);
+  }
+  
+  public getExistingDataById() {
+    return this.http.get(
+      `${baserUrl()}/rest/period-criteria/getPeriodCriteriaByUser`
+    );
+  }
+  
+  public getAveragePeriod() {
+    return this.http.get(
+        `${baserUrl()}/rest/period-criteria/periodDuration`
+    );
+  }
+
+  public getNextPeriodDate() {
+    return this.http.get(
+        `${baserUrl()}/rest/period-criteria/nextPeriodDate`
+    );
+  }
+  public getAverageVariationCycle() {
+    return this.http.get(
+        `${baserUrl()}/rest/period-criteria/averageVariationCycle`
+    );
+  }
+
+  public getFertileDays() {
+    return this.http.get(
+        `${baserUrl()}/rest/period-criteria/fertileDays`
+    );
+  }
 }
 
