@@ -391,10 +391,60 @@ export class PerfilUsuarioComponent implements OnInit {
     frecuencia: '',
     dosis: '',
   };
+
+  limpiarCampos(){
+    this.formName = '';
+    this.formFrecuencia = '';
+    this.formDosis = '';
+  }
   salvarMedicamento() {
     this.medicine.name = this.formName;
     this.medicine.frecuencia = this.formFrecuencia;
     this.medicine.dosis = this.formDosis;
+
+    if(this.formName === '' || this.formName === ' ' || this.formName === null ||
+       this.formFrecuencia === '' || this.formFrecuencia === ' ' || this.formFrecuencia === null ||
+       this.formDosis === '' || this.formDosis === ' ' || this.formDosis === null
+    ){
+      Swal.fire({
+        title: 'Todos los campos son obligatorios',
+        text: 'Favor llenar todos los campos.',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+          this.formName = '';
+          this.formFrecuencia = '';
+          this.formDosis = '';
+        }
+      });
+      this.limpiarCampos();
+      return;
+    }
+    
+    if(isNaN(parseInt(this.medicine.frecuencia.trim(), 10))){
+
+      Swal.fire({
+        title: 'Error de datos',
+        text: 'Frecuencia debe ser un valor numerico.',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+          this.formName = '';
+          this.formFrecuencia = '';
+          this.formDosis = '';
+        }
+      });
+      this.limpiarCampos();
+      return;
+    }
 
     console.log(this.medicine);
     this.medicineService.saveMedicine(this.medicine).subscribe(
@@ -420,7 +470,7 @@ export class PerfilUsuarioComponent implements OnInit {
         if (error.status === 400) {
           // Error de credenciales incorrectos (Código de respuesta 400)
           this.snack.open(
-            'Este correo ya esta en uso, por favor utilice otro',
+            'Error ',
             'Aceptar',
             {
               duration: 3000,
