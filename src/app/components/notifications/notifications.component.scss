@@ -4,11 +4,11 @@
 }
 .notiContainer {
   display: flex;
-  align-items: top;
-  justify-content: top;
+  align-items: center;
+  justify-content: center;
 }
 
-.notiParent{
-  max-height: 80vh;
-  overflow: scroll;
+.notiMain{
+    overflow: auto;
+    height: 80vh;
 }

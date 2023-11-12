@@ -1,19 +1,21 @@
 
-<div class="notiParent" *ngFor="let notification of notificationDataService.notifications">
-    <div class = "notiContainer">
-        <div class="iconWarining">
-            <mat-icon [ngStyle]="{'color':'#df5583'}">
-                warning
-            </mat-icon>
-        </div>
+<div class="notiMain">
+    <div class="notiParent" *ngFor="let notification of notificationDataService.notifications">
+        <div class = "notiContainer">
+            <div class="iconWarining">
+                <mat-icon [ngStyle]="{'color':'#df5583'}">
+                    warning
+                </mat-icon>
+            </div>
 
-        <div class="notificationText">
-            <p > |<time datetime="notification.date">{{notification.date}}</time>| {{notification.text}} </p>
-        </div>
+            <div class="notificationText">
+                <p > |  <time datetime="notification.date">{{notification.date}}</time> | {{notification.text}} </p>
+            </div>
 
-        <div class="notificationsDate">
+            <div class="notificationsDate">
+            </div>
+
         </div>
 
     </div>
-
 </div>
