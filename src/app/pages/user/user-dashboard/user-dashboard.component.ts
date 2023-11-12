@@ -222,6 +222,13 @@ export class UserDashboardComponent implements OnInit {
     const today = new Date();
     today.setHours(today.getHours() - 6);
     this.setFormValues(today.toISOString().split('T')[0]);
+    const notEnoughData = false;
+    this.getChartsData();
+    this.dataService.getAveragePeriod().subscribe(
+      (data:any) =>{
+        console.log("periodaverage", data);
+      }
+  );
     this.dataService.getAveragePeriod().subscribe((data: any) => {
       console.log('periodaverage', data);
     });
@@ -232,17 +239,6 @@ export class UserDashboardComponent implements OnInit {
       console.log('variationCycle', data);
     });
     this.fetchMedications();
-
-  this.dataService.getNextPeriodDate().subscribe(
-      (data:any) =>{
-        console.log(data);
-      }
-  );
-  this.dataService.getAverageVariationCycle().subscribe(
-      (data:any) =>{
-        console.log("variationCycle",data);
-      }
-  );
   this.dataService.getFertileDays().subscribe(
       (data:any) =>{
         console.log("fertileDays",data);
