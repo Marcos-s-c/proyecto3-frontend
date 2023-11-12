@@ -1,0 +1,25 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.post-card {
+  width: 20%;
+  margin: 10px;
+}
+
+.mat-card-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+.time-reading {
+  margin-left: auto;
+  color: #757575;
+}
+//
+/* Dentro de tu archivo de estilos CSS */
+.mat-icon-button.active .material-icons {
+  color: #df5583;
+}

@@ -1,0 +1,14 @@
+.iconWarining,
+.notificationText {
+  padding-left: 20px;
+}
+.notiContainer {
+  display: flex;
+  align-items: top;
+  justify-content: top;
+}
+
+.notiParent{
+  max-height: 80vh;
+  overflow: scroll;
+}

@@ -12,15 +12,6 @@ export class AppComponent {
 
   shouldShowNavbar() {
     const currentRoute = this.router.url;
-    return (
-      currentRoute !== '/signup' &&
-      currentRoute !== '/login' &&
-      currentRoute !== '/' &&
-      currentRoute !== '/#venus'  &&
-      currentRoute !== '/#services'  &&
-      currentRoute !== '/#testimonies' &&
-      currentRoute !== '/#science' &&
-      currentRoute !== '/#contact' 
-    ); //
+    return currentRoute !== '/signup' && currentRoute !== '/login'; //
   }
 }

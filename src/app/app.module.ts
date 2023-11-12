@@ -25,7 +25,6 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DialogPasswordResetComponent } from './pages/login/dialog-password-reset/dialog-password-reset.component';
 import { register } from 'swiper/element/bundle';
-// register Swiper custom elements
 register();
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSelectModule} from '@angular/material/select';
@@ -41,7 +40,18 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { ChartsModule } from '@carbon/charts-angular'
 import {Component} from '@angular/core';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { DialogService } from 'src/app/services/dialog.service';
+// calendar
+import { CalendarComponent } from './components/user/calendar/calendar.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
+import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
+import { DialogDataComponent } from './components/dialog-data/dialog-data.component';
+import { MatBadgeModule } from '@angular/material/badge';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { PostsComponent } from './pages/publications/posts/posts.component';
+import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +62,13 @@ import {MatExpansionModule} from '@angular/material/expansion';
     UserDashboardComponent,
     PasswordResetComponent,
     DialogPasswordResetComponent,
+    CalendarComponent,
+    UserCalendarComponent,
+    CalendarComponent,
+    DialogDataComponent,
+    NotificationsComponent,
+    PostsComponent,
+    DialogPostsComponent,
   ],
   imports: [
     CommonModule,
@@ -72,7 +89,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatIconModule,
     MatButtonModule,
     MatCardModule,
     MatSidenavModule,
@@ -83,11 +99,16 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatRadioModule,
     MatSliderModule,
     ReactiveFormsModule,
-    MatCheckboxModule, 
     ChartsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatBadgeModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

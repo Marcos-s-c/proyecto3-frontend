@@ -24,6 +24,7 @@ body{
   flex-direction: column;
   margin: 0 10px;
   transform: scale(0.8);
+  object-fit: cover;
 }
 .swiper-slide__content {
   height: 700px;
