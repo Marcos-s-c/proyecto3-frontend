@@ -408,6 +408,7 @@ export class UserDashboardComponent implements OnInit {
         (data: any) => {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
           this.dataArrayList = [];
+          this.notificationDataService.getNotifications();
         },
         (error: any) => {
           if (error.error.Message) {
