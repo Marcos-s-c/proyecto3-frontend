@@ -82,15 +82,22 @@ export class PerfilUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.user.name = this.user1.name;
-    this.user.surname = 'No esta implementado en backend';
+    this.user.surname = '';
     this.user.email = this.user1.email;
-    this.user.password = '*************';
+    this.user.password = '';
     this.user.phone = this.user1.phone;
+
+
+    this.cargarPreferenciasActuales();
   }
 
   onEditar(clickEvent: any) {
     this.editar = true;
     clickEvent.stopPropagation();
+  }
+
+  onEditarOff() {
+    this.editar = false;
   }
 
   onSalvarCambios(clickEvent: any) {
@@ -175,6 +182,20 @@ export class PerfilUsuarioComponent implements OnInit {
               });
             this.clearFields();
           } else {
+            Swal.fire({
+              title: 'Contraseñas no concuerdan',
+              text: 'Verificar nueva contraseña en ambos campos.',
+              showCancelButton: false,
+              showConfirmButton: true,
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: 'pink',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // El usuario hizo clic en "Aceptar"
+              }
+            });
+            this.clearFields();
+            return;
           }
         } else {
           Swal.fire({
@@ -199,21 +220,45 @@ export class PerfilUsuarioComponent implements OnInit {
     );
   }
 
-  formSubmit() {
+  formSubmit(clickEvent: any) {
+
     if (
       !this.user.name ||
-      !this.user.surname ||
       !this.user.email ||
-      !this.user.phone ||
-      !this.user.password
+      !this.user.phone
     ) {
-      this.snack.open(
-        'Todos los campos del formulario son obligatorios.',
-        'Aceptar',
-        {
-          duration: 3000,
+      Swal.fire({
+        title: 'Todos los campos son requeridos',
+        text: 'Favor digitar la información requerida',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
         }
-      );
+      });
+      this.clearFields();
+      return;
+    }
+
+    if (
+      this.user.name === this.user1.name && this.user.email === this.user1.email && this.user.phone === this.user1.phone
+    ) {
+      Swal.fire({
+        title: 'Valores iguales',
+        text: 'Favor actualizar información',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+      this.clearFields();
       return;
     }
 
@@ -221,13 +266,19 @@ export class PerfilUsuarioComponent implements OnInit {
     const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
 
     if (!emailRegex.test(this.user.email)) {
-      this.snack.open(
-        'El email no es válido. Ingresa un correo válido.',
-        'Aceptar',
-        {
-          duration: 3000,
+      Swal.fire({
+        title: 'Error con el correo electrónico',
+        text: 'Correo electrónico debe estar en formato de correo',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
         }
-      );
+      });
+      this.clearFields();
       return;
     }
 
@@ -245,6 +296,11 @@ export class PerfilUsuarioComponent implements OnInit {
             // El usuario hizo clic en "Aceptar"
           }
         });
+        this.user1.name = this.user.name;
+        this.user1.email = this.user.email;
+        this.user1.phone = this.user.phone;
+        this.onEditarOff()
+        return;
       },
       (error: any) => {
         console.log('Error actualizar', error);
@@ -298,15 +354,31 @@ export class PerfilUsuarioComponent implements OnInit {
 
   allComplete: boolean = false;
 
-  // opcionesChecked: any[] = [];
-  // opcionesSeleccionadas(opcion:any): void {
-  //   if(opcion.completed){
-  //     this.opcionesChecked.push(opcion);
-  //   }else{
-  //     this.opcionesChecked = this.opcionesChecked.filter(task => {task != opcion});
-  //   }
-  //   console.log('sselected ', this.opcionesChecked);
-  // }
+
+  cargarPreferenciasActuales(){
+    this.userService.getPreferenciasByEmail(this.user1.email).subscribe(
+      (response:any) => {
+        console.log("preferencias response", response)
+        this.task.subtasks?.forEach((task) => {
+          if(task.value === 'sms' && response.sms === 'true'){
+            task.completed = true;
+          }
+          if(task.value === 'wapp' && response.wapp === 'true'){
+            task.completed = true;
+          }
+          if(task.value === 'email' && response.email === 'true'){
+            task.completed = true;
+          }
+        })
+        console.log(this.task.subtasks);
+      }, (error) => {
+        console.error("error: ", error)
+      }
+    )
+  }
+
+  //cargarPreferenciasActuales();
+
 
   /*
   * updateAllComplete() es un método que calcula el valor de allComplete en función del estado de finalización de las subtareas:
