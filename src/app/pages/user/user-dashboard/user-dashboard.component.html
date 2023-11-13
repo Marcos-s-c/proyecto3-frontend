@@ -211,9 +211,41 @@
           </mat-step>
           <mat-step>
             <ng-template matStepLabel>Vida sexual</ng-template>
-            <mat-form-field  name="temp" class="example-full-width">
-              <input [(ngModel)]="sexTimes" matInput type="number" max="15" min="0" placeholder="Relaciones sexuales">
-            </mat-form-field>
+            <mat-select [(ngModel)]="sexTimes" name="nombre">
+              <mat-option value="Sexo con protección">
+                Sexo con protección
+              </mat-option>
+              <mat-option value="Sexo sin protección">
+                Sexo sin protección
+              </mat-option>
+              <mat-option value="Deseo sexual alto">
+                Deseo sexual alto
+              </mat-option>
+              <mat-option value="Deseo sexual bajo">
+                Deseo sexual bajo
+              </mat-option>
+              <mat-option value=" Medicamento">
+                 Medicamento
+              </mat-option>
+              <mat-option value="Orgasmo">
+                Orgasmo
+              </mat-option>
+              <mat-option value="Sin orgasmo">
+                Sin orgasmo
+                </mat-option>
+              <mat-option value="sexo con dolor">
+                  sexo con dolor
+              </mat-option>
+              <mat-option value="sexo sin dolor">
+                    sexo sin dolor
+              </mat-option>
+              <mat-option value="Coito interrumpido">
+                      Coito interrumpido
+              </mat-option>
+              <mat-option value="Uso de juguetes sexuales">
+                        Uso de juguetes sexuales
+                </mat-option>     
+              </mat-select>
           </mat-step>
         </mat-stepper>
         <div class="stepper-form-buttons-container">
