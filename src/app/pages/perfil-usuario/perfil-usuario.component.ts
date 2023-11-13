@@ -496,27 +496,27 @@ export class PerfilUsuarioComponent implements OnInit {
       this.limpiarCampos();
       return;
     }
-    
-    if(isNaN(parseInt(this.medicine.frecuencia.trim(), 10))){
 
-      Swal.fire({
-        title: 'Error de datos',
-        text: 'Frecuencia debe ser un valor numerico.',
-        showCancelButton: false,
-        showConfirmButton: true,
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: 'pink',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // El usuario hizo clic en "Aceptar"
-          this.formName = '';
-          this.formFrecuencia = '';
-          this.formDosis = '';
-        }
-      });
-      this.limpiarCampos();
-      return;
-    }
+    // if(isNaN(parseInt(this.medicine.frecuencia.trim(), 10))){
+    //
+    //   Swal.fire({
+    //     title: 'Error de datos',
+    //     text: 'Frecuencia debe ser un valor numerico.',
+    //     showCancelButton: false,
+    //     showConfirmButton: true,
+    //     confirmButtonText: 'Aceptar',
+    //     confirmButtonColor: 'pink',
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       // El usuario hizo clic en "Aceptar"
+    //       this.formName = '';
+    //       this.formFrecuencia = '';
+    //       this.formDosis = '';
+    //     }
+    //   });
+    //   this.limpiarCampos();
+    //   return;
+    // }
 
     console.log(this.medicine);
     this.medicineService.saveMedicine(this.medicine).subscribe(
