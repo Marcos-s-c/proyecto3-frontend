@@ -4,10 +4,6 @@
   <ng-container *ngIf="!isEditMode; else editMode">
     <form *ngIf="periodDataForm" [formGroup]="periodDataForm">
       <mat-form-field>
-        <mat-label>Date</mat-label>
-        <input matInput [value]="selectedData?.date" disabled />
-      </mat-form-field>
-      <mat-form-field>
         <mat-label>Emotion Type</mat-label>
         <input matInput [value]="selectedData?.emotionType" disabled />
       </mat-form-field>
@@ -61,10 +57,6 @@
   </ng-container>
   <ng-template #editMode>
     <form *ngIf="periodDataForm" [formGroup]="periodDataForm">
-      <mat-form-field>
-        <mat-label>Date</mat-label>
-        <input matInput placeholder="Date" formControlName="date" />
-      </mat-form-field>
       <mat-form-field>
         <mat-label>Emotion Type</mat-label>
         <input

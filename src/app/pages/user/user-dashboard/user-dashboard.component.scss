@@ -1,15 +1,24 @@
 .example-container {
     width: 100%;
-    height: 90vh;
-  }
+    height: calc(100vh - 63px);
+}
 
-  mat-drawer-content {
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
+.stepper-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.stepper-form-buttons-container {
+  display: flex;
+  right: 0;
+  margin-top: auto;
+}
+mat-drawer-content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .side-form{
   width: 500px;
 }
@@ -77,3 +86,85 @@ height: 1px;
       line-height: 30px;
   }
 }
+
+.info-section{
+  display: flex;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
+}
+
+.cards-section{
+  width: 20%;
+  align-items: end;
+
+  mat-card{
+    flex-grow: 4;
+  }
+}
+
+  .graphs-section{
+    width: 40%;
+  }
+
+  .graph-emotions-physical{
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 40%;
+  }
+
+
+  @media(max-width: 1400px){
+    .cards-section{
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: self-start;
+
+    }
+    .graphs-section{
+      width:100%;
+    }
+    .info-section{
+      flex-direction: column;
+    }
+    .graph-emotions-physical{
+      width: 100%;
+      margin-top: 30px;
+      padding:0px;
+      display:flex;
+
+      .card {
+        width:50%;
+        flex: 1;
+        margin-right: 10px;
+      }
+      .graph-accordion {
+        flex: 1;
+      }
+    }
+  }
+
+@media(max-width: 960px){
+  .cards-section{
+    display:block;
+  }
+  .graphs-section{
+    width:100%;
+  }
+  .info-section{
+    flex-direction: column;
+  }
+  .graph-emotions-physical {
+    flex-direction: column;
+    .card {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
+    .graph-accordion {
+      width: 100%;
+    }
+  }
+}
+
