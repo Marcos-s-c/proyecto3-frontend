@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { DialogPasswordResetComponent } from './dialog-password-reset/dialog-password-reset.component';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
-
+import {ButtonComponent} from '../../components/shared/button/button.component'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

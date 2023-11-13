@@ -52,6 +52,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { PostsComponent } from './pages/publications/posts/posts.component';
 import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
+import { ButtonComponent } from './components/shared/button/button.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import { DialogPostsComponent } from './components/publications/dialog-posts/dia
     NotificationsComponent,
     PostsComponent,
     DialogPostsComponent,
+    ButtonComponent,
   ],
   imports: [
     CommonModule,

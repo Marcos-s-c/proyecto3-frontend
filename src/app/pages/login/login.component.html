@@ -4,15 +4,9 @@
       <div class="row mt20">
         <div class="">
           <mat-card>
-            <button
-              mat-raised-button
-              class="button-color custom-button"
-              style="position: absolute; margin-top: 4px"
-              routerLink="/"
-              routerLinkActive="active"
+            <app-button routerLink="/" routerLinkActive="active"
+              >< Regresar</app-button
             >
-              < Regresar
-            </button>
             <h1 class="text-center" style="color: #f25287">Venus</h1>
 
             <div class="container text-center">
@@ -47,14 +41,7 @@
               <br /><br />
 
               <div class="container text-center">
-                <button
-                  type="submit"
-                  mat-raised-button
-                  class="button-color custom-button"
-                >
-                  Iniciar sesión
-                </button>
-
+                <app-button type="submit">Iniciar sesión</app-button>
                 <!-- <button type="reset" style = "margin-left: 20px;" mat-raised-button color="accent">Limpiar</button> -->
               </div>
             </form>
