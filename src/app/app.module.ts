@@ -56,6 +56,7 @@ import { ButtonComponent } from './components/shared/button/button.component';
 import { InputComponent } from './components/shared/input/input.component';
 import { ContainerComponent } from './components/shared/container/container.component';
 import { CardComponent } from './components/shared/card/card.component';
+import { TitleComponent } from './components/shared/title/title.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +78,7 @@ import { CardComponent } from './components/shared/card/card.component';
     InputComponent,
     ContainerComponent,
     CardComponent,
+    TitleComponent,
   ],
   imports: [
     CommonModule,
