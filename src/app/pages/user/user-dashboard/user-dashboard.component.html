@@ -210,8 +210,10 @@
             </section>
           </mat-step>
           <mat-step>
-            <ng-template matStepLabel>Vida sexual</ng-template>
-            <mat-select [(ngModel)]="sexTimes" name="nombre">
+             <ng-template matStepLabel>Vida sexual</ng-template>
+            <mat-form-field> 
+               <mat-label>Elige uno</mat-label>
+              <mat-select [(ngModel)]="sexTimes"  name="nombre">
               <mat-option value="Sexo con protección">
                 Sexo con protección
               </mat-option>
@@ -246,6 +248,10 @@
                         Uso de juguetes sexuales
                 </mat-option>     
               </mat-select>
+            </mat-form-field>
+          
+           
+           
           </mat-step>
         </mat-stepper>
         <div class="stepper-form-buttons-container">
