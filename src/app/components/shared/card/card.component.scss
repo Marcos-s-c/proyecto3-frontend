@@ -1,0 +1,11 @@
+@media (max-width: 768px) {
+  .mat-card {
+    border-radius: 10px !important;
+  }
+}
+
+.mat-card {
+  max-width: fit-content;
+  margin: auto;
+  border-radius: 20px !important;
+}

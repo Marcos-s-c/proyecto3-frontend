@@ -11,23 +11,11 @@ mat-dialog-actions {
   min-height: 30px; /* Ajusta la altura mínima según tus necesidades */
 }
 
-@media (max-width: 500px) {
-}
-
-.mat-card {
-  max-width: 400px;
-  margin: auto;
-  border-radius: 20px !important;
-}
-
 .top {
   margin-top: 5vw;
 }
 @media (max-width: 768px) {
   .top {
     margin-top: 15vw;
-  }
-  .mat-card {
-    border-radius: 10px !important;
   }
 }
