@@ -124,11 +124,16 @@
 }
 
 .example-section {
-  margin: 12px 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 35px 0;
 }
 
 .example-margin {
-  margin: 0 12px;
+  padding: 0 20px;
+  width: 100%;
 }
 
 ul {
@@ -163,4 +168,24 @@ ul {
 .dosisWr,
 frecuenciWr {
   margin: 1rem;
+}
+
+
+.back-container{
+  font-size: small;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  margin: 5px;
+}
+
+.vertical-center{
+  display: flex;
+  width: 100%;
+  justify-content: center; 
+}
+
+.example-list-section{
+  padding: 0 35px;
+  width: 100%;
 }

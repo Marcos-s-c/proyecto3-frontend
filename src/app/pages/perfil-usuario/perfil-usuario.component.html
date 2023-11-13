@@ -5,97 +5,89 @@
         <p>Información personal</p>
       </div>
     </ng-template>
-    <div class="bootstrap-wrapper">
-      <div class="container">
-        <div class="row">
+      <div class="password-reset-container">
+        <div class="password-reset-form">
+        <h2>Información personal</h2>
+        <form (ngSubmit)="formSubmit($event)">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input
+              [disabled]="!editar"
+              required
+              [(ngModel)]="user.name"
+              name="nombre"
+              matInput
+              placeholder="Digite su nombre"
+            />
+          </mat-form-field>
+          <!-- <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input
+              [disabled]="!editar"
+              required
+              [(ngModel)]="user.surname"
+              name="apellido"
+              matInput
+              placeholder="Digite su apellido"
+            />
+          </mat-form-field> -->
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              [disabled]="!editar"
+              required
+              [(ngModel)]="user.email"
+              name="email"
+              type="email"
+              matInput
+              placeholder="Digite su email"
+            />
+          </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input
+              [disabled]="!editar"
+              required
+              [(ngModel)]="user.phone"
+              name="telefono"
+              matInput
+              placeholder="Digite su telefono"
+            />
+          </mat-form-field>
           <div class="container">
-            <div class="right-section rcorners1">
-              <div class="text-center" style="padding-top: 25px">
-                <h1 style="font-weight: 400">Información de tu cuenta</h1>
-                <form (ngSubmit)="formSubmit($event)">
-                  <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Nombre</mat-label>
-                    <input
-                      [disabled]="!editar"
-                      required
-                      [(ngModel)]="user.name"
-                      name="nombre"
-                      matInput
-                      placeholder="Digite su nombre"
-                    />
-                  </mat-form-field>
-                  <!-- <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Apellido</mat-label>
-                    <input
-                      [disabled]="!editar"
-                      required
-                      [(ngModel)]="user.surname"
-                      name="apellido"
-                      matInput
-                      placeholder="Digite su apellido"
-                    />
-                  </mat-form-field> -->
-                  <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Email</mat-label>
-                    <input
-                      [disabled]="!editar"
-                      required
-                      [(ngModel)]="user.email"
-                      name="email"
-                      type="email"
-                      matInput
-                      placeholder="Digite su email"
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Teléfono</mat-label>
-                    <input
-                      [disabled]="!editar"
-                      required
-                      [(ngModel)]="user.phone"
-                      name="telefono"
-                      matInput
-                      placeholder="Digite su telefono"
-                    />
-                  </mat-form-field>
-                  <div class="container">
-                    <div class="vertical-center">
-                      <button
-                        *ngIf="!editar"
-                        mat-raised-button
-                        class="full-width-button button-color custom-button"
-                        style="width: 250px"
-                        (click)="onEditar($event)"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        *ngIf="editar"
-                        mat-raised-button
-                        class="full-width-button button-color custom-button"
-                        style="width: 250px"
-                      >
-                        Salvar Cambios
-                      </button>
-                      <button
-                        *ngIf="editar"
-                        mat-raised-button
-                        class="full-width-button button-color custom-button"
-                        style="width: 250px"
-                        (click)="onCancelar($event)"
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+            <div class="vertical-center">
+              <button
+                class="back-container"
+                color="primary"
+                *ngIf="!editar"
+                mat-raised-button
+                (click)="onEditar($event)"
+              >
+                Editar
+              </button>
+              <button
+                *ngIf="editar"
+                mat-raised-button
+                class="full-width-button button-color custom-button"
+                class="back-container"
+                color="primary"
+              >
+                Salvar Cambios
+              </button>
+              <button
+                *ngIf="editar"
+                mat-raised-button
+                class="back-container"
+                color="primary"
+                (click)="onCancelar($event)"
+              >
+                Cancelar
+              </button>
             </div>
           </div>
-          <br /><br /><br />
+        </form>
         </div>
       </div>
-    </div>
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
@@ -105,7 +97,7 @@
     </ng-template>
     <div class="password-reset-container">
       <div class="password-reset-form">
-        <h2>Password Reset</h2>
+        <h2>Restablecer Contraseña</h2>
         <form (ngSubmit)="resetPassword()">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Contraseña actual</mat-label>
@@ -141,7 +133,12 @@
             />
           </mat-form-field>
           <div class="button-container">
-            <button type="submit" class="custom-button">
+            <button 
+            type="submit" 
+            class="back-container"
+            color="primary"
+            mat-raised-button
+            >
               Reestablecer contraseña
             </button>
           </div>
@@ -155,10 +152,11 @@
         <p>Preferencias</p>
       </div>
     </ng-template>
-    <div class="preferencias-wr">
-      <p class="prefTitulo">
+    <div class="password-reset-container">
+      <div class="password-reset-form">
+      <h2>
         Selecciona los métodos por los cuales deseas recibir notificaciones
-      </p>
+      </h2>
       <div class="pref-cajon">
         <section class="example-section">
           <span class="example-list-section">
@@ -189,11 +187,19 @@
             </ul>
           </span>
         </section>
-        <button (click)="salvarOpciones()" type="submit" class="custom-button">
+      </div>
+      <div class="vertical-center">
+        <button 
+        (click)="salvarOpciones()" 
+        type="submit" 
+        class="back-container"
+        color="primary"
+        mat-raised-button>
           Actualizar preferencias
         </button>
       </div>
     </div>
+  </div>
   </mat-tab>
 
   <mat-tab>
@@ -203,8 +209,9 @@
       </div>
     </ng-template>
 
-    <div class="medicamentosWr">
-      <h1 class="title">Agrega tus medicamentos</h1>
+    <div class="password-reset-container">
+      <div class="password-reset-form">
+      <h2>Agrega tus medicamentos</h2>
       <div class="formWr">
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Nombre</mat-label>
@@ -242,9 +249,16 @@
           <mat-hint></mat-hint>
         </mat-form-field>
       </div>
-      <button mat-raised-button (click)="salvarMedicamento()" color="primary">
-        Guardar
-      </button>
+      <div class="button-container">
+        <button  
+        (click)="salvarMedicamento()" 
+        class="back-container"
+        color="primary"
+        mat-raised-button>
+          Guardar
+        </button>
+      </div>
+      </div>
     </div>
   </mat-tab>
 </mat-tab-group>
