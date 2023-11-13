@@ -9,6 +9,11 @@
   justify-content: center;
 }
 
+/* login.component.scss */
+.error {
+  border: 1px solid red;
+}
+
 /* Ajusta el estilo de mat-dialog-actions */
 mat-dialog-actions {
   display: flex;

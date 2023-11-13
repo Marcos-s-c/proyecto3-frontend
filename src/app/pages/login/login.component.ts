@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { DialogPasswordResetComponent } from './dialog-password-reset/dialog-password-reset.component';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
-import {ButtonComponent} from '../../components/shared/button/button.component'
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,8 +33,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   formSubmit() {
-    if (!this.loginData.email)
-     {
+    if (!this.loginData.email) {
       this.snack.open('El email es requerido!', 'Aceptar', {
         duration: 3000,
       });

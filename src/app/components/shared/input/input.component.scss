@@ -1,0 +1,23 @@
+// input.component.scss
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: pink;
+
+  &:hover {
+    color: #f25287;
+  }
+
+  &.error {
+    border-color: red; // Cambia el color del borde en caso de error
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+
+  &.mat-focused {
+    .mat-form-field-label {
+      color: #df5583;
+      font-weight: 400;
+    }
+  }
+}

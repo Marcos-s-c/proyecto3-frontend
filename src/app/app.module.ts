@@ -53,6 +53,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { PostsComponent } from './pages/publications/posts/posts.component';
 import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
 import { ButtonComponent } from './components/shared/button/button.component';
+import { InputComponent } from './components/shared/input/input.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +72,7 @@ import { ButtonComponent } from './components/shared/button/button.component';
     PostsComponent,
     DialogPostsComponent,
     ButtonComponent,
+    InputComponent,
   ],
   imports: [
     CommonModule,
