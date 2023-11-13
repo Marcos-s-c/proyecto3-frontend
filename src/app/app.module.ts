@@ -54,6 +54,8 @@ import { PostsComponent } from './pages/publications/posts/posts.component';
 import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
 import { ButtonComponent } from './components/shared/button/button.component';
 import { InputComponent } from './components/shared/input/input.component';
+import { ContainerComponent } from './components/shared/container/container.component';
+import { CardComponent } from './components/shared/card/card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +75,8 @@ import { InputComponent } from './components/shared/input/input.component';
     DialogPostsComponent,
     ButtonComponent,
     InputComponent,
+    ContainerComponent,
+    CardComponent,
   ],
   imports: [
     CommonModule,

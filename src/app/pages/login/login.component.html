@@ -1,56 +1,50 @@
-<div class="bootstrap-wrapper">
-  <div class="container">
-    <div class="container background">
-      <div class="row mt20">
-        <div class="">
-          <mat-card>
-            <app-button routerLink="/" routerLinkActive="active"
-              >< Regresar</app-button
-            >
-            <h1 class="text-center" style="color: #f25287">Venus</h1>
+<app-container>
+  <div class="center top">
+    <mat-card>
+      <app-button routerLink="/" routerLinkActive="active"
+        >< Regresar</app-button
+      >
+      <h1 class="text-center" style="color: #f25287">Venus</h1>
 
-            <div class="container text-center">
-              <img src="../../../assets/login.png" width="100" height="100" />
-            </div>
-
-            <form (ngSubmit)="formSubmit()" >
-              <div class="full-width">
-                <app-input
-                  [label]="'Correo Electrónico'"
-                  [placeholder]="'Ingrese su correo electrónico'"
-                  [error]="!loginData.email"
-                  errorMessage="Correo electrónico es requerido"
-                  [(value)]="loginData.email"
-                  [type]="'text'"
-                  [hint]="'El correo de usuario debe ser válido'"
-                ></app-input>
-
-                <app-input
-                  [label]="'Contraseña'"
-                  [placeholder]="'Digite su contraseña'"
-                  [error]="!loginData.password"
-                  errorMessage="La contraseña es requerida"
-                  [(value)]="loginData.password"
-                  [type]="'password'"
-                  [hint]="'La contraseña debe ser válida'"
-                ></app-input>
-              </div>
-
-              <br /><br />
-
-              <div class="container text-center">
-                <app-button type="submit">Iniciar sesión</app-button>
-                <!-- <button type="reset" style = "margin-left: 20px;" mat-raised-button color="accent">Limpiar</button> -->
-              </div>
-            </form>
-            <mat-dialog-actions class="text-center">
-              <div style="margin-top: 10px; cursor: pointer">
-                <a (click)="openDialog()">Recuperar contraseña</a>
-              </div>
-            </mat-dialog-actions>
-          </mat-card>
-        </div>
+      <div class="text-center">
+        <img src="../../../assets/login.png" width="100" height="100" />
       </div>
-    </div>
+
+      <form (ngSubmit)="formSubmit()">
+        <div>
+          <app-input
+            [label]="'Correo Electrónico'"
+            [placeholder]="'Ingrese su correo electrónico'"
+            [error]="!loginData.email"
+            errorMessage="Correo electrónico es requerido"
+            [(value)]="loginData.email"
+            [type]="'text'"
+            [hint]="'El correo de usuario debe ser válido'"
+          ></app-input>
+
+          <app-input
+            [label]="'Contraseña'"
+            [placeholder]="'Digite su contraseña'"
+            [error]="!loginData.password"
+            errorMessage="La contraseña es requerida"
+            [(value)]="loginData.password"
+            [type]="'password'"
+            [hint]="'La contraseña debe ser válida'"
+          ></app-input>
+        </div>
+
+        <br /><br />
+
+        <div class="text-center">
+          <app-button type="submit">Iniciar sesión</app-button>
+          <!-- <button type="reset" style = "margin-left: 20px;" mat-raised-button color="accent">Limpiar</button> -->
+        </div>
+      </form>
+      <mat-dialog-actions class="text-center">
+        <div style="margin-top: 10px; cursor: pointer">
+          <a (click)="openDialog()">Recuperar contraseña</a>
+        </div>
+      </mat-dialog-actions>
+    </mat-card>
   </div>
-</div>
+</app-container>
