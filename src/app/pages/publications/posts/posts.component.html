@@ -3,7 +3,10 @@
   <mat-card class="post-card">
     <img mat-card-image [src]="post.imageUrl" alt="Post Image" />
     <mat-card-content>
-      <h2>{{ post.subject }}</h2>
+      <div class="post-header">
+        <h2>{{ post.subject }}</h2>
+        <h4>{{post.date}}</h4>
+      </div>
       <p>{{ getTruncatedContent(post) }}</p>
     </mat-card-content>
     <mat-card-actions>
@@ -19,22 +22,12 @@
       <span class="time-reading">Tiempo de lectura: {{ calculateReadingTime(post.content) }} min</span>
     </mat-card-actions>
   </mat-card>
-  <button
+</div>
+<button
+    class="add-post-button"
     *ngIf="login.getUserRole() == 'ADMIN'"
-    style="
-      position: fixed;
-      width: 60px;
-      height: 60px;
-      color: white;
-      font-size: 40px;
-      background-color: #f25287;
-      border-radius: 50%;
-      bottom: 20px;
-      right: 20px;
-    "
     mat-raised-button
     (click)="newPostRoute()"
   >
     +
   </button>
-</div>
