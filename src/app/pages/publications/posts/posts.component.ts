@@ -29,8 +29,10 @@ export class PostsComponent implements OnInit {
   }
 
   toggleLike(post: any): void {
-    post.liked = !post.liked;
-    post.active = true;
+    post.likedByLoggedUser = !post.likedByLoggedUser;
+    this.postService.likePost(post.postId).subscribe((data=>{
+      console.log(data);
+    }))
   }
 
   openPost(post: any): void {
