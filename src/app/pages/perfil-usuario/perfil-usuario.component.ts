@@ -16,6 +16,8 @@ import { LoginService } from '../../services/login.service';
 import { ResetContraRequestBody } from '../../interface/ResetContraRequestBody';
 import { PreferenciasPostBody } from '../../interface/PreferenciasPostBody';
 import { MedicineService } from 'src/app/services/medicine.service';
+import {MatListModule} from "@angular/material/list";
+import {MatCardModule} from "@angular/material/card";
 
 export interface Task {
   name: string;
@@ -56,6 +58,8 @@ export interface User {
     MatCheckboxModule,
     CommonModule,
     MatSelectModule,
+    MatListModule,
+    MatCardModule,
   ],
 })
 export class PerfilUsuarioComponent implements OnInit {
@@ -89,6 +93,7 @@ export class PerfilUsuarioComponent implements OnInit {
 
 
     this.cargarPreferenciasActuales();
+    this.anadeFrecuencias();
   }
 
   onEditar(clickEvent: any) {
@@ -556,5 +561,23 @@ export class PerfilUsuarioComponent implements OnInit {
         }
       }
     );
+  }
+
+  editarMedicamento(){
+    console.log('editar')
+  }
+
+  borrarMedicamento(){
+    console.log('borrar')
+  }
+
+  frecuencias: string[] = [];
+  anadeFrecuencias(){
+    this.frecuencias.push('Una dosis diaria')
+    this.frecuencias.push('Dos dosis diarias')
+    this.frecuencias.push('Tres dosis diarias')
+    this.frecuencias.push('Una dosis semanal')
+    this.frecuencias.push('Una dosis mensual')
+    this.frecuencias.push('Indefinida')
   }
 }

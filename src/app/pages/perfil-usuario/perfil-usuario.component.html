@@ -133,8 +133,8 @@
             />
           </mat-form-field>
           <div class="button-container">
-            <button 
-            type="submit" 
+            <button
+            type="submit"
             class="back-container"
             color="primary"
             mat-raised-button
@@ -189,9 +189,9 @@
         </section>
       </div>
       <div class="vertical-center">
-        <button 
-        (click)="salvarOpciones()" 
-        type="submit" 
+        <button
+        (click)="salvarOpciones()"
+        type="submit"
         class="back-container"
         color="primary"
         mat-raised-button>
@@ -209,56 +209,81 @@
       </div>
     </ng-template>
 
-    <div class="password-reset-container">
-      <div class="password-reset-form">
-      <h2>Agrega tus medicamentos</h2>
-      <div class="formWr">
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Nombre</mat-label>
-          <input
-            matInput
-            type="text"
-            [(ngModel)]="formName"
-            name="title"
-            (change)="printToConsole($event)"
-          />
-          <mat-hint></mat-hint>
-        </mat-form-field>
+    <div class="med-wrapper">
+      <div class="left-med-wrapper">
+        <div class="password-reset-container">
+          <div class="password-reset-form">
+            <h2>Agrega tus medicamentos</h2>
+            <div class="formWr">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="formName"
+                  name="title"
+                  (change)="printToConsole($event)"
+                />
+                <mat-hint></mat-hint>
+              </mat-form-field>
 
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Dosis</mat-label>
-          <input
-            matInput
-            type="text"
-            [(ngModel)]="formDosis"
-            name="title"
-            (change)="printToConsole($event)"
-          />
-          <mat-hint></mat-hint>
-        </mat-form-field>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Dosis</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="formDosis"
+                  name="title"
+                  (change)="printToConsole($event)"
+                />
+                <mat-hint></mat-hint>
+              </mat-form-field>
 
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Frecuencia</mat-label>
-          <input
-            matInput
-            type="text"
-            [(ngModel)]="formFrecuencia"
-            name="title"
-            (change)="printToConsole($event)"
-          />
-          <mat-hint></mat-hint>
-        </mat-form-field>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Frecuencia</mat-label>
+                <mat-form-field>
+                  <mat-select>
+                    <mat-option *ngFor="let frec of frecuencias" [value]="frec">{{frec}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </mat-form-field>
+            </div>
+            <div class="button-container">
+              <button
+                (click)="salvarMedicamento()"
+                class="back-container"
+                color="primary"
+                mat-raised-button>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="button-container">
-        <button  
-        (click)="salvarMedicamento()" 
-        class="back-container"
-        color="primary"
-        mat-raised-button>
-          Guardar
-        </button>
-      </div>
+      <div class="right-med-wrapper">
+        <div class="lista-med">
+          <h2>Lista de medicamentos</h2>
+          <mat-action-list>
+            <mat-card>
+              <mat-card-header>Panadol</mat-card-header>
+              <mat-card-content>3mg</mat-card-content>
+              <mat-card-content>3 veces al dia</mat-card-content>
+              <mat-card-footer>
+                <div class="boton">
+                  <button mat-stroked-button color="primary" (click)="editarMedicamento()">Editar</button>
+                  <button mat-stroked-button color="warn" (click)="borrarMedicamento()">Borrar</button>
+                </div>
+              </mat-card-footer>
+            </mat-card>
+
+
+          </mat-action-list>
+        </div>
+
+
       </div>
     </div>
+
   </mat-tab>
 </mat-tab-group>
