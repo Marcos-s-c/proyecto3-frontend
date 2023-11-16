@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { baserUrl } from './helper';
+import {Medicina} from "../interface/Medicina";
 
 @Injectable({
   providedIn: 'root',
@@ -15,5 +16,9 @@ export class MedicineService {
 
   public getMedicines(medicine: any) {
     return this.http.get(`${baserUrl()}/rest/medicines/get`, medicine);
+  }
+
+  public getAllMedicamentos(){
+    return this.http.get<Medicina[]>(`${baserUrl()}/rest/medicines/get`)
   }
 }

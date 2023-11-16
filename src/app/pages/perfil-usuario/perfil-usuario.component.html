@@ -264,21 +264,21 @@
       <div class="right-med-wrapper">
         <div class="lista-med">
           <h2>Lista de medicamentos</h2>
-          <mat-action-list>
-            <mat-card>
-              <mat-card-header>Panadol</mat-card-header>
-              <mat-card-content>3mg</mat-card-content>
-              <mat-card-content>3 veces al dia</mat-card-content>
-              <mat-card-footer>
-                <div class="boton">
-                  <button mat-stroked-button color="primary" (click)="editarMedicamento()">Editar</button>
-                  <button mat-stroked-button color="warn" (click)="borrarMedicamento()">Borrar</button>
-                </div>
-              </mat-card-footer>
-            </mat-card>
-
-
-          </mat-action-list>
+            <mat-action-list>
+                <mat-card *ngFor="let med of medicinas">
+                  <div class="med-carta">
+                    <mat-card-header>{{ med.name }}</mat-card-header>
+                    <mat-card-content>{{ med.dosis }}</mat-card-content>
+                    <mat-card-content>{{ med.frecuencia }}</mat-card-content>
+                    <mat-card-footer>
+                      <div class="boton">
+                        <button mat-stroked-button color="primary" (click)="editarMedicamento()">Editar</button>
+                        <button mat-stroked-button color="warn" (click)="borrarMedicamento()">Borrar</button>
+                      </div>
+                    </mat-card-footer>
+                  </div>
+                </mat-card>
+            </mat-action-list>
         </div>
 
 

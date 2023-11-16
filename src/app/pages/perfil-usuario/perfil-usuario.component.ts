@@ -18,6 +18,14 @@ import { PreferenciasPostBody } from '../../interface/PreferenciasPostBody';
 import { MedicineService } from 'src/app/services/medicine.service';
 import {MatListModule} from "@angular/material/list";
 import {MatCardModule} from "@angular/material/card";
+import {Medicina} from "../../interface/Medicina";
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 export interface Task {
   name: string;
@@ -25,13 +33,6 @@ export interface Task {
   completed: boolean;
   color: ThemePalette;
   subtasks?: Task[];
-}
-
-export interface Medicamento {
-  nombre: string;
-  administracion: string;
-  dosis: string;
-  frecuencia: string;
 }
 
 export interface User {
@@ -75,14 +76,19 @@ export class PerfilUsuarioComponent implements OnInit {
   };
 
   private user1 = this.loginService.getUser();
+  public medicinas: Medicina[] = [];
+
 
   constructor(
     private userService: UserService,
     private loginService: LoginService,
     private snack: MatSnackBar,
     private router: Router,
-    private medicineService: MedicineService
+    private medicineService: MedicineService,
+    public dialog: MatDialog
   ) {}
+
+
 
   ngOnInit(): void {
     this.user.name = this.user1.name;
@@ -91,9 +97,9 @@ export class PerfilUsuarioComponent implements OnInit {
     this.user.password = '';
     this.user.phone = this.user1.phone;
 
-
     this.cargarPreferenciasActuales();
     this.anadeFrecuencias();
+    this.getAllMedicinasFiltered();
   }
 
   onEditar(clickEvent: any) {
@@ -567,6 +573,7 @@ export class PerfilUsuarioComponent implements OnInit {
     console.log('editar')
   }
 
+
   borrarMedicamento(){
     console.log('borrar')
   }
@@ -579,5 +586,12 @@ export class PerfilUsuarioComponent implements OnInit {
     this.frecuencias.push('Una dosis semanal')
     this.frecuencias.push('Una dosis mensual')
     this.frecuencias.push('Indefinida')
+  }
+
+  getAllMedicinasFiltered(){
+    console.log('medicinas')
+    this.medicineService.getAllMedicamentos().subscribe((response: Medicina[]) => {
+      this.medicinas = response;
+    })
   }
 }
