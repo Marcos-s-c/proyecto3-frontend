@@ -588,6 +588,25 @@ export class PerfilUsuarioComponent implements OnInit {
 
 
   sendNextPeriodWA() {
-
+    this.notitificationService.sendNextPeriodWA().subscribe(
+      (data: any) => {
+        if(data.result === "noWAPreferenceOn"){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de WhatsApp.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "noWAPreferenceOn"){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+      }
+    );
   }
 }
