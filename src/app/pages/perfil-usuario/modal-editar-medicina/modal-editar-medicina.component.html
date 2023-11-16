@@ -1,6 +1,28 @@
-<h1 mat-dialog-title>Dialog with elements</h1>
-<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>
-<div mat-dialog-content>ID {{ medicine_id}}.</div>
+<h1 mat-dialog-title>Editar</h1>
+<form class="editar-form" (ngSubmit)="formSubmit($event)">
+  <div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Nuevo nombre de medicamento</mat-label>
+      <input matInput type="text" [(ngModel)]="name">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Nueva dosis</mat-label>
+      <input matInput type="text" [(ngModel)]="dosis">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nueva frecuencia</mat-label>
+      <mat-select [(ngModel)]="frecuencia">
+        <mat-option *ngFor="let frec of frecuencias" [value]="frec">{{frec}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <button mat-stroked-button color="primary">Actualizar</button>
+</form>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>
 </div>
