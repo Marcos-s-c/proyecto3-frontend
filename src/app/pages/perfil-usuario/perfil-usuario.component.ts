@@ -16,6 +16,8 @@ import { LoginService } from '../../services/login.service';
 import { ResetContraRequestBody } from '../../interface/ResetContraRequestBody';
 import { PreferenciasPostBody } from '../../interface/PreferenciasPostBody';
 import { MedicineService } from 'src/app/services/medicine.service';
+import {TextComponent} from "../../components/text/text.component";
+import {NotificationService} from "../../services/notifications.service";
 
 export interface Task {
   name: string;
@@ -56,6 +58,7 @@ export interface User {
     MatCheckboxModule,
     CommonModule,
     MatSelectModule,
+    TextComponent,
   ],
 })
 export class PerfilUsuarioComponent implements OnInit {
@@ -77,7 +80,8 @@ export class PerfilUsuarioComponent implements OnInit {
     private loginService: LoginService,
     private snack: MatSnackBar,
     private router: Router,
-    private medicineService: MedicineService
+    private medicineService: MedicineService,
+    private notitificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -556,5 +560,34 @@ export class PerfilUsuarioComponent implements OnInit {
         }
       }
     );
+  }
+
+
+  sendNextPeriodSMS() {
+    this.notitificationService.sendNextPeriodSMS().subscribe(
+      (data: any) => {
+        if(data.result === "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de texto.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+      }
+    );
+  }
+
+
+  sendNextPeriodWA() {
+
   }
 }
