@@ -23,9 +23,10 @@ import {
   MatDialog,
   MatDialogActions,
   MatDialogClose,
-  MatDialogContent,
+  MatDialogContent, MatDialogModule,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import {ModalEditarMedicinaComponent} from "./modal-editar-medicina/modal-editar-medicina.component";
 
 export interface Task {
   name: string;
@@ -61,6 +62,7 @@ export interface User {
     MatSelectModule,
     MatListModule,
     MatCardModule,
+    MatDialogModule,
   ],
 })
 export class PerfilUsuarioComponent implements OnInit {
@@ -569,8 +571,12 @@ export class PerfilUsuarioComponent implements OnInit {
     );
   }
 
-  editarMedicamento(){
-    console.log('editar')
+  editarMedicamento(medicine_id: number){
+    this.dialog.open(ModalEditarMedicinaComponent, {
+      data: {
+        medicine_id: medicine_id
+      }
+    });
   }
 
 

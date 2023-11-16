@@ -52,7 +52,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { PostsComponent } from './pages/publications/posts/posts.component';
 import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
-import { ModalEditarMedicinaComponent, DialogElementsExampleDialog  } from './pages/perfil-usuario/modal-editar-medicina/modal-editar-medicina.component';
+import { ModalEditarMedicinaComponent  } from './pages/perfil-usuario/modal-editar-medicina/modal-editar-medicina.component';
 
 @NgModule({
     declarations: [

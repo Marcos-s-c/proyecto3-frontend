@@ -272,7 +272,7 @@
                     <mat-card-content>{{ med.frecuencia }}</mat-card-content>
                     <mat-card-footer>
                       <div class="boton">
-                        <button mat-stroked-button color="primary" (click)="editarMedicamento()">Editar</button>
+                        <button mat-stroked-button color="primary" (click)="editarMedicamento(med.medicine_id)">Editar</button>
                         <button mat-stroked-button color="warn" (click)="borrarMedicamento()">Borrar</button>
                       </div>
                     </mat-card-footer>
