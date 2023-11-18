@@ -16,8 +16,19 @@ import { LoginService } from '../../services/login.service';
 import { ResetContraRequestBody } from '../../interface/ResetContraRequestBody';
 import { PreferenciasPostBody } from '../../interface/PreferenciasPostBody';
 import { MedicineService } from 'src/app/services/medicine.service';
+import {MatListModule} from "@angular/material/list";
+import {MatCardModule} from "@angular/material/card";
+import {Medicina} from "../../interface/Medicina";
 import {TextComponent} from "../../components/text/text.component";
 import {NotificationService} from "../../services/notifications.service";
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent, MatDialogModule,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import {ModalEditarMedicinaComponent} from "./modal-editar-medicina/modal-editar-medicina.component";
 
 export interface Task {
   name: string;
@@ -25,13 +36,6 @@ export interface Task {
   completed: boolean;
   color: ThemePalette;
   subtasks?: Task[];
-}
-
-export interface Medicamento {
-  nombre: string;
-  administracion: string;
-  dosis: string;
-  frecuencia: string;
 }
 
 export interface User {
@@ -58,6 +62,9 @@ export interface User {
     MatCheckboxModule,
     CommonModule,
     MatSelectModule,
+    MatListModule,
+    MatCardModule,
+    MatDialogModule,
     TextComponent,
   ],
 })
@@ -74,6 +81,8 @@ export class PerfilUsuarioComponent implements OnInit {
   };
 
   private user1 = this.loginService.getUser();
+  public medicinas: Medicina[] = [];
+
 
   constructor(
     private userService: UserService,
@@ -81,8 +90,11 @@ export class PerfilUsuarioComponent implements OnInit {
     private snack: MatSnackBar,
     private router: Router,
     private medicineService: MedicineService,
+    public dialog: MatDialog,
     private notitificationService: NotificationService
   ) {}
+
+
 
   ngOnInit(): void {
     this.user.name = this.user1.name;
@@ -91,8 +103,9 @@ export class PerfilUsuarioComponent implements OnInit {
     this.user.password = '';
     this.user.phone = this.user1.phone;
 
-
     this.cargarPreferenciasActuales();
+    this.anadeFrecuencias();
+    this.getAllMedicinasFiltered();
   }
 
   onEditar(clickEvent: any) {
@@ -364,13 +377,13 @@ export class PerfilUsuarioComponent implements OnInit {
       (response:any) => {
         console.log("preferencias response", response)
         this.task.subtasks?.forEach((task) => {
-          if(task.value === 'sms' && response.sms === 'true'){
+          if(task.value === 'sms' && response.sms === '1'){
             task.completed = true;
           }
-          if(task.value === 'wapp' && response.wapp === 'true'){
+          if(task.value === 'wapp' && response.wapp === '1'){
             task.completed = true;
           }
-          if(task.value === 'email' && response.email === 'true'){
+          if(task.value === 'email' && response.email === '1'){
             task.completed = true;
           }
         })
@@ -412,29 +425,32 @@ export class PerfilUsuarioComponent implements OnInit {
     this.task.subtasks.forEach((task) => (task.completed = completed));
   }
 
-  wappSelected: string = 'false';
-  smsSelected: string = 'false';
-  emailSelected: string = 'false';
+  wappSelected: string = '0';
+  smsSelected: string = '0';
+  emailSelected: string = '0';
   prefBody: PreferenciasPostBody;
   isOptionSelected(subtask: any): boolean {
     return subtask.completed;
   }
 
   salvarOpciones(): void {
-    if (!this.task.subtasks || this.task.subtasks[0].completed) {
-      this.smsSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[0].completed) {
+      this.smsSelected = '1';
     } else {
-      this.smsSelected = 'false';
+      this.smsSelected = '0';
     }
-    if (!this.task.subtasks || this.task.subtasks[1].completed) {
-      this.wappSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[1].completed) {
+      this.wappSelected = '1';
     } else {
-      this.wappSelected = 'false';
+      this.wappSelected = '0';
     }
-    if (!this.task.subtasks || this.task.subtasks[2].completed) {
-      this.emailSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[2].completed) {
+      this.emailSelected = '1';
     } else {
-      this.emailSelected = 'false';
+      this.emailSelected = '0';
     }
 
     this.prefBody = {
@@ -449,7 +465,7 @@ export class PerfilUsuarioComponent implements OnInit {
         console.log('userService.addPreferencia ', response);
       },
       (error: any) => {
-        console.error('userService.addPreferencia ', error);
+        console.error('userService.addPreferencia error', error);
       }
     );
   }
@@ -540,6 +556,7 @@ export class PerfilUsuarioComponent implements OnInit {
             this.formDosis = '';
           }
         });
+        this.getAllMedicinasFiltered();
       },
       (error: any) => {
         console.log('Error agregar medicamento', error);
@@ -562,6 +579,62 @@ export class PerfilUsuarioComponent implements OnInit {
     );
   }
 
+  editarMedicamento(medicine_id: number){
+    this.dialog.open(ModalEditarMedicinaComponent, {
+      data: {
+        medicine_id: medicine_id,
+        name:this.formName,
+        dosis:this.formDosis,
+        frecuencia:this.formFrecuencia
+      }
+    });
+
+    this.dialog.afterAllClosed.subscribe(result => {
+      console.log('\ncomponente usuario',result)
+      console.log('\ncomponente usuario',result)
+      console.log('\ncomponente usuario',result)
+      this.getAllMedicinasFiltered();
+    })
+  }
+
+
+  borrarMedicamento(medicine_id: number) {
+    console.log('borrar');
+    this.medicineService.borrarMed(medicine_id).subscribe((response) => {
+      this.getAllMedicinasFiltered();
+      console.log('borrar ', response.toString());
+      Swal.fire({
+        title: 'Medicamento borrado',
+        text: 'Medicamento eliminado con éxito',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+    });
+  }
+
+
+  frecuencias: string[] = [];
+  anadeFrecuencias(){
+    this.frecuencias.push('Una dosis diaria')
+    this.frecuencias.push('Dos dosis diarias')
+    this.frecuencias.push('Tres dosis diarias')
+    this.frecuencias.push('Una dosis semanal')
+    this.frecuencias.push('Una dosis mensual')
+    this.frecuencias.push('Indefinida')
+  }
+
+  getAllMedicinasFiltered(){
+    console.log('medicinas')
+    this.medicineService.getAllMedicamentos().subscribe((response: Medicina[]) => {
+      this.medicinas = response;
+    })
+  }
 
   sendNextPeriodSMS() {
     this.notitificationService.sendNextPeriodSMS().subscribe(
