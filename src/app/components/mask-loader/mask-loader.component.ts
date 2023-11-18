@@ -13,7 +13,7 @@ import { warn } from 'console';
 
 export class MaskLoaderComponent {
 
-  color: ThemePalette = 'primary';
+  color: ThemePalette = 'accent';
   mode: ProgressSpinnerMode = 'indeterminate';
   value = 50;
 }
