@@ -3,6 +3,7 @@ import { DataService } from '../../../services/dataService.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MedicineService } from 'src/app/services/medicine.service';
 import { NotificationDataService } from 'src/app/services/notificationDataService';
+import { MaskService } from 'src/app/services/mask.service';
 
 
 export type DataObject = {
@@ -216,7 +217,9 @@ export class UserDashboardComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService) {}
+    private medicineService: MedicineService,
+    public maskService:MaskService
+    ) {}
 
   ngOnInit():void {
     const today = new Date();
@@ -404,11 +407,13 @@ export class UserDashboardComponent implements OnInit {
       });
 
     if (this.dataArrayList.length > 0) {
+      this.maskService.isLoading = true;
       this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
         (data: any) => {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
           this.dataArrayList = [];
           this.notificationDataService.getNotifications();
+          this.maskService.isLoading = false;
         },
         (error: any) => {
           if (error.error.Message) {
@@ -423,6 +428,7 @@ export class UserDashboardComponent implements OnInit {
             );
           }
           this.dataArrayList = [];
+          this.maskService.isLoading = false;
         }
       );
     } else {
