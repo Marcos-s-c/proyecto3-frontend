@@ -23,6 +23,6 @@ export class NotificationService{
       return this.http.post(`${baserUrl()}/rest/twilio/sendMessage/nextPeriod`,{})
     }
     public sendNextPeriodWA(){
-      return this.http.get(`${baserUrl()}/`)
+      return this.http.post(`${baserUrl()}/rest/wa/sendMessage/nextPeriod`, {})
     }
 }
