@@ -373,13 +373,13 @@ export class PerfilUsuarioComponent implements OnInit {
       (response:any) => {
         console.log("preferencias response", response)
         this.task.subtasks?.forEach((task) => {
-          if(task.value === 'sms' && response.sms === 'true'){
+          if(task.value === 'sms' && response.sms === '1'){
             task.completed = true;
           }
-          if(task.value === 'wapp' && response.wapp === 'true'){
+          if(task.value === 'wapp' && response.wapp === '1'){
             task.completed = true;
           }
-          if(task.value === 'email' && response.email === 'true'){
+          if(task.value === 'email' && response.email === '1'){
             task.completed = true;
           }
         })
@@ -421,29 +421,32 @@ export class PerfilUsuarioComponent implements OnInit {
     this.task.subtasks.forEach((task) => (task.completed = completed));
   }
 
-  wappSelected: string = 'false';
-  smsSelected: string = 'false';
-  emailSelected: string = 'false';
+  wappSelected: string = '0';
+  smsSelected: string = '0';
+  emailSelected: string = '0';
   prefBody: PreferenciasPostBody;
   isOptionSelected(subtask: any): boolean {
     return subtask.completed;
   }
 
   salvarOpciones(): void {
-    if (!this.task.subtasks || this.task.subtasks[0].completed) {
-      this.smsSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[0].completed) {
+      this.smsSelected = '1';
     } else {
-      this.smsSelected = 'false';
+      this.smsSelected = '0';
     }
-    if (!this.task.subtasks || this.task.subtasks[1].completed) {
-      this.wappSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[1].completed) {
+      this.wappSelected = '1';
     } else {
-      this.wappSelected = 'false';
+      this.wappSelected = '0';
     }
-    if (!this.task.subtasks || this.task.subtasks[2].completed) {
-      this.emailSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[2].completed) {
+      this.emailSelected = '1';
     } else {
-      this.emailSelected = 'false';
+      this.emailSelected = '0';
     }
 
     this.prefBody = {
@@ -458,7 +461,7 @@ export class PerfilUsuarioComponent implements OnInit {
         console.log('userService.addPreferencia ', response);
       },
       (error: any) => {
-        console.error('userService.addPreferencia ', error);
+        console.error('userService.addPreferencia error', error);
       }
     );
   }
