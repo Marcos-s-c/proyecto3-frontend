@@ -4,6 +4,7 @@ import { DialogPostService } from '../../../services/dialogPost.service';
 import { PostService } from 'src/app/services/post.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { MaskService } from 'src/app/services/mask.service';
 
 @Component({
   selector: 'app-posts',
@@ -15,17 +16,22 @@ export class PostsComponent implements OnInit {
     private postService: PostService,
     private dialogPostService: DialogPostService,
     private router: Router,
-    public login: LoginService
+    public login: LoginService,
+    public maskService:MaskService
   ) {}
 
   posts: any[] = [];
   maxWordsToShow = 50;
 
   ngOnInit(): void {
+    this.maskService.isLoading = true;
     this.postService.getAllPosts().subscribe((response: any) => {
+      
       this.posts = response;
       console.log(this.posts);
+      this.maskService.isLoading = false;
     });
+    
   }
 
   toggleLike(post: any): void {
