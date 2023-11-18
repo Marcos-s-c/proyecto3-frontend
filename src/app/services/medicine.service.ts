@@ -25,4 +25,8 @@ export class MedicineService {
   public modificaMedicina(medicina:Medicina, id:number){
     return this.http.put(`${baserUrl()}/rest/medicines/mod/${id}`, medicina);
   }
+
+  public borrarMed(id: number){
+    return this.http.delete(`${baserUrl()}/rest/medicines/delete/${id}`);
+  }
 }

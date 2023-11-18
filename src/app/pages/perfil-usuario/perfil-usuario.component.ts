@@ -549,6 +549,7 @@ export class PerfilUsuarioComponent implements OnInit {
             this.formDosis = '';
           }
         });
+        this.getAllMedicinasFiltered();
       },
       (error: any) => {
         console.log('Error agregar medicamento', error);
@@ -590,9 +591,26 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
 
-  borrarMedicamento(){
-    console.log('borrar')
+  borrarMedicamento(medicine_id: number) {
+    console.log('borrar');
+    this.medicineService.borrarMed(medicine_id).subscribe((response) => {
+      this.getAllMedicinasFiltered();
+      console.log('borrar ', response.toString());
+      Swal.fire({
+        title: 'Medicamento borrado',
+        text: 'Medicamento eliminado con éxito',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+    });
   }
+
 
   frecuencias: string[] = [];
   anadeFrecuencias(){
