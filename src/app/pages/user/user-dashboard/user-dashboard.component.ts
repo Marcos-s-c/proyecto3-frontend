@@ -529,7 +529,7 @@ export class UserDashboardComponent implements OnInit {
   noFertileDays: any;
   fetchMedications() {
     console.log(this.medications);
-    this.medicineService.getMedicines(this.medications).subscribe(
+    this.medicineService.getMedicineByMedicine(this.medications).subscribe(
       (medications: any) => {
         this.medications = medications;
         console.log('after', this.medications);

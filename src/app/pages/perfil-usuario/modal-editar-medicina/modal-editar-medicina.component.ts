@@ -1,16 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogModule,
-  MatDialogTitle
+  MatDialogRef,
 } from "@angular/material/dialog";
-import {ComponentType} from "@angular/cdk/overlay";
-import {MatButtonModule} from "@angular/material/button";
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from '@angular/forms';
+import {MedicineService} from "../../../services/medicine.service";
 
 @Component({
   selector: 'app-modal-editar-medicina',
@@ -20,12 +14,19 @@ import {FormsModule} from "@angular/forms";
 export class ModalEditarMedicinaComponent implements OnInit{
 
   public medicine_id: number;
-  public name: string = '';
-  public dosis: string = '';
-  public frecuencia: string = '';
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any) {
+  public name: string ;
+  public dosis: string;
+  public frecuencia: string;
+  constructor(@Inject(MAT_DIALOG_DATA) public data:any, public dialogRef: MatDialogRef<ModalEditarMedicinaComponent>,  private medServervice: MedicineService) {
     this.medicine_id = data.medicine_id;
   }
+
+  // public medicina = {
+  //   medicine_id: 0,
+  //   name: '',
+  //   dosis:'',
+  //   frecuencia:''
+  // }
 
   frecuencias: string[] = [];
   anadeFrecuencias(){
@@ -41,14 +42,16 @@ export class ModalEditarMedicinaComponent implements OnInit{
     this.anadeFrecuencias()
   }
 
-  formSubmit(event: any) {
+  formSubmit() {
     console.log('form submitted');
-    console.log(event.target);
     console.log('name', this.name);
     console.log('dosis', this.dosis);
     console.log('frecuencia', this.frecuencia);
-  }
 
+    this.medServervice.getAllMedicamentos().subscribe((response:any) => {
+      console.log('response ', response)
+    })
+  }
 
 }
 

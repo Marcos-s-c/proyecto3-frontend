@@ -14,7 +14,7 @@ export class MedicineService {
     return this.http.post(`${baserUrl()}/rest/medicines/add`, medicine);
   }
 
-  public getMedicines(medicine: any) {
+  public getMedicineByMedicine(medicine: any) {
     return this.http.get(`${baserUrl()}/rest/medicines/get`, medicine);
   }
 
