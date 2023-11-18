@@ -3,19 +3,19 @@
   <div>
     <mat-form-field class ="example-full-width">
       <mat-label>Nuevo nombre de medicamento</mat-label>
-      <input name="name" matInput type="text" [(ngModel)]="name">
+      <input name="name" matInput type="text" [(ngModel)]="medicina.name">
     </mat-form-field>
   </div>
   <div>
     <mat-form-field class="example-full-width">
       <mat-label>Nueva dosis</mat-label>
-      <input name="dosis" matInput type="text" [(ngModel)]="dosis">
+      <input name="dosis" matInput type="text" [(ngModel)]="medicina.dosis">
     </mat-form-field>
   </div>
   <div>
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Nueva frecuencia</mat-label>
-      <mat-select name="frecuencia" [(ngModel)]="frecuencia">
+      <mat-select [(ngModel)]="medicina.frecuencia">
         <mat-option *ngFor="let frec of frecuencias" [value]="frec">{{frec}}</mat-option>
       </mat-select>
     </mat-form-field>

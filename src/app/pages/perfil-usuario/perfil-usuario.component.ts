@@ -574,9 +574,19 @@ export class PerfilUsuarioComponent implements OnInit {
   editarMedicamento(medicine_id: number){
     this.dialog.open(ModalEditarMedicinaComponent, {
       data: {
-        medicine_id: medicine_id
+        medicine_id: medicine_id,
+        name:this.formName,
+        dosis:this.formDosis,
+        frecuencia:this.formFrecuencia
       }
     });
+
+    this.dialog.afterAllClosed.subscribe(result => {
+      console.log('\ncomponente usuario',result)
+      console.log('\ncomponente usuario',result)
+      console.log('\ncomponente usuario',result)
+      this.getAllMedicinasFiltered();
+    })
   }
 
 

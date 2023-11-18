@@ -21,4 +21,8 @@ export class MedicineService {
   public getAllMedicamentos(){
     return this.http.get<Medicina[]>(`${baserUrl()}/rest/medicines/get`)
   }
+
+  public modificaMedicina(medicina:Medicina, id:number){
+    return this.http.put(`${baserUrl()}/rest/medicines/mod/${id}`, medicina);
+  }
 }

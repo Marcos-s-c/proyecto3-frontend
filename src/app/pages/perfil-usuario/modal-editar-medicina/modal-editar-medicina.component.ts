@@ -5,6 +5,7 @@ import {
 } from "@angular/material/dialog";
 import { FormsModule } from '@angular/forms';
 import {MedicineService} from "../../../services/medicine.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-modal-editar-medicina',
@@ -13,12 +14,22 @@ import {MedicineService} from "../../../services/medicine.service";
 })
 export class ModalEditarMedicinaComponent implements OnInit{
 
-  public medicine_id: number;
-  public name: string ;
-  public dosis: string;
-  public frecuencia: string;
+  public medicina={
+    medicine_id: 0,
+    name:'',
+    dosis:'',
+    frecuencia:'',
+  }
+  //
+  // public medicine_id: number;
+  // public name: string ;
+  // public dosis: string;
+  // public frecuencia: string;
   constructor(@Inject(MAT_DIALOG_DATA) public data:any, public dialogRef: MatDialogRef<ModalEditarMedicinaComponent>,  private medServervice: MedicineService) {
-    this.medicine_id = data.medicine_id;
+    this.medicina.medicine_id = data.medicine_id;
+    this.medicina.name = data.name;
+    this.medicina.dosis = data.dosis;
+    this.medicina.frecuencia = data.frecuencia;
   }
 
   // public medicina = {
@@ -44,13 +55,30 @@ export class ModalEditarMedicinaComponent implements OnInit{
 
   formSubmit() {
     console.log('form submitted');
-    console.log('name', this.name);
-    console.log('dosis', this.dosis);
-    console.log('frecuencia', this.frecuencia);
+    console.log('name', this.medicina.name);
+    console.log('dosis', this.medicina.dosis);
+    console.log('frecuencia', this.medicina.frecuencia);
 
-    this.medServervice.getAllMedicamentos().subscribe((response:any) => {
+    this.medServervice.modificaMedicina(this.medicina, this.medicina.medicine_id).subscribe((response:any) => {
       console.log('response ', response)
+      Swal.fire({
+        title: 'Medicina modificada',
+        text: 'Medicina modificada con éxito.',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+      const dataToSendBack = this.medicina;
+      this.dialogRef.close(dataToSendBack);
+
     })
+
+
   }
 
 }
