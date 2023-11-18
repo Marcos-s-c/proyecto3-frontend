@@ -49,10 +49,12 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
 import { DialogDataComponent } from './components/dialog-data/dialog-data.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { PostsComponent } from './pages/publications/posts/posts.component';
 import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
 import { ModalEditarMedicinaComponent  } from './pages/perfil-usuario/modal-editar-medicina/modal-editar-medicina.component';
+import { MaskLoaderComponent } from './components/mask-loader/mask-loader.component';
 
 @NgModule({
     declarations: [
@@ -72,6 +74,7 @@ import { ModalEditarMedicinaComponent  } from './pages/perfil-usuario/modal-edit
         PostsComponent,
         DialogPostsComponent,
         ModalEditarMedicinaComponent,
+        MaskLoaderComponent,
     ],
     imports: [
         CommonModule,
@@ -106,6 +109,7 @@ import { ModalEditarMedicinaComponent  } from './pages/perfil-usuario/modal-edit
         MatExpansionModule,
         MatCheckboxModule,
         MatBadgeModule,
+      MatProgressSpinnerModule,
         CalendarModule.forRoot({
             provide: DateAdapter,
             useFactory: adapterFactory,

@@ -112,7 +112,7 @@
 
 .pref-cajon {
   width: 50%;
-  height: 300px;
+  height: 250px;
 }
 
 .example-section {
@@ -217,4 +217,14 @@ frecuenciWr {
 mat-card{
   margin-bottom: 1rem;
 
+}
+.notifications-section{
+  justify-content: center;
+  font-size: small;
+  padding-top: 40px;
+  div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

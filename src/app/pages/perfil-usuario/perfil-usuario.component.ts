@@ -19,6 +19,8 @@ import { MedicineService } from 'src/app/services/medicine.service';
 import {MatListModule} from "@angular/material/list";
 import {MatCardModule} from "@angular/material/card";
 import {Medicina} from "../../interface/Medicina";
+import {TextComponent} from "../../components/text/text.component";
+import {NotificationService} from "../../services/notifications.service";
 import {
   MatDialog,
   MatDialogActions,
@@ -63,6 +65,7 @@ export interface User {
     MatListModule,
     MatCardModule,
     MatDialogModule,
+    TextComponent,
   ],
 })
 export class PerfilUsuarioComponent implements OnInit {
@@ -87,7 +90,8 @@ export class PerfilUsuarioComponent implements OnInit {
     private snack: MatSnackBar,
     private router: Router,
     private medicineService: MedicineService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private notitificationService: NotificationService
   ) {}
 
 
