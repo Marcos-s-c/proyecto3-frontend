@@ -75,7 +75,7 @@
       aria-label="Example icon-button with heart icon"
       [routerLink]="'/user-dashboard'"
     >
-      Ir al Dashboard
+      Ir al Inicio
     </button>
   </ng-container>
   <!-- Mostrar diferentes opciones según la URL y el estado de inicio de sesión -->
@@ -97,7 +97,7 @@
       class="example-icon favorite-icon mr20 ml70"
       aria-label="Example icon-button with heart icon"
     >
-      Dashboard
+      Inicio
     </a>
     <a
       [routerLink]="'/user-calendar'"
@@ -131,7 +131,9 @@
       class="example-icon favorite-icon"
       aria-label="Example icon-button with heart icon"
     >
-    <a class="profile-link" [routerLink]="'/perfil'">{{ user.email || 'Perfil'}}</a>
+      <a class="profile-link" [routerLink]="'/perfil'">{{
+        user.email || "Perfil"
+      }}</a>
     </button>
     <button
       type="button"

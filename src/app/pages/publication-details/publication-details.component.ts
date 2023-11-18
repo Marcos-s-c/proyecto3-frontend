@@ -8,6 +8,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
 import Swal from 'sweetalert2';
 import { MatButtonModule } from '@angular/material/button';
+import { MaskService } from 'src/app/services/mask.service';
 
 const noImagePath = '../../assets/noImage.jpg'
 @Component({
@@ -25,8 +26,7 @@ export class PublicationDetailsComponent implements OnInit {
   public subject: string;
   public content: string;
   private file: any;
-
-  constructor(private route: ActivatedRoute, private router:Router ,private cdr: ChangeDetectorRef, private postService:PostService) { }
+  constructor(private route: ActivatedRoute, private router:Router ,private cdr: ChangeDetectorRef, private postService:PostService, private maskService:MaskService) { }
 
   ngOnInit(): void {
       this.route.params.subscribe((params) => {
@@ -39,12 +39,13 @@ export class PublicationDetailsComponent implements OnInit {
     event.preventDefault();
     if(this.subject && this.content && (this.file || this.imageUrl!=noImagePath)){
       const formData = new FormData();
+      this.maskService.isLoading = true;
       if(this.postId)formData.append('postId', this.postId);
       if(this.file)formData.append('file', this.file);              
       formData.append('subject', this.subject);
       formData.append('content',this.content);
       this.postService.crearPost(formData).subscribe({
-        next: (response) => Swal.fire({
+        next: (response) => {Swal.fire({
           title: 'Post',
           text: 'Información Guardada',
           showCancelButton: false,
@@ -52,17 +53,21 @@ export class PublicationDetailsComponent implements OnInit {
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#f25287',
         })
-        .then(response => this.router.navigate(['/community/publication-posts'])),
+        .then(response => this.router.navigate(['/community/publication-posts']))
+        this.maskService.isLoading = false;  
+      },
         error: (error) => {
+        
         console.log(error)
         Swal.fire({
-          title: 'Error',
+          title: 'Error no se pude crear la publicación, intentelo nuevamente',
           text: error.error.message,
           showCancelButton: false,
           showConfirmButton: true,
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#f25287',
         }).then(response => this.getPost());
+        this.maskService.isLoading = false;  
       }
     })
   }else{

@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MaskService } from 'src/app/services/mask.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -20,12 +21,14 @@ export class SignupComponent implements OnInit {
   constructor(
     private userService: UserService,
     private snack: MatSnackBar,
-    private router: Router
+    private router: Router,
+    public maskService: MaskService
   ) {}
 
   ngOnInit(): void {}
 
   formSubmit() {
+    this.maskService.isLoading = true;
     console.log(this.user);
 
     if (
@@ -62,7 +65,7 @@ export class SignupComponent implements OnInit {
     this.userService.añadirUsuario(this.user).subscribe(
       (response) => {
         console.log(response);
-
+        this.maskService.isLoading = false;
         Swal.fire({
           title: 'Usuario guardado',
           text: 'Usuario registrado con éxito.',
@@ -89,11 +92,13 @@ export class SignupComponent implements OnInit {
               duration: 3000,
             }
           );
+          this.maskService.isLoading = false;
         } else {
           // Error del sistema u otro tipo de error
           this.snack.open('Ha ocurrido un error en el sistema.', 'Aceptar', {
             duration: 3000,
           });
+          this.maskService.isLoading = false;
         }
       }
     );

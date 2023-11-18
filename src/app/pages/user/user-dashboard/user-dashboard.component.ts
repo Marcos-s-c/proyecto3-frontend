@@ -3,14 +3,13 @@ import { DataService } from '../../../services/dataService.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MedicineService } from 'src/app/services/medicine.service';
 import { NotificationDataService } from 'src/app/services/notificationDataService';
-
+import { MaskService } from 'src/app/services/mask.service';
 
 export type DataObject = {
   fieldName: string;
   value: any;
   date: Date;
 };
-
 
 @Component({
   selector: 'app-user-dashboard',
@@ -119,16 +118,16 @@ export class UserDashboardComponent implements OnInit {
       bottom: {
         title: 'Fecha',
         mapsTo: 'key',
-        scaleType: 'labels'
+        scaleType: 'labels',
       },
       left: {
         mapsTo: 'value',
         title: 'Tipo',
-        scaleType: 'labels'
-      }
+        scaleType: 'labels',
+      },
     },
     height: '350px',
-    width:'100%'
+    width: '100%',
   };
   dataSpike: any = [];
   optionsRadar: any = {
@@ -149,149 +148,156 @@ export class UserDashboardComponent implements OnInit {
   };
   dataRadarPain: any = [
     {
-      product : "Sentimientos",
-      feature : "Dolor generalizado",
-      score : 0
-    }, {
-      product : "Sentimientos",
-      feature : "Dolor de cabeza",
-      score : 0
-    },  {
-      product : "Sentimientos",
-      feature : "Dolor pélvico",
-      score : 0
-     },  {
-      product : "Sentimientos",
-      feature : "Hinchazón abdominal",
-      score : 0
-    },  {
-      product : "Sentimientos",
-      feature : " Cólicos menstruales",
-      score : 0
-    },  {
-      product : "Sentimientos",
-      feature : "Sensibilidad en mamas",
-      score : 0
-    },  {
-      product : "Sentimientos",
-      feature : "Dolor lumbar",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Dolor generalizado',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Dolor de cabeza',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Dolor pélvico',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Hinchazón abdominal',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: ' Cólicos menstruales',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Sensibilidad en mamas',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Dolor lumbar',
+      score: 0,
     },
   ];
   dataRadarEmotion: any = [
     {
-      product : "Sentimientos",
-      feature : "Cambios de humor",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Cambios de humor',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Ansiedad",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Ansiedad',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Depresión",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Depresión',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Fatiga",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Fatiga',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Irritabilidad",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Irritabilidad',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Estrés",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Estrés',
+      score: 0,
     },
   ];
   loading: boolean = true;
-  panelOpenState:boolean = true;
+  panelOpenState: boolean = true;
   constructor(
     private dataService: DataService,
     private _snackBar: MatSnackBar,
-    private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService) {}
+    private notificationDataService: NotificationDataService,
+    private medicineService: MedicineService,
+    public maskService: MaskService
+  ) {}
 
-  ngOnInit():void {
+  ngOnInit(): void {
+    this.maskService.isLoading = true;
     const today = new Date();
     today.setHours(today.getHours() - 6);
     this.setFormValues(today.toISOString().split('T')[0]);
     const notEnoughData = false;
     this.getChartsData();
-    this.dataService.getAveragePeriod().subscribe(
-      (data:any) =>{
-        if(data.average != null){
-          this.periodAverageDuration = data.average + " días";
-        }else{
-          this.periodAverageDuration = "No hay suficientes datos.";
-        }
+    this.dataService.getAveragePeriod().subscribe((data: any) => {
+      this.maskService.isLoading = false;
+      if (data.average != null) {
+        this.periodAverageDuration = data.average + ' días';
+      } else {
+        this.periodAverageDuration = 'No hay suficientes datos.';
       }
-  );
+    });
     this.dataService.getAverageVariationCycle().subscribe((data: any) => {
-      if(data.average != null) {
-        this.averagePeriodVariation = data.average + " días";
-      }else{
-        this.averagePeriodVariation = "No hay suficientes datos.";
+      if (data.average != null) {
+        this.averagePeriodVariation = data.average + ' días';
+      } else {
+        this.averagePeriodVariation = 'No hay suficientes datos.';
       }
     });
     this.dataService.getNextPeriodDate().subscribe((data: any) => {
-      if(data.date != null){
+      if (data.date != null) {
         this.nextPeriod = data.date;
       }
     });
     this.dataService.getFertileDays().subscribe((data: any) => {
-      if(data.firstDate != null && data.lastDate != ""){
-        this.firstFertileDay = data.firstDate ;
+      if (data.firstDate != null && data.lastDate != '') {
+        this.firstFertileDay = data.firstDate;
         this.lastFertileDay = data.lastDate;
-      }else{
-        this.noFertileDays = "No hay suficientes datos.";
+      } else {
+        this.noFertileDays = 'No hay suficientes datos.';
       }
     });
 
     this.fetchMedications();
-
   }
 
   getChartsData() {
     this.loading = true;
-     this.dataService.getPeriodCritiriaLastMonth().subscribe((response: any) => {
-      console.log(response)
-        for (let i = 0; i < response.length; i++) {
-          let item = response[i];
-          switch (item.fieldName) {
-            case 'temperature':
-              if(item.value){
-               this.dataLineal.push({
+    this.dataService.getPeriodCritiriaLastMonth().subscribe((response: any) => {
+      console.log(response);
+      for (let i = 0; i < response.length; i++) {
+        let item = response[i];
+        switch (item.fieldName) {
+          case 'temperature':
+            if (item.value) {
+              this.dataLineal.push({
                 group: 'Temperatura (C°)',
                 date: item.date.replace(/-/g, '/').toString(),
                 value: parseInt(item.value),
               });
-              }
-              break;
-            case 'fluidAmount':
-              if(item.value){
+            }
+            break;
+          case 'fluidAmount':
+            if (item.value) {
               this.dataSpike.push({
                 group: 'Flujo Cervical',
                 key: item.date.replace(/-/g, '/').toString(),
                 value: item.value,
               });
-              }
+            }
             break;
-            case 'sexTimes':
-             this.dataCircle = this.dataCircle.map((objeto:any) => {
-                if (objeto.group == item.value) {
-                  return { ...objeto, value: objeto.value + 1 };
-                }
-                return objeto;
-              });
-          break;
-            case 'emotionType':
+          case 'sexTimes':
+            this.dataCircle = this.dataCircle.map((objeto: any) => {
+              if (objeto.group == item.value) {
+                return { ...objeto, value: objeto.value + 1 };
+              }
+              return objeto;
+            });
+            break;
+          case 'emotionType':
             /*
               this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
                 console.log(objeto.feature == item.value);
@@ -301,14 +307,15 @@ export class UserDashboardComponent implements OnInit {
                 return objeto;
               });
                */
-               for (let i = 0; i < this.dataRadarEmotion.length; i++) {
-                if (this.dataRadarEmotion[i].feature == item.value) {
-                  this.dataRadarEmotion[i].score = this.dataRadarEmotion[i].score + 1;
-                }
+            for (let i = 0; i < this.dataRadarEmotion.length; i++) {
+              if (this.dataRadarEmotion[i].feature == item.value) {
+                this.dataRadarEmotion[i].score =
+                  this.dataRadarEmotion[i].score + 1;
               }
+            }
             break;
-            case 'painType':
-              /*
+          case 'painType':
+            /*
                 this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
                   if (objeto.feature == item.value) {
                     return { ...objeto, feature: objeto.feature + 1 };
@@ -316,17 +323,17 @@ export class UserDashboardComponent implements OnInit {
                   return objeto;
                 });
                  */
-                 for (let i = 0; i < this.dataRadarPain.length; i++) {
-                  if (this.dataRadarPain[i].feature == item.value) {
-                    this.dataRadarPain[i].score = this.dataRadarPain[i].score + 1;
-                  }
-                }
-              break;
+            for (let i = 0; i < this.dataRadarPain.length; i++) {
+              if (this.dataRadarPain[i].feature == item.value) {
+                this.dataRadarPain[i].score = this.dataRadarPain[i].score + 1;
+              }
+            }
+            break;
         }
-       }
-        this.loading = false;
-      });
-    }
+      }
+      this.loading = false;
+    });
+  }
   createDataArrayList() {
     //define date
     if (this.date == undefined) this.date = new Date();
@@ -409,6 +416,7 @@ export class UserDashboardComponent implements OnInit {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
           this.dataArrayList = [];
           this.notificationDataService.getNotifications();
+          this.maskService.isLoading = false;
         },
         (error: any) => {
           if (error.error.Message) {
@@ -423,6 +431,7 @@ export class UserDashboardComponent implements OnInit {
             );
           }
           this.dataArrayList = [];
+          this.maskService.isLoading = false;
         }
       );
     } else {
