@@ -1,0 +1,33 @@
+<!-- posts.component.html -->
+<div *ngFor="let post of posts" class="card-container">
+  <mat-card class="post-card">
+    <img mat-card-image [src]="post.imageUrl" alt="Post Image" />
+    <mat-card-content>
+      <div class="post-header">
+        <h2>{{ post.subject }}</h2>
+        <h4>{{post.date}}</h4>
+      </div>
+      <p>{{ getTruncatedContent(post) }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-icon-button *ngIf="login.getUserRole() == 'ADMIN'" (click)="editPostRoute(post.postId)">
+        <mat-icon fontIcon="edit">edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="toggleLike(post)" [ngClass]="{'red-color': post.likedByLoggedUser }">
+        <mat-icon>{{ post.likedByLoggedUser ? "favorite" : "favorite_border" }}</mat-icon>
+      </button>
+      <button mat-icon-button (click)="openPost(post)">
+        <mat-icon>open_in_new</mat-icon>
+      </button>
+      <span class="time-reading">Tiempo de lectura: {{ calculateReadingTime(post.content) }} min</span>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<button
+    class="add-post-button"
+    *ngIf="login.getUserRole() == 'ADMIN'"
+    mat-raised-button
+    (click)="newPostRoute()"
+  >
+    +
+  </button>

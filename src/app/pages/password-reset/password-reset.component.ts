@@ -23,7 +23,7 @@ export class PasswordResetComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private dialog: MatDialog 
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {

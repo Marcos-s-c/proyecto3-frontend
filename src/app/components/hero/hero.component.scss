@@ -17,6 +17,7 @@
     width: 100%;
     margin: 0;
     height: 100%;
+    object-fit: cover;
   }
   .hero-logo {
     padding-top: 5%;
@@ -24,6 +25,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+    object-fit: cover
   }
   h1 {
     @include title;

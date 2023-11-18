@@ -1,0 +1,312 @@
+<mat-tab-group class="profile-tabs">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>
+        <p>Información personal</p>
+      </div>
+    </ng-template>
+      <div class="password-reset-container">
+        <div class="password-reset-form">
+        <h2>Información personal</h2>
+        <form (ngSubmit)="formSubmit($event)">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input
+              [disabled]="!editar"
+              required
+              [(ngModel)]="user.name"
+              name="nombre"
+              matInput
+              placeholder="Digite su nombre"
+            />
+          </mat-form-field>
+          <!-- <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input
+              [disabled]="!editar"
+              required
+              [(ngModel)]="user.surname"
+              name="apellido"
+              matInput
+              placeholder="Digite su apellido"
+            />
+          </mat-form-field> -->
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              [disabled]="!editar"
+              required
+              [(ngModel)]="user.email"
+              name="email"
+              type="email"
+              matInput
+              placeholder="Digite su email"
+            />
+          </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input
+              [disabled]="!editar"
+              required
+              [(ngModel)]="user.phone"
+              name="telefono"
+              matInput
+              placeholder="Digite su telefono"
+            />
+          </mat-form-field>
+          <div class="container">
+            <div class="vertical-center">
+              <button
+                class="back-container"
+                color="primary"
+                *ngIf="!editar"
+                mat-raised-button
+                (click)="onEditar($event)"
+              >
+                Editar
+              </button>
+              <button
+                *ngIf="editar"
+                mat-raised-button
+                class="full-width-button button-color custom-button"
+                class="back-container"
+                color="primary"
+              >
+                Salvar Cambios
+              </button>
+              <button
+                *ngIf="editar"
+                mat-raised-button
+                class="back-container"
+                color="primary"
+                (click)="onCancelar($event)"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>
+        <p>Seguridad</p>
+      </div>
+    </ng-template>
+    <div class="password-reset-container">
+      <div class="password-reset-form">
+        <h2>Restablecer Contraseña</h2>
+        <form (ngSubmit)="resetPassword()">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Contraseña actual</mat-label>
+            <input
+              type="password"
+              [(ngModel)]="currentPassword"
+              name="currentPassword"
+              matInput
+              placeholder="Digite la contraseña actual"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nueva contraseña</mat-label>
+            <input
+              type="password"
+              [(ngModel)]="newPassword"
+              name="newPassword"
+              matInput
+              placeholder="Enter new password"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Confirmar nueva contraseña</mat-label>
+            <input
+              type="password"
+              [(ngModel)]="confirmPassword"
+              name="confirmPassword"
+              matInput
+              placeholder="Confirm new password"
+              required
+            />
+          </mat-form-field>
+          <div class="button-container">
+            <button
+            type="submit"
+            class="back-container"
+            color="primary"
+            mat-raised-button
+            >
+              Reestablecer contraseña
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>
+        <p>Preferencias</p>
+      </div>
+    </ng-template>
+    <div class="password-reset-container">
+      <div class="password-reset-form">
+      <h2>
+        Selecciona los métodos por los cuales deseas recibir notificaciones
+      </h2>
+      <div class="pref-cajon">
+        <section class="example-section">
+          <span class="example-list-section">
+            <mat-checkbox
+              class="example-margin"
+              [checked]="allComplete"
+              [color]="task.color"
+              [indeterminate]="someComplete()"
+              (change)="setAll($event.checked)"
+            >
+              {{ task.name }}
+            </mat-checkbox>
+          </span>
+          <span class="example-list-section">
+            <ul>
+              <li *ngFor="let subtask of task.subtasks">
+                <mat-checkbox
+                  [value]="subtask.value"
+                  [(ngModel)]="subtask.completed"
+                  [color]="subtask.color"
+                  (ngModelChange)="updateAllComplete()"
+                  class="notificaciones"
+                  [checked]="isOptionSelected(subtask)"
+                >
+                  {{ subtask.name }}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </span>
+        </section>
+      </div>
+      <div class="vertical-center">
+        <button
+        (click)="salvarOpciones()"
+        type="submit"
+        class="back-container"
+        color="primary"
+        mat-raised-button>
+          Actualizar preferencias
+        </button>
+      </div>
+        <!--Delete after prefrences frecuence-->
+        <div class="notifications-section">
+          <p>Si quieres obtener el pronóstico de tu siguiente período por texto, selecciona la preferencia de SMS y haz click en el botón.</p>
+          <div>
+            <button
+              (click)="sendNextPeriodSMS()"
+              class="back-container"
+              color="primary"
+              mat-raised-button>
+              Enviar
+            </button>
+          </div>
+          <p>Si quieres obtener el pronóstico de tu siguiente período por WhatsApp, selecciona la preferencia de WhatsApp y haz click en el botón.</p>
+          <div>
+            <button
+              (click)="sendNextPeriodWA()"
+              class="back-container"
+              color="primary"
+              mat-raised-button>
+              Enviar
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>
+        <p>Medicamentos</p>
+      </div>
+    </ng-template>
+
+    <div class="med-wrapper">
+      <div class="left-med-wrapper">
+        <div class="password-reset-container">
+          <div class="password-reset-form">
+            <h2>Agrega tus medicamentos</h2>
+            <div class="formWr">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="formName"
+                  name="title"
+                  (change)="printToConsole($event)"
+                />
+                <mat-hint></mat-hint>
+              </mat-form-field>
+
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Dosis</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="formDosis"
+                  name="title"
+                  (change)="printToConsole($event)"
+                />
+                <mat-hint></mat-hint>
+              </mat-form-field>
+
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Frecuencia</mat-label>
+                <mat-form-field>
+                  <mat-select [(ngModel)]="formFrecuencia">
+                    <mat-option *ngFor="let frec of frecuencias" [value]="frec">{{frec}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </mat-form-field>
+            </div>
+            <div class="button-container">
+              <button
+                (click)="salvarMedicamento()"
+                class="back-container"
+                color="primary"
+                mat-raised-button>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-med-wrapper">
+        <div class="lista-med">
+          <h2>Lista de medicamentos</h2>
+            <mat-action-list>
+                <mat-card *ngFor="let med of medicinas">
+                  <div class="med-carta">
+                    <mat-card-header>{{ med.name }}</mat-card-header>
+                    <mat-card-content>{{ med.dosis }}</mat-card-content>
+                    <mat-card-content>{{ med.frecuencia }}</mat-card-content>
+                    <mat-card-footer>
+                      <div class="boton">
+                        <button mat-stroked-button color="primary" (click)="editarMedicamento(med.medicine_id)">Editar</button>
+                        <button mat-stroked-button color="warn" (click)="borrarMedicamento(med.medicine_id)">Borrar</button>
+                      </div>
+                    </mat-card-footer>
+                  </div>
+                </mat-card>
+            </mat-action-list>
+        </div>
+
+
+      </div>
+    </div>
+
+  </mat-tab>
+</mat-tab-group>

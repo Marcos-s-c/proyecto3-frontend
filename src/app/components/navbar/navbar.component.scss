@@ -1,11 +1,15 @@
-.example-spacer{
+.example-spacer {
   flex: 1 1 auto;
 }
-button{
-  border:none;
+button {
+  border: none;
   background-color: #f7d9d9;
 }
-.material-icons.color_grey { 
-  color: #df5583; 
+.material-icons.color_grey {
+  color: #df5583;
+}
 
+.profile-link{
+  text-decoration: none;
+  color: #df5583;
 }

@@ -1,0 +1,685 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
+import { ThemePalette } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { LoginService } from '../../services/login.service';
+import { ResetContraRequestBody } from '../../interface/ResetContraRequestBody';
+import { PreferenciasPostBody } from '../../interface/PreferenciasPostBody';
+import { MedicineService } from 'src/app/services/medicine.service';
+import {MatListModule} from "@angular/material/list";
+import {MatCardModule} from "@angular/material/card";
+import {Medicina} from "../../interface/Medicina";
+import {TextComponent} from "../../components/text/text.component";
+import {NotificationService} from "../../services/notifications.service";
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent, MatDialogModule,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import {ModalEditarMedicinaComponent} from "./modal-editar-medicina/modal-editar-medicina.component";
+
+export interface Task {
+  name: string;
+  value: string;
+  completed: boolean;
+  color: ThemePalette;
+  subtasks?: Task[];
+}
+
+export interface User {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
+@Component({
+  selector: 'app-perfil-usuario',
+  templateUrl: './perfil-usuario.component.html',
+  styleUrls: ['./perfil-usuario.component.scss'],
+  standalone: true,
+  imports: [
+    MatTabsModule,
+    MatIconModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatCheckboxModule,
+    CommonModule,
+    MatSelectModule,
+    MatListModule,
+    MatCardModule,
+    MatDialogModule,
+    TextComponent,
+  ],
+})
+export class PerfilUsuarioComponent implements OnInit {
+  public editar: boolean = false;
+  public body?: ResetContraRequestBody;
+
+  public user = {
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
+    phone: '',
+  };
+
+  private user1 = this.loginService.getUser();
+  public medicinas: Medicina[] = [];
+
+
+  constructor(
+    private userService: UserService,
+    private loginService: LoginService,
+    private snack: MatSnackBar,
+    private router: Router,
+    private medicineService: MedicineService,
+    public dialog: MatDialog,
+    private notitificationService: NotificationService
+  ) {}
+
+
+
+  ngOnInit(): void {
+    this.user.name = this.user1.name;
+    this.user.surname = '';
+    this.user.email = this.user1.email;
+    this.user.password = '';
+    this.user.phone = this.user1.phone;
+
+    this.cargarPreferenciasActuales();
+    this.anadeFrecuencias();
+    this.getAllMedicinasFiltered();
+  }
+
+  onEditar(clickEvent: any) {
+    this.editar = true;
+    clickEvent.stopPropagation();
+  }
+
+  onEditarOff() {
+    this.editar = false;
+  }
+
+  onSalvarCambios(clickEvent: any) {
+    this.userService.actualizarUsuario(this.user).subscribe((response) => {
+      console.log(response);
+    });
+    // Handle the "Salvar Cambios" button click
+    //clickEvent.stopPropagation();
+  }
+
+  onCancelar(clickEvent: any) {
+    this.editar = false;
+    clickEvent.stopPropagation();
+  }
+
+  //DATOS DE USUARIO
+
+  //REESTABLECER CONTRASENA
+
+  currenPasswordMatch: boolean = false;
+
+  clearFields(): void {
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+  }
+
+  confirmaContraActual(event: any) {
+    this.body = { string: this.currentPassword, email: this.user.email };
+  }
+
+  currentPassword: string = '';
+  newPassword: string = '';
+  confirmPassword: string = '';
+  resetPassword() {
+    this.body = { string: this.currentPassword, email: this.user.email };
+
+    if (
+      this.newPassword === '' ||
+      this.newPassword === null ||
+      this.confirmPassword === '' ||
+      this.confirmPassword === null ||
+      this.currentPassword === '' ||
+      this.currentPassword === null
+    ) {
+      Swal.fire({
+        title: 'Todos los campos son requeridos',
+        text: 'Favor digitar la información requerida',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+      this.clearFields();
+      return;
+    }
+
+    this.userService.compara(this.body).subscribe(
+      (response: any) => {
+        if (response) {
+          if (this.newPassword === this.confirmPassword) {
+            this.user.password = this.confirmPassword;
+            this.userService
+              .actualizarUsuario(this.user)
+              .subscribe((response) => {
+                Swal.fire({
+                  title: 'Usuario actualizado',
+                  text: 'Usuario actualizado con éxito.',
+                  showCancelButton: false,
+                  showConfirmButton: true,
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: 'pink',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    // El usuario hizo clic en "Aceptar"
+                  }
+                });
+              });
+            this.clearFields();
+          } else {
+            Swal.fire({
+              title: 'Contraseñas no concuerdan',
+              text: 'Verificar nueva contraseña en ambos campos.',
+              showCancelButton: false,
+              showConfirmButton: true,
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: 'pink',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // El usuario hizo clic en "Aceptar"
+              }
+            });
+            this.clearFields();
+            return;
+          }
+        } else {
+          Swal.fire({
+            title: 'Error en contraseña actual',
+            text: 'Favor verificar la contraseña actual',
+            showCancelButton: false,
+            showConfirmButton: true,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: 'pink',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // El usuario hizo clic en "Aceptar"
+            }
+          });
+          this.clearFields();
+          return;
+        }
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+
+  formSubmit(clickEvent: any) {
+
+    if (
+      !this.user.name ||
+      !this.user.email ||
+      !this.user.phone
+    ) {
+      Swal.fire({
+        title: 'Todos los campos son requeridos',
+        text: 'Favor digitar la información requerida',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+      this.clearFields();
+      return;
+    }
+
+    if (
+      this.user.name === this.user1.name && this.user.email === this.user1.email && this.user.phone === this.user1.phone
+    ) {
+      Swal.fire({
+        title: 'Valores iguales',
+        text: 'Favor actualizar información',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+      this.clearFields();
+      return;
+    }
+
+    // Expresión regular para validar correos electrónicos
+    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+    if (!emailRegex.test(this.user.email)) {
+      Swal.fire({
+        title: 'Error con el correo electrónico',
+        text: 'Correo electrónico debe estar en formato de correo',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+      this.clearFields();
+      return;
+    }
+
+    this.userService.actualizarUsuario(this.user).subscribe(
+      (response: any) => {
+        Swal.fire({
+          title: 'Usuario actualizado',
+          text: 'Usuario actualizado con éxito.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+          }
+        });
+        this.user1.name = this.user.name;
+        this.user1.email = this.user.email;
+        this.user1.phone = this.user.phone;
+        this.onEditarOff()
+        return;
+      },
+      (error: any) => {
+        console.log('Error actualizar', error);
+        if (error.status === 400) {
+          // Error de credenciales incorrectos (Código de respuesta 400)
+          this.snack.open(
+            'Este correo ya esta en uso, por favor utilice otro',
+            'Aceptar',
+            {
+              duration: 3000,
+            }
+          );
+        } else {
+          // Error del sistema u otro tipo de error
+          this.snack.open('Ha ocurrido un error en el sistema.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+      }
+    );
+  }
+
+  // PREFERENCIAS
+
+  task: Task = {
+    name: 'Seleccionar todas',
+    value: 'todas',
+    completed: false,
+    color: 'primary',
+    subtasks: [
+      {
+        name: 'Mensaje de texto SMS',
+        value: 'sms',
+        completed: false,
+        color: 'primary',
+      },
+      {
+        name: 'Mensaje de Whatsapp',
+        value: 'wapp',
+        completed: false,
+        color: 'primary',
+      },
+      {
+        name: 'Correo electrónico',
+        value: 'email',
+        completed: false,
+        color: 'primary',
+      },
+    ],
+  };
+
+  allComplete: boolean = false;
+
+
+  cargarPreferenciasActuales(){
+    this.userService.getPreferenciasByEmail(this.user1.email).subscribe(
+      (response:any) => {
+        console.log("preferencias response", response)
+        this.task.subtasks?.forEach((task) => {
+          if(task.value === 'sms' && response.sms === '1'){
+            task.completed = true;
+          }
+          if(task.value === 'wapp' && response.wapp === '1'){
+            task.completed = true;
+          }
+          if(task.value === 'email' && response.email === '1'){
+            task.completed = true;
+          }
+        })
+        console.log(this.task.subtasks);
+      }, (error) => {
+        console.error("error: ", error)
+      }
+    )
+  }
+
+  //cargarPreferenciasActuales();
+
+
+  /*
+  * updateAllComplete() es un método que calcula el valor de allComplete en función del estado de finalización de las subtareas:
+    Comprueba si la propiedad de subtareas del objeto de tarea no es nula.
+    Si las subtareas no son nulas, utiliza el método every para verificar si todas las subtareas tienen su propiedad completada establecida en true. Si lo hacen, establece this.allComplete en true;sino en false.*/
+  updateAllComplete() {
+    this.allComplete =
+      this.task.subtasks != null &&
+      this.task.subtasks.every((task) => task.completed);
+  }
+
+  someComplete(): boolean {
+    if (this.task.subtasks == null) {
+      return false;
+    }
+    return (
+      this.task.subtasks.filter((task) => task.completed).length > 0 &&
+      !this.allComplete
+    );
+  }
+
+  setAll(completed: boolean) {
+    this.allComplete = completed;
+    if (this.task.subtasks == null) {
+      return;
+    }
+    this.task.subtasks.forEach((task) => (task.completed = completed));
+  }
+
+  wappSelected: string = '0';
+  smsSelected: string = '0';
+  emailSelected: string = '0';
+  prefBody: PreferenciasPostBody;
+  isOptionSelected(subtask: any): boolean {
+    return subtask.completed;
+  }
+
+  salvarOpciones(): void {
+    // @ts-ignore
+    if (this.task.subtasks[0].completed) {
+      this.smsSelected = '1';
+    } else {
+      this.smsSelected = '0';
+    }
+    // @ts-ignore
+    if (this.task.subtasks[1].completed) {
+      this.wappSelected = '1';
+    } else {
+      this.wappSelected = '0';
+    }
+    // @ts-ignore
+    if (this.task.subtasks[2].completed) {
+      this.emailSelected = '1';
+    } else {
+      this.emailSelected = '0';
+    }
+
+    this.prefBody = {
+      emailId: this.user.email,
+      sms: this.smsSelected,
+      wapp: this.wappSelected,
+      email: this.emailSelected,
+    };
+
+    this.userService.addPreferencia(this.prefBody).subscribe(
+      (response: any) => {
+        console.log('userService.addPreferencia ', response);
+      },
+      (error: any) => {
+        console.error('userService.addPreferencia error', error);
+      }
+    );
+  }
+
+  formDosis: string = '';
+  formFrecuencia: string = '';
+  formName: string = '';
+
+  printToConsole(event: any) {
+    console.log(event.target.value);
+  }
+  onSeleccionMedicamento(event: any) {}
+  public medicine = {
+    name: '',
+    frecuencia: '',
+    dosis: '',
+  };
+
+  limpiarCampos(){
+    this.formName = '';
+    this.formFrecuencia = '';
+    this.formDosis = '';
+  }
+  salvarMedicamento() {
+    this.medicine.name = this.formName;
+    this.medicine.frecuencia = this.formFrecuencia;
+    this.medicine.dosis = this.formDosis;
+
+    if(this.formName === '' || this.formName === ' ' || this.formName === null ||
+       this.formFrecuencia === '' || this.formFrecuencia === ' ' || this.formFrecuencia === null ||
+       this.formDosis === '' || this.formDosis === ' ' || this.formDosis === null
+    ){
+      Swal.fire({
+        title: 'Todos los campos son obligatorios',
+        text: 'Favor llenar todos los campos.',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+          this.formName = '';
+          this.formFrecuencia = '';
+          this.formDosis = '';
+        }
+      });
+      this.limpiarCampos();
+      return;
+    }
+
+    // if(isNaN(parseInt(this.medicine.frecuencia.trim(), 10))){
+    //
+    //   Swal.fire({
+    //     title: 'Error de datos',
+    //     text: 'Frecuencia debe ser un valor numerico.',
+    //     showCancelButton: false,
+    //     showConfirmButton: true,
+    //     confirmButtonText: 'Aceptar',
+    //     confirmButtonColor: 'pink',
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       // El usuario hizo clic en "Aceptar"
+    //       this.formName = '';
+    //       this.formFrecuencia = '';
+    //       this.formDosis = '';
+    //     }
+    //   });
+    //   this.limpiarCampos();
+    //   return;
+    // }
+
+    console.log(this.medicine);
+    this.medicineService.saveMedicine(this.medicine).subscribe(
+      (response: any) => {
+        Swal.fire({
+          title: 'Medicamento Agregado',
+          text: 'Medicamento Agregado con éxito.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+            this.formName = '';
+            this.formFrecuencia = '';
+            this.formDosis = '';
+          }
+        });
+        this.getAllMedicinasFiltered();
+      },
+      (error: any) => {
+        console.log('Error agregar medicamento', error);
+        if (error.status === 400) {
+          // Error de credenciales incorrectos (Código de respuesta 400)
+          this.snack.open(
+            'Error ',
+            'Aceptar',
+            {
+              duration: 3000,
+            }
+          );
+        } else {
+          // Error del sistema u otro tipo de error
+          this.snack.open('Ha ocurrido un error en el sistema.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+      }
+    );
+  }
+
+  editarMedicamento(medicine_id: number){
+    this.dialog.open(ModalEditarMedicinaComponent, {
+      data: {
+        medicine_id: medicine_id,
+        name:this.formName,
+        dosis:this.formDosis,
+        frecuencia:this.formFrecuencia
+      }
+    });
+
+    this.dialog.afterAllClosed.subscribe(result => {
+      console.log('\ncomponente usuario',result)
+      console.log('\ncomponente usuario',result)
+      console.log('\ncomponente usuario',result)
+      this.getAllMedicinasFiltered();
+    })
+  }
+
+
+  borrarMedicamento(medicine_id: number) {
+    console.log('borrar');
+    this.medicineService.borrarMed(medicine_id).subscribe((response) => {
+      this.getAllMedicinasFiltered();
+      console.log('borrar ', response.toString());
+      Swal.fire({
+        title: 'Medicamento borrado',
+        text: 'Medicamento eliminado con éxito',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+    });
+  }
+
+
+  frecuencias: string[] = [];
+  anadeFrecuencias(){
+    this.frecuencias.push('Una dosis diaria')
+    this.frecuencias.push('Dos dosis diarias')
+    this.frecuencias.push('Tres dosis diarias')
+    this.frecuencias.push('Una dosis semanal')
+    this.frecuencias.push('Una dosis mensual')
+    this.frecuencias.push('Indefinida')
+  }
+
+  getAllMedicinasFiltered(){
+    console.log('medicinas')
+    this.medicineService.getAllMedicamentos().subscribe((response: Medicina[]) => {
+      this.medicinas = response;
+    })
+  }
+
+  sendNextPeriodSMS() {
+    this.notitificationService.sendNextPeriodSMS().subscribe(
+      (data: any) => {
+        if(data.result === "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de texto.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+      }
+    );
+  }
+
+
+  sendNextPeriodWA() {
+    this.notitificationService.sendNextPeriodWA().subscribe(
+      (data: any) => {
+        if(data.result === "noWAPreferenceOn"){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de WhatsApp.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "noWAPreferenceOn"){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+      }
+    );
+  }
+}

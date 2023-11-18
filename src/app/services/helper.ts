@@ -12,5 +12,3 @@ export const formatDate = (date:Date) => {
     return `${year}-${month}-${day}`;
 }
 
-export const noImagePath = '/src/assets/noImage.jpg'
-

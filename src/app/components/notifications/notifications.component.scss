@@ -1,0 +1,14 @@
+.iconWarining,
+.notificationText {
+  padding-left: 20px;
+}
+.notiContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notiMain{
+    overflow: auto;
+    height: 80vh;
+}

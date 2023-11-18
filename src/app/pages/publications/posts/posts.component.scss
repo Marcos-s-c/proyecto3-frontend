@@ -1,0 +1,53 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.post-card {
+  width: 50vw;
+  margin: 10px;
+}
+
+.mat-card-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+.time-reading {
+  margin-left: auto;
+  color: #757575;
+}
+//
+/* Dentro de tu archivo de estilos CSS */
+.mat-icon-button.active .material-icons {
+  color: #df5583;
+}
+
+.post-header{
+  display: flex;
+  align-items: center;
+  h4, h2{
+    padding: 0 3px;
+  }
+  h4{
+    color: grey;
+    padding-top: 3px;
+  }
+}
+
+.add-post-button{
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  color: white;
+  font-size: 40px;
+  background-color: #f25287;
+  border-radius: 50%;
+  bottom: 20px;
+  right: 20px;
+}
+
+.red-color{
+  color: red;
+}

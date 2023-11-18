@@ -3,6 +3,7 @@ import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MaskService } from 'src/app/services/mask.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,7 +20,8 @@ export class DialogPasswordResetComponent implements OnInit {
     private snack: MatSnackBar,
     private userService: UserService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private maskService: MaskService
   ) {}
 
   ngOnInit(): void {}
@@ -48,7 +50,7 @@ export class DialogPasswordResetComponent implements OnInit {
       );
       return;
     }
-
+    this.maskService.isLoading = true;
     this.userService
       .reiniciarContraseña(this.dialogEmail)
       .subscribe((response) => {
@@ -56,6 +58,7 @@ export class DialogPasswordResetComponent implements OnInit {
           'Revisar Correo',
           'Se ha enviado un código de restablecimiento de contraseña a su dirección de correo electrónico. '
         );
+        this.maskService.isLoading = false;
         Swal.fire({
           title: 'Revisar Correo',
           text: 'Se ha enviado un código de restablecimiento de contraseña a su dirección de correo electrónico.',

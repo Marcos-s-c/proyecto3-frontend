@@ -1,0 +1,13 @@
+<!-- post-dialog.component.html -->
+<div class="post-content">
+  <h2>{{ data.post.subject }}</h2>
+  <img mat-card-image [src]="data.post.imageUrl" alt="Post Image" class="contain-image" />
+
+  <p>{{ data.post.content }}</p>
+</div>
+
+<div class="container text-center">
+  <button type="submit" mat-raised-button class="button-color custom-button">
+    Comentarios
+  </button>
+</div>

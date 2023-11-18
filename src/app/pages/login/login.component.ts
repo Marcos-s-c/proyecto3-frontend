@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { DialogPasswordResetComponent } from './dialog-password-reset/dialog-password-reset.component';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { MaskService } from 'src/app/services/mask.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     private snack: MatSnackBar,
     private loginService: LoginService,
     private router: Router,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    public maskService: MaskService
   ) {}
 
   openDialog() {
@@ -33,8 +35,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   formSubmit() {
-    if (!this.loginData.email)
-     {
+    this.maskService.isLoading = true;
+    if (!this.loginData.email) {
       this.snack.open('El email es requerido!', 'Aceptar', {
         duration: 3000,
       });
@@ -65,20 +67,20 @@ export class LoginComponent implements OnInit {
       (response: any) => {
         this.loginService.loginUser(response.token);
         this.loginService.setUser(response.user);
-        console.log(this.loginService.getUserRole());
 
-        if (this.loginService.getUserRole() == 'ROLE_ADMIN') {
-          //dashboard admin
-          //window.location.href = '/admin';
-          this.router.navigate(['/']);
+        if (this.loginService.getUserRole() == 'ADMIN') {
+          this.maskService.isLoading = false;
+          this.router.navigate(['/admin']);
           this.loginService.loginStatusSubjec.next(true);
-        } else if (this.loginService.getUserRole() == 'ROLE_USER') {
+        } else if (this.loginService.getUserRole() == 'USER') {
+          this.maskService.isLoading = false;
           this.router.navigate(['/user-dashboard']);
           this.loginService.loginStatusSubjec.next(true);
         }
       },
       (error) => {
         console.log(error);
+        this.maskService.isLoading = false;
         Swal.fire({
           title: 'Credenciales inválidos',
           text: 'Lo sentimos, no pudimos procesar tus credenciales en este momento. Por favor, inténtalo de nuevo más tarde o comunícate con el soporte técnico si el problema persiste.',
