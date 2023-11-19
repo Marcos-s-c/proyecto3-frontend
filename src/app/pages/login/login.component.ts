@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   formSubmit() {
-    this.maskService.isLoading = true;
     if (!this.loginData.email) {
       this.snack.open('El email es requerido!', 'Aceptar', {
         duration: 3000,
@@ -62,7 +61,7 @@ export class LoginComponent implements OnInit {
       });
       return;
     }
-
+    this.maskService.isLoading = true;
     this.loginService.generateToken(this.loginData).subscribe(
       (response: any) => {
         this.loginService.loginUser(response.token);
