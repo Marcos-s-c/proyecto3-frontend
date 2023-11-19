@@ -293,6 +293,15 @@ export class UserDashboardComponent implements OnInit {
                   }
                 }
               break;
+              case 'sleepHours':
+                if(item.value){
+                   this.dataCircle.push({
+                  group: 'Horas de sueño',
+                  date: item.date.replace(/-/g, '/').toString(),
+                  value: [item.value],
+                });
+                }
+               break;
         }
       }
       this.loading = false;
