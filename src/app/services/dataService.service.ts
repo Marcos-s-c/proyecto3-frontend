@@ -16,6 +16,14 @@ export class DataService {
     );
   }
 
+  public addComment(comment : any){
+    return this.http.post(`${baserUrl()}/rest/comments/add`, comment)
+  }
+
+  public getCommentsByPost(idPost: any){
+    return this.http.get(`${baserUrl()}/rest/comments/getByPostId/`+idPost);
+  }
+
   public getExistingData(today: string) {
     return this.http.get(
       `${baserUrl()}/rest/period-criteria/getPeriodCriteriaByDate?date=${today}`

@@ -49,6 +49,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
 import { DialogDataComponent } from './components/dialog-data/dialog-data.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { PostsComponent } from './pages/publications/posts/posts.component';
 import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
@@ -57,7 +58,73 @@ import { InputComponent } from './components/shared/input/input.component';
 import { ContainerComponent } from './components/shared/container/container.component';
 import { CardComponent } from './components/shared/card/card.component';
 import { TitleComponent } from './components/shared/title/title.component';
+import { ModalEditarMedicinaComponent  } from './pages/perfil-usuario/modal-editar-medicina/modal-editar-medicina.component';
+import { MaskLoaderComponent } from './components/mask-loader/mask-loader.component';
+
 @NgModule({
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        SignupComponent,
+        LoginComponent,
+        DashboardComponent,
+        UserDashboardComponent,
+        PasswordResetComponent,
+        DialogPasswordResetComponent,
+        CalendarComponent,
+        UserCalendarComponent,
+        CalendarComponent,
+        DialogDataComponent,
+        NotificationsComponent,
+        PostsComponent,
+        DialogPostsComponent,
+        ModalEditarMedicinaComponent,
+        MaskLoaderComponent,
+    ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        HttpClientModule,
+        MatSnackBarModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatGridListModule,
+        MatDialogModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatSelectModule,
+        MatStepperModule,
+        ReactiveFormsModule,
+        MatDividerModule,
+        MatRadioModule,
+        MatSliderModule,
+        ReactiveFormsModule,
+        ChartsModule,
+        MatExpansionModule,
+        MatCheckboxModule,
+        MatBadgeModule,
+      MatProgressSpinnerModule,
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+        }),
+    ],
+    providers: [authInterceptorProviders, DialogService],
+    bootstrap: [AppComponent],
+    exports: [
+        ModalEditarMedicinaComponent
+    ]
   declarations: [
     AppComponent,
     NavbarComponent,

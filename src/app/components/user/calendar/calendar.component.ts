@@ -4,7 +4,7 @@ import { CalendarView, CalendarEvent } from 'angular-calendar';
 import { DataService } from 'src/app/services/dataService.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { parseISO } from 'date-fns';
-
+import { MaskService } from 'src/app/services/mask.service';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -13,7 +13,8 @@ import { parseISO } from 'date-fns';
 export class CalendarComponent implements OnInit {
   constructor(
     private dataService: DataService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public maskService: MaskService
   ) {}
 
   public periodCriteria = {
@@ -29,6 +30,7 @@ export class CalendarComponent implements OnInit {
   events: CalendarEvent[] = [];
 
   ngOnInit() {
+    this.maskService.isLoading = true;
     this.getDataById().subscribe((data) => {
       this.groupedData = this.groupAndCombineFieldsByDate(data);
     });
@@ -94,7 +96,7 @@ export class CalendarComponent implements OnInit {
 
     // Asigna los eventos al arreglo events
     this.events = calendarEvents;
-
+    this.maskService.isLoading = false;
     return consolidatedData;
   }
 }

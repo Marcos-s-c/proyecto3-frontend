@@ -3,14 +3,13 @@ import { DataService } from '../../../services/dataService.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MedicineService } from 'src/app/services/medicine.service';
 import { NotificationDataService } from 'src/app/services/notificationDataService';
-
+import { MaskService } from 'src/app/services/mask.service';
 
 export type DataObject = {
   fieldName: string;
   value: any;
   date: Date;
 };
-
 
 @Component({
   selector: 'app-user-dashboard',
@@ -59,57 +58,24 @@ export class UserDashboardComponent implements OnInit {
   };
   dataLineal: any = [];
   optionsCircle: any = {
-    title: 'Vida Sexual',
+    title: 'Horas de sueño',
     toolbar: {
       enabled: false,
     },
-    legend: {
-      alignment: 'center',
-      position: 'right',
-      orientation: 'vertical',
+    axes: {
+      left: {
+        mapsTo: 'date',
+        scaleType: 'labels',
+      },
+      bottom: {
+        mapsTo: 'value',
+        domain :[0,14]
+      },
     },
-    curve: 'curveMonotoneX',
     height: '400px',
-    width: '100%',
   };
-  dataCircle: any = [
-    {
-      group: 'Sexo con protección',
-      value: 0,
-    },
-    {
-      group: 'Sexo sin protección',
-      value: 0,
-    },
-    {
-      group: 'Deseo sexual alto',
-      value: 0,
-    },
-    {
-      group: 'Deseo sexual bajo',
-      value: 0,
-    },
-    {
-      group: 'Masturbación',
-      value: 0,
-    },
-    {
-      group: 'Orgasmo',
-      value: 0,
-    },
-    {
-      group: 'sexo con dolor',
-      value: 0,
-    },
-    {
-      group: 'Sexo interrumpido',
-      value: 0,
-    },
-    {
-      group: 'Uso de juguetes sexuales',
-      value: 0,
-    },
-  ];
+
+  dataCircle: any = [];
   optionsSpike: any = {
     title: 'Flujo cervical',
     toolbar: {
@@ -119,16 +85,16 @@ export class UserDashboardComponent implements OnInit {
       bottom: {
         title: 'Fecha',
         mapsTo: 'key',
-        scaleType: 'labels'
+        scaleType: 'labels',
       },
       left: {
         mapsTo: 'value',
         title: 'Tipo',
-        scaleType: 'labels'
-      }
+        scaleType: 'labels',
+      },
     },
     height: '350px',
-    width:'100%'
+    width: '100%',
   };
   dataSpike: any = [];
   optionsRadar: any = {
@@ -149,74 +115,80 @@ export class UserDashboardComponent implements OnInit {
   };
   dataRadarPain: any = [
     {
-      product : "Sentimientos",
-      feature : "Dolor generalizado",
-      score : 0
-    }, {
-      product : "Sentimientos",
-      feature : "Dolor de cabeza",
-      score : 0
-    },  {
-      product : "Sentimientos",
-      feature : "Dolor pélvico",
-      score : 0
-     },  {
-      product : "Sentimientos",
-      feature : "Hinchazón abdominal",
-      score : 0
-    },  {
-      product : "Sentimientos",
-      feature : " Cólicos menstruales",
-      score : 0
-    },  {
-      product : "Sentimientos",
-      feature : "Sensibilidad en mamas",
-      score : 0
-    },  {
-      product : "Sentimientos",
-      feature : "Dolor lumbar",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Dolor generalizado',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Dolor de cabeza',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Dolor pélvico',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Hinchazón abdominal',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: ' Cólicos menstruales',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Sensibilidad en mamas',
+      score: 0,
+    },
+    {
+      product: 'Sentimientos',
+      feature: 'Dolor lumbar',
+      score: 0,
     },
   ];
   dataRadarEmotion: any = [
     {
-      product : "Sentimientos",
-      feature : "Cambios de humor",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Cambios de humor',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Ansiedad",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Ansiedad',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Depresión",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Depresión',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Fatiga",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Fatiga',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Irritabilidad",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Irritabilidad',
+      score: 0,
     },
     {
-      product : "Sentimientos",
-      feature : "Estrés",
-      score : 0
+      product: 'Sentimientos',
+      feature: 'Estrés',
+      score: 0,
     },
   ];
   loading: boolean = true;
-  panelOpenState:boolean = true;
+  panelOpenState: boolean = true;
   constructor(
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService) {}
+    private medicineService: MedicineService, private maskService : MaskService) {}
 
   ngOnInit():void {
     const today = new Date();
@@ -234,28 +206,27 @@ export class UserDashboardComponent implements OnInit {
       }
   );
     this.dataService.getAverageVariationCycle().subscribe((data: any) => {
-      if(data.average != null) {
-        this.averagePeriodVariation = data.average + " días";
-      }else{
-        this.averagePeriodVariation = "No hay suficientes datos.";
+      if (data.average != null) {
+        this.averagePeriodVariation = data.average + ' días';
+      } else {
+        this.averagePeriodVariation = 'No hay suficientes datos.';
       }
     });
     this.dataService.getNextPeriodDate().subscribe((data: any) => {
-      if(data.date != null){
+      if (data.date != null) {
         this.nextPeriod = data.date;
       }
     });
     this.dataService.getFertileDays().subscribe((data: any) => {
-      if(data.firstDate != null && data.lastDate != ""){
-        this.firstFertileDay = data.firstDate ;
+      if (data.firstDate != null && data.lastDate != '') {
+        this.firstFertileDay = data.firstDate;
         this.lastFertileDay = data.lastDate;
-      }else{
-        this.noFertileDays = "No hay suficientes datos.";
+      } else {
+        this.noFertileDays = 'No hay suficientes datos.';
       }
     });
 
     this.fetchMedications();
-
   }
 
   getChartsData() {
@@ -272,16 +243,16 @@ export class UserDashboardComponent implements OnInit {
                 date: item.date.replace(/-/g, '/').toString(),
                 value: parseInt(item.value),
               });
-              }
-              break;
-            case 'fluidAmount':
-              if(item.value){
+            }
+            break;
+          case 'fluidAmount':
+            if (item.value) {
               this.dataSpike.push({
                 group: 'Flujo Cervical',
                 key: item.date.replace(/-/g, '/').toString(),
-                value: item.value,
+                value: (item.value != null) ? item.value  : 0,
               });
-              }
+            }
             break;
             case 'sexTimes':
              this.dataCircle = this.dataCircle.map((objeto:any) => {
@@ -322,11 +293,20 @@ export class UserDashboardComponent implements OnInit {
                   }
                 }
               break;
+              case 'sleepHours':
+                if(item.value){
+                   this.dataCircle.push({
+                  group: 'Horas de sueño',
+                  date: item.date.replace(/-/g, '/').toString(),
+                  value: [item.value],
+                });
+                }
+               break;
         }
-       }
-        this.loading = false;
-      });
-    }
+      }
+      this.loading = false;
+    });
+  }
   createDataArrayList() {
     //define date
     if (this.date == undefined) this.date = new Date();
@@ -409,6 +389,7 @@ export class UserDashboardComponent implements OnInit {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
           this.dataArrayList = [];
           this.notificationDataService.getNotifications();
+          this.maskService.isLoading = false;
         },
         (error: any) => {
           if (error.error.Message) {
@@ -423,6 +404,7 @@ export class UserDashboardComponent implements OnInit {
             );
           }
           this.dataArrayList = [];
+          this.maskService.isLoading = false;
         }
       );
     } else {
@@ -529,10 +511,9 @@ export class UserDashboardComponent implements OnInit {
   noFertileDays: any;
   fetchMedications() {
     console.log(this.medications);
-    this.medicineService.getMedicines(this.medications).subscribe(
+    this.medicineService.getMedicineByMedicine(this.medications).subscribe(
       (medications: any) => {
         this.medications = medications;
-        console.log('after', this.medications);
       },
       (error: any) => {
         console.error('Error fetching medications:', error);

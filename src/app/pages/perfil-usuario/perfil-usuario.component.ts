@@ -16,6 +16,16 @@ import { LoginService } from '../../services/login.service';
 import { ResetContraRequestBody } from '../../interface/ResetContraRequestBody';
 import { PreferenciasPostBody } from '../../interface/PreferenciasPostBody';
 import { MedicineService } from 'src/app/services/medicine.service';
+import {MatListModule} from "@angular/material/list";
+import {MatCardModule} from "@angular/material/card";
+import {Medicina} from "../../interface/Medicina";
+import {TextComponent} from "../../components/text/text.component";
+import {NotificationService} from "../../services/notifications.service";
+import {
+  MatDialog, MatDialogModule,
+} from '@angular/material/dialog';
+import {ModalEditarMedicinaComponent} from "./modal-editar-medicina/modal-editar-medicina.component";
+import { MaskService } from 'src/app/services/mask.service';
 
 export interface Task {
   name: string;
@@ -23,13 +33,6 @@ export interface Task {
   completed: boolean;
   color: ThemePalette;
   subtasks?: Task[];
-}
-
-export interface Medicamento {
-  nombre: string;
-  administracion: string;
-  dosis: string;
-  frecuencia: string;
 }
 
 export interface User {
@@ -56,6 +59,10 @@ export interface User {
     MatCheckboxModule,
     CommonModule,
     MatSelectModule,
+    MatListModule,
+    MatCardModule,
+    MatDialogModule,
+    TextComponent,
   ],
 })
 export class PerfilUsuarioComponent implements OnInit {
@@ -71,14 +78,20 @@ export class PerfilUsuarioComponent implements OnInit {
   };
 
   private user1 = this.loginService.getUser();
+  public medicinas: Medicina[] = [];
+
 
   constructor(
     private userService: UserService,
     private loginService: LoginService,
     private snack: MatSnackBar,
-    private router: Router,
-    private medicineService: MedicineService
+    private maskService: MaskService,
+    private medicineService: MedicineService,
+    public dialog: MatDialog,
+    private notitificationService: NotificationService
   ) {}
+
+
 
   ngOnInit(): void {
     this.user.name = this.user1.name;
@@ -87,8 +100,9 @@ export class PerfilUsuarioComponent implements OnInit {
     this.user.password = '';
     this.user.phone = this.user1.phone;
 
-
     this.cargarPreferenciasActuales();
+    this.anadeFrecuencias();
+    this.getAllMedicinasFiltered();
   }
 
   onEditar(clickEvent: any) {
@@ -101,9 +115,11 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   onSalvarCambios(clickEvent: any) {
-    this.userService.actualizarUsuario(this.user).subscribe((response) => {
-      console.log(response);
-    });
+    this.maskService.isLoading = true;
+    this.userService.actualizarUsuario(this.user).subscribe(
+      (response) => {
+       this.maskService.isLoading = false;
+    },(error) => this.maskService.isLoading = false);
     // Handle the "Salvar Cambios" button click
     //clickEvent.stopPropagation();
   }
@@ -159,6 +175,7 @@ export class PerfilUsuarioComponent implements OnInit {
       return;
     }
 
+    this.maskService.isLoading = true;
     this.userService.compara(this.body).subscribe(
       (response: any) => {
         if (response) {
@@ -167,6 +184,7 @@ export class PerfilUsuarioComponent implements OnInit {
             this.userService
               .actualizarUsuario(this.user)
               .subscribe((response) => {
+                this.maskService.isLoading = false;
                 Swal.fire({
                   title: 'Usuario actualizado',
                   text: 'Usuario actualizado con éxito.',
@@ -182,6 +200,7 @@ export class PerfilUsuarioComponent implements OnInit {
               });
             this.clearFields();
           } else {
+            this.maskService.isLoading = false;
             Swal.fire({
               title: 'Contraseñas no concuerdan',
               text: 'Verificar nueva contraseña en ambos campos.',
@@ -211,6 +230,7 @@ export class PerfilUsuarioComponent implements OnInit {
             }
           });
           this.clearFields();
+          this.maskService.isLoading = false;
           return;
         }
       },
@@ -282,6 +302,7 @@ export class PerfilUsuarioComponent implements OnInit {
       return;
     }
 
+    this.maskService.isLoading = true;
     this.userService.actualizarUsuario(this.user).subscribe(
       (response: any) => {
         Swal.fire({
@@ -300,7 +321,8 @@ export class PerfilUsuarioComponent implements OnInit {
         this.user1.email = this.user.email;
         this.user1.phone = this.user.phone;
         this.onEditarOff()
-        return;
+        this.maskService.isLoading = false;
+        localStorage.setItem("user",JSON.stringify(this.user));
       },
       (error: any) => {
         console.log('Error actualizar', error);
@@ -319,6 +341,7 @@ export class PerfilUsuarioComponent implements OnInit {
             duration: 3000,
           });
         }
+        this.maskService.isLoading = false;
       }
     );
   }
@@ -356,23 +379,26 @@ export class PerfilUsuarioComponent implements OnInit {
 
 
   cargarPreferenciasActuales(){
+    this.maskService.isLoading = true;
     this.userService.getPreferenciasByEmail(this.user1.email).subscribe(
       (response:any) => {
         console.log("preferencias response", response)
         this.task.subtasks?.forEach((task) => {
-          if(task.value === 'sms' && response.sms === 'true'){
+          if(task.value === 'sms' && response.sms === '1'){
             task.completed = true;
           }
-          if(task.value === 'wapp' && response.wapp === 'true'){
+          if(task.value === 'wapp' && response.wapp === '1'){
             task.completed = true;
           }
-          if(task.value === 'email' && response.email === 'true'){
+          if(task.value === 'email' && response.email === '1'){
             task.completed = true;
           }
         })
         console.log(this.task.subtasks);
+        this.maskService.isLoading = false;
       }, (error) => {
-        console.error("error: ", error)
+        console.error("error: ", error);
+        this.maskService.isLoading = false;
       }
     )
   }
@@ -408,29 +434,32 @@ export class PerfilUsuarioComponent implements OnInit {
     this.task.subtasks.forEach((task) => (task.completed = completed));
   }
 
-  wappSelected: string = 'false';
-  smsSelected: string = 'false';
-  emailSelected: string = 'false';
+  wappSelected: string = '0';
+  smsSelected: string = '0';
+  emailSelected: string = '0';
   prefBody: PreferenciasPostBody;
   isOptionSelected(subtask: any): boolean {
     return subtask.completed;
   }
 
   salvarOpciones(): void {
-    if (!this.task.subtasks || this.task.subtasks[0].completed) {
-      this.smsSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[0].completed) {
+      this.smsSelected = '1';
     } else {
-      this.smsSelected = 'false';
+      this.smsSelected = '0';
     }
-    if (!this.task.subtasks || this.task.subtasks[1].completed) {
-      this.wappSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[1].completed) {
+      this.wappSelected = '1';
     } else {
-      this.wappSelected = 'false';
+      this.wappSelected = '0';
     }
-    if (!this.task.subtasks || this.task.subtasks[2].completed) {
-      this.emailSelected = 'true';
+    // @ts-ignore
+    if (this.task.subtasks[2].completed) {
+      this.emailSelected = '1';
     } else {
-      this.emailSelected = 'false';
+      this.emailSelected = '0';
     }
 
     this.prefBody = {
@@ -440,12 +469,16 @@ export class PerfilUsuarioComponent implements OnInit {
       email: this.emailSelected,
     };
 
+
+    this.maskService.isLoading = true;
     this.userService.addPreferencia(this.prefBody).subscribe(
       (response: any) => {
         console.log('userService.addPreferencia ', response);
+        this.maskService.isLoading = false;
       },
       (error: any) => {
         console.error('userService.addPreferencia ', error);
+        this.maskService.isLoading = false;
       }
     );
   }
@@ -518,7 +551,7 @@ export class PerfilUsuarioComponent implements OnInit {
     //   return;
     // }
 
-    console.log(this.medicine);
+    this.maskService.isLoading = true;
     this.medicineService.saveMedicine(this.medicine).subscribe(
       (response: any) => {
         Swal.fire({
@@ -536,6 +569,8 @@ export class PerfilUsuarioComponent implements OnInit {
             this.formDosis = '';
           }
         });
+        this.getAllMedicinasFiltered();
+        this.maskService.isLoading = false;
       },
       (error: any) => {
         console.log('Error agregar medicamento', error);
@@ -554,6 +589,117 @@ export class PerfilUsuarioComponent implements OnInit {
             duration: 3000,
           });
         }
+        this.maskService.isLoading = false;
+      }
+    );
+  }
+
+  editarMedicamento(medicine_id: number){
+    this.dialog.open(ModalEditarMedicinaComponent, {
+      data: {
+        medicine_id: medicine_id,
+        name:this.formName,
+        dosis:this.formDosis,
+        frecuencia:this.formFrecuencia
+      }
+    });
+
+    this.dialog.afterAllClosed.subscribe(result => {
+      console.log('\ncomponente usuario',result)
+      console.log('\ncomponente usuario',result)
+      console.log('\ncomponente usuario',result)
+      this.getAllMedicinasFiltered();
+    })
+  }
+
+
+  borrarMedicamento(medicine_id: number) {
+    console.log('borrar');
+    this.medicineService.borrarMed(medicine_id).subscribe((response) => {
+      this.getAllMedicinasFiltered();
+      console.log('borrar ', response.toString());
+      Swal.fire({
+        title: 'Medicamento borrado',
+        text: 'Medicamento eliminado con éxito',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar"
+        }
+      });
+    });
+  }
+
+
+  frecuencias: string[] = [];
+  anadeFrecuencias(){
+    this.frecuencias.push('Una dosis diaria')
+    this.frecuencias.push('Dos dosis diarias')
+    this.frecuencias.push('Tres dosis diarias')
+    this.frecuencias.push('Una dosis semanal')
+    this.frecuencias.push('Una dosis mensual')
+    this.frecuencias.push('Indefinida')
+  }
+
+  getAllMedicinasFiltered(){
+    console.log('medicinas')
+    this.medicineService.getAllMedicamentos().subscribe((response: Medicina[]) => {
+      this.medicinas = response;
+    })
+  }
+
+  sendNextPeriodSMS() {
+    this.maskService.isLoading = true;
+    this.notitificationService.sendNextPeriodSMS().subscribe(
+      (data: any) => {
+        if(data.result === "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de texto.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        this.maskService.isLoading = false;
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
+      }
+    );
+  }
+
+
+  sendNextPeriodWA() {
+    this.maskService.isLoading = true;
+    this.notitificationService.sendNextPeriodWA().subscribe(
+      (data: any) => {
+        if(data.result === "noWAPreferenceOn"){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de WhatsApp.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "noWAPreferenceOn"){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        this.maskService.isLoading = false;
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
       }
     );
   }

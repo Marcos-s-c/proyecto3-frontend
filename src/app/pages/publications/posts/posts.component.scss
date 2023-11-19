@@ -23,6 +23,12 @@
 .mat-icon-button.active .material-icons {
   color: #df5583;
 }
+.commentarea{
+  width: 100%;
+}
+.button-send{
+  margin-right: 10px;
+}
 
 .post-header{
   display: flex;
@@ -46,4 +52,8 @@
   border-radius: 50%;
   bottom: 20px;
   right: 20px;
+}
+
+.red-color{
+  color: red;
 }

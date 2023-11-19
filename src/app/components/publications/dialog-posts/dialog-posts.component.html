@@ -6,8 +6,20 @@
   <p>{{ data.post.content }}</p>
 </div>
 
-<div class="container text-center">
-  <button type="submit" mat-raised-button class="button-color custom-button">
-    Comentarios
-  </button>
+<div class="container container-comment text-center">
+  <h2>Comentarios</h2>
+  <div *ngIf="noComments">
+    <p>No hay comentarios disponibles</p>
+  </div>
+  <div *ngIf="!noComments">
+  <div>
+    <mat-card  class="comment-card" *ngFor="let comment of commentsArray">
+        <mat-card-content>
+         <h3 style="border-bottom: 1px black solid">{{comment.user_id.name}}</h3>
+          <p>{{comment.comment}}</p>
+          <p class="date-comment">{{comment.date}}</p>
+       </mat-card-content>
+    </mat-card>
+  </div>
+  </div>
 </div>
