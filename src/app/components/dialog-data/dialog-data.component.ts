@@ -5,6 +5,7 @@ import { DataService } from 'src/app/services/dataService.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
+import { MaskService } from 'src/app/services/mask.service';
 export type DataObject = {
   fieldName: string;
   value: any;
@@ -25,7 +26,8 @@ export class DialogDataComponent implements OnInit {
   constructor(
     private dialogService: DialogService,
     private fb: FormBuilder,
-    private dataService: DataService
+    private dataService: DataService,
+    public maskService: MaskService
   ) {}
 
   ngOnInit() {
@@ -147,99 +149,104 @@ export class DialogDataComponent implements OnInit {
           date: this.selectedData?.date,
         });
       }
+
       console.log(this.dataArrayList);
+
+      // Actualiza selectedData con los nuevos valores
+      if (this.selectedData) {
+        if (this.periodDataForm?.value.periodAmount) {
+          this.selectedData.periodAmount =
+            this.periodDataForm.value.periodAmount;
+        }
+        if (this.periodDataForm?.value.periodColor) {
+          this.selectedData.periodColor = this.periodDataForm.value.periodColor;
+        }
+        if (this.periodDataForm?.value.emotionType) {
+          this.selectedData.emotionType =
+            this.periodDataForm?.value.emotionType;
+        }
+        if (this.periodDataForm?.value.emotionalState) {
+          this.selectedData.emotionalState =
+            this.periodDataForm?.value.emotionalState;
+        }
+        if (this.periodDataForm?.value.fluidAmount) {
+          this.selectedData.fluidAmount =
+            this.periodDataForm?.value.fluidAmount;
+        }
+        if (this.periodDataForm?.value.fluidColor) {
+          this.selectedData.fluidColor = this.periodDataForm?.value.fluidColor;
+        }
+        if (this.periodDataForm?.value.painType) {
+          this.selectedData.painType = this.periodDataForm.value.painType;
+        }
+        if (this.periodDataForm?.value.periodAmount) {
+          this.selectedData.periodAmount =
+            this.periodDataForm?.value.periodAmount;
+        }
+        if (this.periodDataForm?.value.periodCycle) {
+          this.selectedData.periodCycle =
+            this.periodDataForm?.value.periodCycle;
+        }
+        if (this.periodDataForm?.value.physicalState) {
+          this.selectedData.physicalState =
+            this.periodDataForm.value.physicalState;
+        }
+        if (this.periodDataForm?.value.sexTimes) {
+          this.selectedData.sexTimes = this.periodDataForm.value.sexTimes;
+        }
+        if (this.periodDataForm?.value.sleepHours) {
+          if (this.periodDataForm.value.sleepHours < 0) {
+            // Muestra un mensaje de error si las horas de sueño son negativas
+            Swal.fire(
+              'Error',
+              'Las horas de sueño no pueden ser negativas',
+              'error'
+            );
+            return; // Detiene el proceso de guardar cambios
+          }
+          if (this.periodDataForm.value.sleepHours >= 23) {
+            Swal.fire(
+              'Error',
+              'Las horas de sueño no pueden ser mayores a 23',
+              'error'
+            );
+            return; // Detiene el proceso de guardar cambios
+          }
+          this.selectedData.sleepHours = this.periodDataForm?.value.sleepHours;
+        }
+        if (this.periodDataForm?.value.temperature) {
+          const temperatureValue = this.periodDataForm.value.temperature;
+
+          if (temperatureValue < 35 || temperatureValue > 42) {
+            Swal.fire(
+              'Error',
+              'La temperatura debe estar entre 35°C y 42°C',
+              'error'
+            );
+            return;
+          }
+          const temperatureString = temperatureValue.toString();
+          const temperatureRegex = /^\d+\.\d{2}$/; // Expresión regular para dos decimales
+
+          if (!temperatureRegex.test(temperatureString)) {
+            // Muestra un mensaje de error si el formato no tiene dos decimales
+            Swal.fire(
+              'Error',
+              'La temperatura debe tener exactamente dos decimales',
+              'error'
+            );
+            return; // Detiene el proceso de guardar cambios
+          }
+
+          this.selectedData.temperature =
+            this.periodDataForm?.value.temperature;
+        }
+      }
+      this.maskService.isLoading = true;
       this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
         (response) => {
           // Maneja la respuesta exitosa o realiza otras acciones necesarias
           console.log('Cambios guardados con éxito', response);
-
-          // Actualiza selectedData con los nuevos valores
-          // Actualiza selectedData con los nuevos valores
-          if (this.selectedData) {
-            if (this.periodDataForm?.value.periodAmount) {
-              this.selectedData.periodAmount =
-                this.periodDataForm.value.periodAmount;
-            }
-            if (this.periodDataForm?.value.periodColor) {
-              this.selectedData.periodColor =
-                this.periodDataForm.value.periodColor;
-            }
-            if (this.periodDataForm?.value.emotionType) {
-              this.selectedData.emotionType =
-                this.periodDataForm?.value.emotionType;
-            }
-            if (this.periodDataForm?.value.emotionalState) {
-              this.selectedData.emotionalState =
-                this.periodDataForm?.value.emotionalState;
-            }
-            if (this.periodDataForm?.value.fluidAmount) {
-              this.selectedData.fluidAmount =
-                this.periodDataForm?.value.fluidAmount;
-            }
-            if (this.periodDataForm?.value.fluidColor) {
-              this.selectedData.fluidColor =
-                this.periodDataForm?.value.fluidColor;
-            }
-            if (this.periodDataForm?.value.painType) {
-              this.selectedData.painType = this.periodDataForm.value.painType;
-            }
-            if (this.periodDataForm?.value.periodAmount) {
-              this.selectedData.periodAmount =
-                this.periodDataForm?.value.periodAmount;
-            }
-            if (this.periodDataForm?.value.periodCycle) {
-              this.selectedData.periodCycle =
-                this.periodDataForm?.value.periodCycle;
-            }
-            if (this.periodDataForm?.value.physicalState) {
-              this.selectedData.physicalState =
-                this.periodDataForm.value.physicalState;
-            }
-            if (this.periodDataForm?.value.sexTimes) {
-              this.selectedData.sexTimes = this.periodDataForm.value.sexTimes;
-            }
-            if (this.periodDataForm?.value.sleepHours) {
-              if (this.periodDataForm.value.sleepHours < 0) {
-                // Muestra un mensaje de error si las horas de sueño son negativas
-                Swal.fire(
-                  'Error',
-                  'Las horas de sueño no pueden ser negativas',
-                  'error'
-                );
-                return; // Detiene el proceso de guardar cambios
-              }
-
-              this.selectedData.sleepHours =
-                this.periodDataForm?.value.sleepHours;
-            }
-            if (this.periodDataForm?.value.temperature) {
-              const temperatureValue = this.periodDataForm.value.temperature;
-
-              if (temperatureValue < 35 || temperatureValue > 42) {
-                Swal.fire(
-                  'Error',
-                  'La temperatura debe estar entre 35°C y 42°C',
-                  'error'
-                );
-                return;
-              }
-              const temperatureString = temperatureValue.toString();
-              const temperatureRegex = /^\d+\.\d{2}$/; // Expresión regular para dos decimales
-
-              if (!temperatureRegex.test(temperatureString)) {
-                // Muestra un mensaje de error si el formato no tiene dos decimales
-                Swal.fire(
-                  'Error',
-                  'La temperatura debe tener exactamente dos decimales',
-                  'error'
-                );
-                return; // Detiene el proceso de guardar cambios
-              }
-
-              this.selectedData.temperature =
-                this.periodDataForm?.value.temperature;
-            }
-          }
 
           // Muestra una alerta de éxito
           Swal.fire(
@@ -249,12 +256,13 @@ export class DialogDataComponent implements OnInit {
           );
 
           // Desactiva el modo de edición
+          this.maskService.isLoading = false;
           this.isEditMode = false;
         },
         (error) => {
           // Maneja errores en la solicitud HTTP, si es necesario
           console.error('Error al guardar los cambios', error);
-
+          this.maskService.isLoading = false;
           // Muestra una alerta de error
           Swal.fire(
             'Error',
