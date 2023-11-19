@@ -316,9 +316,9 @@
           </mat-card>
         </div>
         <div class="graph-emotions-physical">
-          <mat-card class="card">
+          <mat-card class="card"  style="margin-bottom: 30px;">
             <mat-card-content  style="padding-right: 30px;">
-              <ibm-donut-chart [data]="dataCircle" *ngIf="!loading" [options]="optionsCircle"></ibm-donut-chart>
+              <ibm-simple-bar-chart [data]="dataCircle" *ngIf="!loading" [options]="optionsCircle"></ibm-simple-bar-chart>
             </mat-card-content>
           </mat-card>
           <mat-accordion class="graph-accordion">

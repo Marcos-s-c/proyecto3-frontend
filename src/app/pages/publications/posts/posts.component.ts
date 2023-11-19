@@ -4,6 +4,9 @@ import { DialogPostService } from '../../../services/dialogPost.service';
 import { PostService } from 'src/app/services/post.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { NumberInput } from '@angular/cdk/coercion';
+import { DataService } from '../../../services/dataService.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaskService } from 'src/app/services/mask.service';
 import Swal from "sweetalert2";
 
@@ -18,12 +21,16 @@ export class PostsComponent implements OnInit {
     private dialogPostService: DialogPostService,
     private router: Router,
     public login: LoginService,
+    public dataService: DataService,
+    private _snackBar: MatSnackBar,
     public maskService:MaskService
   ) {}
 
   posts: any[] = [];
   maxWordsToShow = 50;
-
+  addComment : Boolean = false;
+  opened !: Number;
+  newComment !: String;
   ngOnInit(): void {
     this.maskService.isLoading = true;
     this.cargarPosts();
@@ -44,6 +51,35 @@ export class PostsComponent implements OnInit {
     this.postService.likePost(post.postId).subscribe((data=>{
       console.log(data);
     }))
+  }
+
+  openComments(idComment : any){
+    this.opened = idComment;
+    this.addComment = true;
+  }
+
+  closeComments(){
+    this.newComment = "";
+    this.opened = 0;
+    this.addComment = false;
+  }
+
+  sendComment(postId : any){
+    let commentObj = {
+      post_id : postId,
+      date : new Date(),
+      comment : this.newComment
+    }
+    this.dataService.addComment(commentObj).subscribe((response: any) => {
+      if(response.id){
+        this._snackBar.open("Su comentario fue envidado con exito.", undefined, { duration: 5 * 1000 });
+        this.closeComments()
+      }else{
+        this._snackBar.open(
+          'Ocurrió un problema al crear su comentario.', undefined, { duration: 5 * 1000 });
+        this.closeComments()
+      }
+    });
   }
 
   openPost(post: any): void {

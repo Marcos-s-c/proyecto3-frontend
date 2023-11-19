@@ -16,14 +16,30 @@
       <button mat-icon-button (click)="toggleLike(post)" [ngClass]="{'red-color': post.likedByLoggedUser }">
         <mat-icon>{{ post.likedByLoggedUser ? "favorite" : "favorite_border" }}</mat-icon>
       </button>
+
       <button mat-icon-button (click)="openPost(post)">
         <mat-icon>open_in_new</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="openComments(post.postId)">
+        <mat-icon>
+          add_circle
+        </mat-icon>
       </button>
       <button mat-icon-button *ngIf="login.getUserRole() == 'ADMIN'" (click)="borrarPost(post.postId)">
         <mat-icon fontIcon="delete">delete</mat-icon>
       </button>
       <span class="time-reading">Tiempo de lectura: {{ calculateReadingTime(post.content) }} min</span>
     </mat-card-actions>
+
+  <div class="newCommentbox" *ngIf="addComment == true && opened == post.postId">
+      <mat-form-field class="commentarea">
+        <mat-label>Escribe tu comentario</mat-label>
+        <textarea matInput [(ngModel)]="newComment"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary"  (click)="sendComment(post.postId)" class="button-send">Enviar</button>
+      <button mat-raised-button (click)="closeComments()">Cancelar</button>
+  </div>
   </mat-card>
 </div>
 <button
