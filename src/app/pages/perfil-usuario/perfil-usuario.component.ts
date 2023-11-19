@@ -22,13 +22,10 @@ import {Medicina} from "../../interface/Medicina";
 import {TextComponent} from "../../components/text/text.component";
 import {NotificationService} from "../../services/notifications.service";
 import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent, MatDialogModule,
-  MatDialogTitle,
+  MatDialog, MatDialogModule,
 } from '@angular/material/dialog';
 import {ModalEditarMedicinaComponent} from "./modal-editar-medicina/modal-editar-medicina.component";
+import { MaskService } from 'src/app/services/mask.service';
 
 export interface Task {
   name: string;
@@ -88,7 +85,7 @@ export class PerfilUsuarioComponent implements OnInit {
     private userService: UserService,
     private loginService: LoginService,
     private snack: MatSnackBar,
-    private router: Router,
+    private maskService: MaskService,
     private medicineService: MedicineService,
     public dialog: MatDialog,
     private notitificationService: NotificationService
@@ -118,9 +115,11 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   onSalvarCambios(clickEvent: any) {
-    this.userService.actualizarUsuario(this.user).subscribe((response) => {
-      console.log(response);
-    });
+    this.maskService.isLoading = true;
+    this.userService.actualizarUsuario(this.user).subscribe(
+      (response) => {
+       this.maskService.isLoading = false;
+    },(error) => this.maskService.isLoading = false);
     // Handle the "Salvar Cambios" button click
     //clickEvent.stopPropagation();
   }
@@ -176,6 +175,7 @@ export class PerfilUsuarioComponent implements OnInit {
       return;
     }
 
+    this.maskService.isLoading = true;
     this.userService.compara(this.body).subscribe(
       (response: any) => {
         if (response) {
@@ -184,6 +184,7 @@ export class PerfilUsuarioComponent implements OnInit {
             this.userService
               .actualizarUsuario(this.user)
               .subscribe((response) => {
+                this.maskService.isLoading = false;
                 Swal.fire({
                   title: 'Usuario actualizado',
                   text: 'Usuario actualizado con éxito.',
@@ -199,6 +200,7 @@ export class PerfilUsuarioComponent implements OnInit {
               });
             this.clearFields();
           } else {
+            this.maskService.isLoading = false;
             Swal.fire({
               title: 'Contraseñas no concuerdan',
               text: 'Verificar nueva contraseña en ambos campos.',
@@ -228,6 +230,7 @@ export class PerfilUsuarioComponent implements OnInit {
             }
           });
           this.clearFields();
+          this.maskService.isLoading = false;
           return;
         }
       },
@@ -299,6 +302,7 @@ export class PerfilUsuarioComponent implements OnInit {
       return;
     }
 
+    this.maskService.isLoading = true;
     this.userService.actualizarUsuario(this.user).subscribe(
       (response: any) => {
         Swal.fire({
@@ -317,7 +321,8 @@ export class PerfilUsuarioComponent implements OnInit {
         this.user1.email = this.user.email;
         this.user1.phone = this.user.phone;
         this.onEditarOff()
-        return;
+        this.maskService.isLoading = false;
+        localStorage.setItem("user",JSON.stringify(this.user));
       },
       (error: any) => {
         console.log('Error actualizar', error);
@@ -336,6 +341,7 @@ export class PerfilUsuarioComponent implements OnInit {
             duration: 3000,
           });
         }
+        this.maskService.isLoading = false;
       }
     );
   }
@@ -373,6 +379,7 @@ export class PerfilUsuarioComponent implements OnInit {
 
 
   cargarPreferenciasActuales(){
+    this.maskService.isLoading = true;
     this.userService.getPreferenciasByEmail(this.user1.email).subscribe(
       (response:any) => {
         console.log("preferencias response", response)
@@ -388,8 +395,10 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         })
         console.log(this.task.subtasks);
+        this.maskService.isLoading = false;
       }, (error) => {
-        console.error("error: ", error)
+        console.error("error: ", error);
+        this.maskService.isLoading = false;
       }
     )
   }
@@ -460,12 +469,16 @@ export class PerfilUsuarioComponent implements OnInit {
       email: this.emailSelected,
     };
 
+
+    this.maskService.isLoading = true;
     this.userService.addPreferencia(this.prefBody).subscribe(
       (response: any) => {
         console.log('userService.addPreferencia ', response);
+        this.maskService.isLoading = false;
       },
       (error: any) => {
-        console.error('userService.addPreferencia error', error);
+        console.error('userService.addPreferencia ', error);
+        this.maskService.isLoading = false;
       }
     );
   }
@@ -538,7 +551,7 @@ export class PerfilUsuarioComponent implements OnInit {
     //   return;
     // }
 
-    console.log(this.medicine);
+    this.maskService.isLoading = true;
     this.medicineService.saveMedicine(this.medicine).subscribe(
       (response: any) => {
         Swal.fire({
@@ -557,6 +570,7 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         });
         this.getAllMedicinasFiltered();
+        this.maskService.isLoading = false;
       },
       (error: any) => {
         console.log('Error agregar medicamento', error);
@@ -575,6 +589,7 @@ export class PerfilUsuarioComponent implements OnInit {
             duration: 3000,
           });
         }
+        this.maskService.isLoading = false;
       }
     );
   }
@@ -637,6 +652,7 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   sendNextPeriodSMS() {
+    this.maskService.isLoading = true;
     this.notitificationService.sendNextPeriodSMS().subscribe(
       (data: any) => {
         if(data.result === "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
@@ -649,18 +665,21 @@ export class PerfilUsuarioComponent implements OnInit {
             duration: 3000,
           });
         }
+        this.maskService.isLoading = false;
       },
       (error: any) => {
         console.log(error);
         this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
           duration: 3000,
         });
+        this.maskService.isLoading = false;
       }
     );
   }
 
 
   sendNextPeriodWA() {
+    this.maskService.isLoading = true;
     this.notitificationService.sendNextPeriodWA().subscribe(
       (data: any) => {
         if(data.result === "noWAPreferenceOn"){
@@ -673,12 +692,14 @@ export class PerfilUsuarioComponent implements OnInit {
             duration: 3000,
           });
         }
+        this.maskService.isLoading = false;
       },
       (error: any) => {
         console.log(error);
         this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
           duration: 3000,
         });
+        this.maskService.isLoading = false;
       }
     );
   }
