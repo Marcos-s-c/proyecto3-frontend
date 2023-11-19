@@ -1,6 +1,6 @@
 export const baserUrl = () => {
     if(window.location.href.includes('localhost')){
-        return 'http://localhost:5500';
+        return 'http://localhost:8080';
     }
     return 'https://venus-api.azurewebsites.net';
 }
