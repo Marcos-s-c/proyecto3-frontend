@@ -28,7 +28,6 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   formSubmit() {
-    this.maskService.isLoading = true;
     console.log(this.user);
 
     if (
@@ -61,7 +60,7 @@ export class SignupComponent implements OnInit {
       );
       return;
     }
-
+  this.maskService.isLoading = true;
     this.userService.añadirUsuario(this.user).subscribe(
       (response) => {
         console.log(response);
