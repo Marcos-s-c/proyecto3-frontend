@@ -1,15 +1,47 @@
-.example-spacer {
-  flex: 1 1 auto;
+/* Estilos generales */
+.mat-toolbar {
+  display: flex;
+
+  align-items: center;
 }
 button {
   border: none;
   background-color: #f7d9d9;
 }
-.material-icons.color_grey {
+
+.profile-link {
+  text-decoration: none;
   color: #df5583;
 }
 
-.profile-link{
-  text-decoration: none;
-  color: #df5583;
+/* Estilos para los elementos a la izquierda */
+.left-elements {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Estilos para los elementos a la derecha */
+.right-elements {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Media query para pantallas pequeñas (móviles) */
+@media screen and (max-width: 768px) {
+  .mat-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .left-elements,
+  .right-elements {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .right-elements {
+    margin-top: 10px; /* Ajusta el espacio entre los grupos */
+  }
 }
