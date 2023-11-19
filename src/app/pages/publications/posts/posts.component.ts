@@ -5,6 +5,7 @@ import { PostService } from 'src/app/services/post.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { MaskService } from 'src/app/services/mask.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-posts',
@@ -25,13 +26,17 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.maskService.isLoading = true;
+    this.cargarPosts();
+
+  }
+
+  cargarPosts():void{
     this.postService.getAllPosts().subscribe((response: any) => {
-      
+
       this.posts = response;
       console.log(this.posts);
       this.maskService.isLoading = false;
     });
-    
   }
 
   toggleLike(post: any): void {
@@ -59,6 +64,28 @@ export class PostsComponent implements OnInit {
 
   editPostRoute(param: number) {
     this.router.navigate([`/community/publication-details/${param}`]);
+  }
+
+  borrarPost(postId: number){
+    Swal.fire({
+      title: 'Borrar publicación',
+      text: '¿Deseas borrar la publicación?',
+      showDenyButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Borrar',
+      denyButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // El usuario hizo clic en "Aceptar"
+        this.postService.borrarPost(postId).subscribe((response:any) => {
+          console.log('borrar')
+          this.cargarPosts();
+        })
+      }
+    });
+
+
   }
 
   // Propiedad computada para el contenido truncado.
