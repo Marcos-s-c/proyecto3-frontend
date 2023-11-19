@@ -46,9 +46,12 @@
     flex-direction: column;
   }
 
-  .image-container img {
-    width: 0%;
-    height: 0%;
+  .image-container {
+    background-color: white;
+  }
+
+  .long-button {
+    width: 300px !important;
   }
 
   .left-section,

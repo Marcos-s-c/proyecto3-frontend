@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   template: `
-    <button mat-raised-button>
+    <button [ngClass]="{ 'long-button': isLong }" mat-raised-button>
       <ng-content></ng-content>
     </button>
   `,
   styleUrls: ['./button.component.scss'],
 })
-export class ButtonComponent {}
+export class ButtonComponent {
+  @Input() isLong: boolean = false;
+}
