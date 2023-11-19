@@ -7,6 +7,8 @@ import { LoginService } from 'src/app/services/login.service';
 import { NumberInput } from '@angular/cdk/coercion';
 import { DataService } from '../../../services/dataService.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaskService } from 'src/app/services/mask.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-posts',
@@ -21,6 +23,7 @@ export class PostsComponent implements OnInit {
     public login: LoginService,
     public dataService: DataService,
     private _snackBar: MatSnackBar,
+    public maskService:MaskService
   ) {}
 
   posts: any[] = [];
@@ -29,15 +32,25 @@ export class PostsComponent implements OnInit {
   opened !: Number;
   newComment !: String;
   ngOnInit(): void {
+    this.maskService.isLoading = true;
+    this.cargarPosts();
+
+  }
+
+  cargarPosts():void{
     this.postService.getAllPosts().subscribe((response: any) => {
+
       this.posts = response;
       console.log(this.posts);
+      this.maskService.isLoading = false;
     });
   }
 
   toggleLike(post: any): void {
-    post.liked = !post.liked;
-    post.active = true;
+    post.likedByLoggedUser = !post.likedByLoggedUser;
+    this.postService.likePost(post.postId).subscribe((data=>{
+      console.log(data);
+    }))
   }
 
   openComments(idComment : any){
@@ -87,6 +100,28 @@ export class PostsComponent implements OnInit {
 
   editPostRoute(param: number) {
     this.router.navigate([`/community/publication-details/${param}`]);
+  }
+
+  borrarPost(postId: number){
+    Swal.fire({
+      title: 'Borrar publicación',
+      text: '¿Deseas borrar la publicación?',
+      showDenyButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Borrar',
+      denyButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // El usuario hizo clic en "Aceptar"
+        this.postService.borrarPost(postId).subscribe((response:any) => {
+          console.log('borrar')
+          this.cargarPosts();
+        })
+      }
+    });
+
+
   }
 
   // Propiedad computada para el contenido truncado.

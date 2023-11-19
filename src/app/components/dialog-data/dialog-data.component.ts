@@ -31,7 +31,6 @@ export class DialogDataComponent implements OnInit {
   ngOnInit() {
     this.dialogService.selectedData$.subscribe((data) => {
       this.selectedData = data;
-      console.log('Data received in DialogDataComponent:', this.selectedData);
       this.initializeForm();
     });
   }
@@ -200,10 +199,43 @@ export class DialogDataComponent implements OnInit {
               this.selectedData.sexTimes = this.periodDataForm.value.sexTimes;
             }
             if (this.periodDataForm?.value.sleepHours) {
+              if (this.periodDataForm.value.sleepHours < 0) {
+                // Muestra un mensaje de error si las horas de sueño son negativas
+                Swal.fire(
+                  'Error',
+                  'Las horas de sueño no pueden ser negativas',
+                  'error'
+                );
+                return; // Detiene el proceso de guardar cambios
+              }
+
               this.selectedData.sleepHours =
                 this.periodDataForm?.value.sleepHours;
             }
             if (this.periodDataForm?.value.temperature) {
+              const temperatureValue = this.periodDataForm.value.temperature;
+
+              if (temperatureValue < 35 || temperatureValue > 42) {
+                Swal.fire(
+                  'Error',
+                  'La temperatura debe estar entre 35°C y 42°C',
+                  'error'
+                );
+                return;
+              }
+              const temperatureString = temperatureValue.toString();
+              const temperatureRegex = /^\d+\.\d{2}$/; // Expresión regular para dos decimales
+
+              if (!temperatureRegex.test(temperatureString)) {
+                // Muestra un mensaje de error si el formato no tiene dos decimales
+                Swal.fire(
+                  'Error',
+                  'La temperatura debe tener exactamente dos decimales',
+                  'error'
+                );
+                return; // Detiene el proceso de guardar cambios
+              }
+
               this.selectedData.temperature =
                 this.periodDataForm?.value.temperature;
             }
@@ -243,7 +275,6 @@ export class DialogDataComponent implements OnInit {
   }
 
   closeDialog() {
- 
     this.dialogService.closeDialog();
   }
 }

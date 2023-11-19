@@ -19,4 +19,12 @@ export class PostService {
   public getAllPosts() {
     return this.http.get(`${baserUrl()}/rest/post/getAllPosts`);
   }
+
+  public likePost(postId:string) {
+    return this.http.get(`${baserUrl()}/rest/post/likePost?postId=${postId}`);
+  }
+
+  public borrarPost(postId: number){
+    return this.http.delete(`${baserUrl()}/rest/post/borrar/${postId}`);
+  }
 }

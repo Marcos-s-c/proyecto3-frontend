@@ -17,4 +17,12 @@ export class NotificationService{
     public readAllNotifications(){
         return this.http.get(`${baserUrl()}/rest/notifications/readNotifications`)
     }
+
+
+    public sendNextPeriodSMS(){
+      return this.http.post(`${baserUrl()}/rest/twilio/sendMessage/nextPeriod`,{})
+    }
+    public sendNextPeriodWA(){
+      return this.http.post(`${baserUrl()}/rest/wa/sendMessage/nextPeriod`, {})
+    }
 }

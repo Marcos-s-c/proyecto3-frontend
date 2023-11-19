@@ -3,16 +3,18 @@
   <mat-card class="post-card">
     <img mat-card-image [src]="post.imageUrl" alt="Post Image" />
     <mat-card-content>
-      <h2>{{ post.subject }}</h2>
+      <div class="post-header">
+        <h2>{{ post.subject }}</h2>
+        <h4>{{post.date}}</h4>
+      </div>
       <p>{{ getTruncatedContent(post) }}</p>
     </mat-card-content>
     <mat-card-actions>
       <button mat-icon-button *ngIf="login.getUserRole() == 'ADMIN'" (click)="editPostRoute(post.postId)">
         <mat-icon fontIcon="edit">edit</mat-icon>
       </button>
-
-      <button mat-icon-button (click)="toggleLike(post)" [class.active]="post.active">
-        <mat-icon>{{ post.liked ? "favorite" : "favorite_border" }}</mat-icon>
+      <button mat-icon-button (click)="toggleLike(post)" [ngClass]="{'red-color': post.likedByLoggedUser }">
+        <mat-icon>{{ post.likedByLoggedUser ? "favorite" : "favorite_border" }}</mat-icon>
       </button>
 
       <button mat-icon-button (click)="openPost(post)">
@@ -23,6 +25,9 @@
         <mat-icon>
           add_circle
         </mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="login.getUserRole() == 'ADMIN'" (click)="borrarPost(post.postId)">
+        <mat-icon fontIcon="delete">delete</mat-icon>
       </button>
       <span class="time-reading">Tiempo de lectura: {{ calculateReadingTime(post.content) }} min</span>
     </mat-card-actions>
@@ -36,23 +41,12 @@
       <button mat-raised-button (click)="closeComments()">Cancelar</button>
   </div>
   </mat-card>
-
-  <button
+</div>
+<button
+    class="add-post-button"
     *ngIf="login.getUserRole() == 'ADMIN'"
-    style="
-      position: fixed;
-      width: 60px;
-      height: 60px;
-      color: white;
-      font-size: 40px;
-      background-color: #f25287;
-      border-radius: 50%;
-      bottom: 20px;
-      right: 20px;
-    "
     mat-raised-button
     (click)="newPostRoute()"
   >
     +
   </button>
-</div>
