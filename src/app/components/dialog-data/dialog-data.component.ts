@@ -31,7 +31,6 @@ export class DialogDataComponent implements OnInit {
   ngOnInit() {
     this.dialogService.selectedData$.subscribe((data) => {
       this.selectedData = data;
-      console.log('Data received in DialogDataComponent:', this.selectedData);
       this.initializeForm();
     });
   }

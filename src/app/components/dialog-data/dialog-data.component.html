@@ -5,51 +5,51 @@
     <form *ngIf="periodDataForm" [formGroup]="periodDataForm">
       <mat-form-field>
         <mat-label>Tipo de Emoción</mat-label>
-        <input matInput [value]="selectedData?.emotionType" disabled />
+        <input matInput [value]="selectedData?.emotionType ? selectedData?.emotionType : ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Estado Emocional</mat-label>
-        <input matInput [value]="selectedData?.emotionalState" disabled />
+        <input matInput [value]="selectedData?.emotionalState ? selectedData?.emotionalState : ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Cantidad de Fluido</mat-label>
-        <input matInput [value]="selectedData?.fluidAmount" disabled />
+        <input matInput [value]="selectedData?.fluidAmount ? selectedData?.fluidAmount: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Color del Fluido</mat-label>
-        <input matInput [value]="selectedData?.fluidColor" disabled />
+        <input matInput [value]="selectedData?.fluidColor ? selectedData?.fluidColor: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Tipo de Dolor</mat-label>
-        <input matInput [value]="selectedData?.painType" disabled />
+        <input matInput [value]="selectedData?.painType ? selectedData?.painType: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Cantidad del Período</mat-label>
-        <input matInput [value]="selectedData?.periodAmount" disabled />
+        <input matInput [value]="selectedData?.periodAmount ? selectedData?.periodAmount: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Color del Período</mat-label>
-        <input matInput [value]="selectedData?.periodColor" disabled />
+        <input matInput [value]="selectedData?.periodColor ? selectedData?.periodColor: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Ciclo del Período</mat-label>
-        <input matInput [value]="selectedData?.periodCycle" disabled />
+        <input matInput [value]="selectedData?.periodCycle ? selectedData?.periodCycle: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Estado Físico</mat-label>
-        <input matInput [value]="selectedData?.physicalState" disabled />
+        <input matInput [value]="selectedData?.physicalState ? selectedData?.physicalState: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Veces Sexuales</mat-label>
-        <input matInput [value]="selectedData?.sexTimes" disabled />
+        <input matInput [value]="selectedData?.sexTimes ? selectedData?.sexTimes: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Horas de Sueño</mat-label>
-        <input matInput [value]="selectedData?.sleepHours" disabled />
+        <input matInput [value]="selectedData?.sleepHours ? selectedData?.sleepHours: ''" disabled />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Temperatura</mat-label>
-        <input matInput [value]="selectedData?.temperature" disabled />
+        <input matInput [value]="selectedData?.temperature ? selectedData?.temperature: ''" disabled />
       </mat-form-field>
     </form>
     <button mat-raised-button (click)="enterEditMode()">Editar</button>
