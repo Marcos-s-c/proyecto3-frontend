@@ -232,7 +232,6 @@ export class UserDashboardComponent implements OnInit {
   getChartsData() {
     this.loading = true;
      this.dataService.getPeriodCritiriaLastMonth().subscribe((response: any) => {
-      console.log(response)
         for (let i = 0; i < response.length; i++) {
           let item = response[i];
           switch (item.fieldName) {
@@ -384,6 +383,7 @@ export class UserDashboardComponent implements OnInit {
       });
 
     if (this.dataArrayList.length > 0) {
+      this.maskService.isLoading = true;
       this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
         (data: any) => {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
