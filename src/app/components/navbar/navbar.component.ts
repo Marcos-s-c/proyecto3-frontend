@@ -55,7 +55,6 @@ export class NavbarComponent implements OnInit {
     this.dialog.open(NotificationsComponent, {
       width: '500px',
       position: { right: '1px', top: '63px' },
-      panelClass: 'mat-dialog-container'
     });
   }
 
