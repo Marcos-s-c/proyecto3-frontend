@@ -258,6 +258,7 @@ export class DialogDataComponent implements OnInit {
           // Desactiva el modo de edición
           this.maskService.isLoading = false;
           this.isEditMode = false;
+          this.clearDataArray();
         },
         (error) => {
           // Maneja errores en la solicitud HTTP, si es necesario
@@ -272,6 +273,11 @@ export class DialogDataComponent implements OnInit {
         }
       );
     }
+  }
+
+  private clearDataArray() {
+    // Limpia el array
+    this.dataArrayList = [];
   }
 
   // Función para actualizar todos los datos en el formulario de vista
