@@ -116,9 +116,11 @@
           <mat-step>
             <ng-template matStepLabel>Estado físico y emocional</ng-template>
             <h4 style="padding-top: 10px;">Estado emocional general</h4>
-            <mat-icon style=" padding-left: 60px;">sentiment_very_dissatisfied</mat-icon>
-            <mat-icon style=" padding-left: 90px;">sentiment_neutral</mat-icon>
-            <mat-icon style=" padding-left: 90px;">sentiment_very_satisfied</mat-icon>
+            <div class="face-container">
+              <mat-icon >sentiment_very_dissatisfied</mat-icon>
+              <mat-icon >sentiment_neutral</mat-icon>
+              <mat-icon>sentiment_very_satisfied</mat-icon>
+            </div>
             <mat-slider [(ngModel)]="emotionalState" style="width: 350px;" max="10" min="0" step="1" discrete="false">
               <input matSliderThumb #slider>
             </mat-slider>
@@ -136,7 +138,7 @@
                 <mat-option value="Depresión">
                   Depresión
                 </mat-option>
-                <mat-option value="Fatiga">enviar
+                <mat-option value="Fatiga">
                   Fatiga
                 </mat-option>
                 <mat-option value="Irritabilidad">
@@ -149,10 +151,11 @@
             </mat-form-field>
 
             <h4 style="padding-top: 10px;">Dolor físico</h4>
-
-            <mat-icon style=" padding-left: 90px;">sentiment_very_satisfied</mat-icon>
-            <mat-icon style=" padding-left: 90px;">sentiment_neutral</mat-icon>
-            <mat-icon style=" padding-left: 60px;">sentiment_very_dissatisfied</mat-icon>
+            <div class="face-container">
+              <mat-icon>sentiment_very_satisfied</mat-icon>
+              <mat-icon>sentiment_neutral</mat-icon>
+              <mat-icon>sentiment_very_dissatisfied</mat-icon>
+            </div>
             <mat-slider [(ngModel)]="physicalState" style="width: 350px;" max="10" min="0" step="1" discrete="false">
               <input matSliderThumb #slider>
             </mat-slider>
