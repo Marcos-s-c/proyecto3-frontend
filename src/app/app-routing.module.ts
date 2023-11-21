@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { PublicationDetailsComponent } from './pages/publication-details/publication-details.component';
 import { UserCalendarComponent } from './pages/user/user-calendar/user-calendar.component';
 import { PostsComponent } from './pages/publications/posts/posts.component';
+import { AuthguardService } from './authguard.service';
 
 const routes: Routes = [
   {
@@ -32,16 +33,22 @@ const routes: Routes = [
     path: 'admin',
     component: DashboardComponent,
     pathMatch: 'full',
+    canActivate: [AuthguardService],
+    data: {roles: ['ADMIN']}
   },
   {
     path: 'user-dashboard',
     component: UserDashboardComponent,
     pathMatch: 'full',
+    canActivate: [AuthguardService],
+    data: {roles: ['USER']}
   },
   {
     path: 'user-calendar',
     component: UserCalendarComponent,
     pathMatch: 'full',
+    canActivate: [AuthguardService],
+    data: {roles: ['ADMIN','USER']}
   },
   {
     path: 'password_reset/:userCode',
@@ -50,19 +57,27 @@ const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuarioComponent,
+    canActivate: [AuthguardService],
+    data: {roles: ['ADMIN','USER']}
   },
   {
     path: 'community/publication-details',
     component: PublicationDetailsComponent,
+    canActivate: [AuthguardService],
+    data: {roles: ['ADMIN']}
   },
   {
     path: 'community/publication-details/:postId',
     component: PublicationDetailsComponent,
+    canActivate: [AuthguardService],
+    data: {roles: ['ADMIN']}
   },
   {
     path: 'community/publication-posts',
     component: PostsComponent,
     pathMatch: 'full',
+    canActivate: [AuthguardService],
+    data: {roles: ['ADMIN','USER']}
   },
 ];
 
