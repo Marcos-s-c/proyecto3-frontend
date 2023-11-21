@@ -25,4 +25,9 @@ export class NotificationService{
     public sendNextPeriodWA(){
       return this.http.post(`${baserUrl()}/rest/wa/sendMessage/nextPeriod`, {})
     }
+
+  public sendNextFertileDaysWA(){
+    return this.http.post(`${baserUrl()}/rest/wa/sendMessage/nextFertileDays`, {})
+  }
+
 }
