@@ -72,17 +72,17 @@ body {
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: pink;
+  color: gainsboro;
 }
 
 .mat-form-field-appearance-outline:hover .mat-form-field-outline {
-  color: #f25287;
+  color: gray;
 }
 
 .mat-form-field {
   &.mat-focused {
     .mat-form-field-label {
-      color: #df5583;
+      color: gray;
       font-weight: 400;
     }
   }
