@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MedicineService } from 'src/app/services/medicine.service';
 import { NotificationDataService } from 'src/app/services/notificationDataService';
 import { MaskService } from 'src/app/services/mask.service';
+import { LoginService } from 'src/app/services/login.service';
 
 export type DataObject = {
   fieldName: string;
@@ -34,6 +35,7 @@ export class UserDashboardComponent implements OnInit {
   painType!: String | null;
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
+  hasDevice: boolean;
   optionsLineal: any = {
     title: 'Temperatura (Cº)',
     axes: {
@@ -188,13 +190,16 @@ export class UserDashboardComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService, private maskService : MaskService) {}
+    private medicineService: MedicineService, 
+    private maskService : MaskService,
+    public loginService: LoginService
+    ) {}
 
   ngOnInit():void {
     const today = new Date();
     today.setHours(today.getHours() - 6);
+    this.hasDevice = this.loginService.getUser().hasDevice;
     this.setFormValues(today.toISOString().split('T')[0]);
-    const notEnoughData = false;
     this.getChartsData();
     this.dataService.getAveragePeriod().subscribe(
       (data:any) =>{
@@ -510,7 +515,6 @@ export class UserDashboardComponent implements OnInit {
   lastFertileDay: any;
   noFertileDays: any;
   fetchMedications() {
-    console.log(this.medications);
     this.medicineService.getMedicineByMedicine(this.medications).subscribe(
       (medications: any) => {
         this.medications = medications;

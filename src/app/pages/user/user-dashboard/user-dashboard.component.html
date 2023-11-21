@@ -197,8 +197,9 @@
           <mat-step>
             <ng-template matStepLabel>Temperatura</ng-template>
             <h4 style="padding-top: 10px;">Temperatura corporal actual</h4>
+            <p *ngIf="hasDevice" style="color: gray;">Temperatura registrada a través del dispositivo</p>
             <mat-form-field  name="temp" class="example-full-width">
-              <input [(ngModel)]="temperature" step="0.01" matInput type="number" max="42.00" min="35.00" placeholder="Temperatura(°C)">
+              <input [(ngModel)]="temperature" step="0.01" matInput type="number" max="42.00" min="35.00" placeholder="Temperatura(°C)" [disabled]="hasDevice">
             </mat-form-field>
           </mat-step>
           <mat-step>
