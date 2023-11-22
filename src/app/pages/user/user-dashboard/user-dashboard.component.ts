@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MedicineService } from 'src/app/services/medicine.service';
 import { NotificationDataService } from 'src/app/services/notificationDataService';
 import { MaskService } from 'src/app/services/mask.service';
+import {MatCheckboxChange} from "@angular/material/checkbox";
+import {Medicina} from "../../../interface/Medicina";
 import { LoginService } from 'src/app/services/login.service';
 
 export type DataObject = {
@@ -386,6 +388,12 @@ export class UserDashboardComponent implements OnInit {
         value: this.emotionType?.toString(),
         date: this.date,
       });
+    if(this.medOpcionesChecked)
+      this.dataArrayList.push({
+        fieldName: 'medication',
+        value: this.medOpcionesChecked.toString(),
+        date: this.date,
+      })
 
     if (this.dataArrayList.length > 0) {
       this.maskService.isLoading = true;
@@ -455,40 +463,49 @@ export class UserDashboardComponent implements OnInit {
       if (response.length > 0) {
         this.periodCycle = response.find(
           (field: DataObject) => field.fieldName == 'periodCycle'
-        ).value;
+        )?.value;
         this.periodAmount = response.find(
           (field: DataObject) => field.fieldName == 'periodAmount'
-        ).value;
+        )?.value;
         this.periodColor = response.find(
           (field: DataObject) => field.fieldName == 'periodColor'
-        ).value;
+        )?.value;
         this.fluidAmount = response.find(
           (field: DataObject) => field.fieldName == 'fluidAmount'
-        ).value;
+        )?.value;
         this.fluidColor = response.find(
           (field: DataObject) => field.fieldName == 'fluidColor'
-        ).value;
+        )?.value;
         this.emotionalState = response.find(
           (field: DataObject) => field.fieldName == 'emotionalState'
-        ).value;
+        )?.value;
         this.physicalState = response.find(
           (field: DataObject) => field.fieldName == 'physicalState'
-        ).value;
+        )?.value;
         this.sleepHours = response.find(
           (field: DataObject) => field.fieldName == 'sleepHours'
-        ).value;
+        )?.value;
         this.temperature = response.find(
           (field: DataObject) => field.fieldName == 'temperature'
-        ).value;
+        )?.value;
         this.sexTimes = response.find(
           (field: DataObject) => field.fieldName == 'sexTimes'
-        ).value;
+        )?.value;
         this.emotionType = response.find(
           (field: DataObject) => field.fieldName == 'emotionType'
-        ).value;
+        )?.value;
         this.painType = response.find(
           (field: DataObject) => field.fieldName == 'painType'
-        ).value;
+        )?.value;
+        console.log('this.medOpcionesChecked',response.find(
+          (field: DataObject) => field.fieldName == 'medication'
+        )?.value.split(','))
+        this.medOpcionesChecked = response.find(
+          (field: DataObject) => field.fieldName == 'medication'
+        )?.value ? response.find(
+          (field: DataObject) => field.fieldName == 'medication'
+        )?.value.split(','): [];
+
       }
     });
   }
@@ -523,5 +540,18 @@ export class UserDashboardComponent implements OnInit {
         console.error('Error fetching medications:', error);
       }
     );
+  }
+  medOpcionesChecked:string [] = [];
+
+  onMedicinasClick(event: MatCheckboxChange, medication:Medicina):boolean{
+    if(event.checked){
+      this.medOpcionesChecked.push(medication.name)
+    }else{
+      let index = this.medOpcionesChecked.indexOf(medication.name);
+      this.medOpcionesChecked.splice(index, 1);
+    }
+    console.log('\n',this.medOpcionesChecked.toString())
+    console.log('\n',typeof this.medOpcionesChecked.toString())
+    return true;
   }
 }

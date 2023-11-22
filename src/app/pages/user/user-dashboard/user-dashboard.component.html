@@ -207,7 +207,10 @@
             <section class="example-section">
               <h4>Seleccione sus medicamentos:</h4>
               <p *ngFor="let medication of medications">
-                <mat-checkbox>
+                <mat-checkbox
+                  (change)="onMedicinasClick($event, medication)"
+                  [checked]="medOpcionesChecked.includes(medication.name)"
+                >
                   {{ medication.name }}
                 </mat-checkbox>
               </p>
