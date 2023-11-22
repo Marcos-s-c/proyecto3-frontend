@@ -116,9 +116,11 @@
           <mat-step>
             <ng-template matStepLabel>Estado físico y emocional</ng-template>
             <h4 style="padding-top: 10px;">Estado emocional general</h4>
-            <mat-icon style=" padding-left: 60px;">sentiment_very_dissatisfied</mat-icon>
-            <mat-icon style=" padding-left: 90px;">sentiment_neutral</mat-icon>
-            <mat-icon style=" padding-left: 90px;">sentiment_very_satisfied</mat-icon>
+            <div class="face-container">
+              <mat-icon >sentiment_very_dissatisfied</mat-icon>
+              <mat-icon >sentiment_neutral</mat-icon>
+              <mat-icon>sentiment_very_satisfied</mat-icon>
+            </div>
             <mat-slider [(ngModel)]="emotionalState" style="width: 350px;" max="10" min="0" step="1" discrete="false">
               <input matSliderThumb #slider>
             </mat-slider>
@@ -149,10 +151,11 @@
             </mat-form-field>
 
             <h4 style="padding-top: 10px;">Dolor físico</h4>
-
-            <mat-icon style=" padding-left: 90px;">sentiment_very_satisfied</mat-icon>
-            <mat-icon style=" padding-left: 90px;">sentiment_neutral</mat-icon>
-            <mat-icon style=" padding-left: 60px;">sentiment_very_dissatisfied</mat-icon>
+            <div class="face-container">
+              <mat-icon>sentiment_very_satisfied</mat-icon>
+              <mat-icon>sentiment_neutral</mat-icon>
+              <mat-icon>sentiment_very_dissatisfied</mat-icon>
+            </div>
             <mat-slider [(ngModel)]="physicalState" style="width: 350px;" max="10" min="0" step="1" discrete="false">
               <input matSliderThumb #slider>
             </mat-slider>
@@ -194,8 +197,9 @@
           <mat-step>
             <ng-template matStepLabel>Temperatura</ng-template>
             <h4 style="padding-top: 10px;">Temperatura corporal actual</h4>
+            <p *ngIf="hasDevice" style="color: gray;">Temperatura registrada a través del dispositivo</p>
             <mat-form-field  name="temp" class="example-full-width">
-              <input [(ngModel)]="temperature" step="0.01" matInput type="number" max="42.00" min="35.00" placeholder="Temperatura(°C)">
+              <input [(ngModel)]="temperature" step="0.01" matInput type="number" max="42.00" min="35.00" placeholder="Temperatura(°C)" [disabled]="hasDevice">
             </mat-form-field>
           </mat-step>
           <mat-step>
@@ -239,16 +243,16 @@
                 Sin orgasmo
                 </mat-option>
               <mat-option value="sexo con dolor">
-                  sexo con dolor
+                Sexo con dolor
               </mat-option>
               <mat-option value="sexo sin dolor">
-                    sexo sin dolor
+                Sexo sin dolor
               </mat-option>
               <mat-option value="Coito interrumpido">
-                      Coito interrumpido
+                Coito interrumpido
               </mat-option>
               <mat-option value="Uso de juguetes sexuales">
-                        Uso de juguetes sexuales
+                Uso de juguetes sexuales
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -259,7 +263,7 @@
         </mat-stepper>
         <div class="stepper-form-buttons-container">
           <button (click)="send()" style="width: 250px; padding-top: 10px; padding-bottom: 15px; border-radius: 0;" mat-raised-button
-                  color="primary">Enviar</button>
+                  color="primary">Guardar</button>
           <button (click)="closeForm()" style="background-color: #DDDD; border-radius: 0; padding-top: 10px; padding-bottom: 15px; width: 250px;"
                   mat-button>Cancelar</button>
         </div>

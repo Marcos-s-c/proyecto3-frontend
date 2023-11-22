@@ -72,7 +72,7 @@ export class PostsComponent implements OnInit {
     }
     this.dataService.addComment(commentObj).subscribe((response: any) => {
       if(response.id){
-        this._snackBar.open("Su comentario fue envidado con exito.", undefined, { duration: 5 * 1000 });
+        this._snackBar.open("Su comentario fue enviado con éxito.", undefined, { duration: 5 * 1000 });
         this.closeComments()
       }else{
         this._snackBar.open(

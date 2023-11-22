@@ -6,6 +6,7 @@ import { NotificationDataService } from 'src/app/services/notificationDataServic
 import { MaskService } from 'src/app/services/mask.service';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {Medicina} from "../../../interface/Medicina";
+import { LoginService } from 'src/app/services/login.service';
 
 export type DataObject = {
   fieldName: string;
@@ -36,6 +37,7 @@ export class UserDashboardComponent implements OnInit {
   painType!: String | null;
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
+  hasDevice: boolean;
   optionsLineal: any = {
     title: 'Temperatura (Cº)',
     axes: {
@@ -190,13 +192,16 @@ export class UserDashboardComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService, private maskService : MaskService) {}
+    private medicineService: MedicineService, 
+    private maskService : MaskService,
+    public loginService: LoginService
+    ) {}
 
   ngOnInit():void {
     const today = new Date();
     today.setHours(today.getHours() - 6);
+    this.hasDevice = this.loginService.getUser().hasDevice;
     this.setFormValues(today.toISOString().split('T')[0]);
-    const notEnoughData = false;
     this.getChartsData();
     this.dataService.getAveragePeriod().subscribe(
       (data:any) =>{
@@ -234,7 +239,6 @@ export class UserDashboardComponent implements OnInit {
   getChartsData() {
     this.loading = true;
      this.dataService.getPeriodCritiriaLastMonth().subscribe((response: any) => {
-      console.log(response)
         for (let i = 0; i < response.length; i++) {
           let item = response[i];
           switch (item.fieldName) {
@@ -392,6 +396,7 @@ export class UserDashboardComponent implements OnInit {
       })
 
     if (this.dataArrayList.length > 0) {
+      this.maskService.isLoading = true;
       this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
         (data: any) => {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
@@ -527,7 +532,6 @@ export class UserDashboardComponent implements OnInit {
   lastFertileDay: any;
   noFertileDays: any;
   fetchMedications() {
-    console.log(this.medications);
     this.medicineService.getMedicineByMedicine(this.medications).subscribe(
       (medications: any) => {
         this.medications = medications;
