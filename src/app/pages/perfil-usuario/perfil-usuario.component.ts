@@ -703,4 +703,31 @@ export class PerfilUsuarioComponent implements OnInit {
       }
     );
   }
+
+  sendNextFertileDaysWA() {
+    this.maskService.isLoading = true;
+    this.notitificationService.sendNextFertileDaysWA().subscribe(
+      (data: any) => {
+        if(data.result === "noWAPreferenceOn"){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de WhatsApp.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "noWAPreferenceOn"){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        this.maskService.isLoading = false;
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
+      }
+    );
+  }
+
 }

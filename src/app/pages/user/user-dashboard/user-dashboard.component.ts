@@ -4,6 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MedicineService } from 'src/app/services/medicine.service';
 import { NotificationDataService } from 'src/app/services/notificationDataService';
 import { MaskService } from 'src/app/services/mask.service';
+import {MatCheckboxChange} from "@angular/material/checkbox";
+import {Medicina} from "../../../interface/Medicina";
+import { LoginService } from 'src/app/services/login.service';
 
 export type DataObject = {
   fieldName: string;
@@ -34,6 +37,7 @@ export class UserDashboardComponent implements OnInit {
   painType!: String | null;
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
+  hasDevice: boolean;
   optionsLineal: any = {
     title: 'Temperatura (Cº)',
     axes: {
@@ -188,16 +192,18 @@ export class UserDashboardComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService, private maskService : MaskService) {}
+    private medicineService: MedicineService, 
+    private maskService : MaskService,
+    public loginService: LoginService
+    ) {}
 
   ngOnInit():void {
     const today = new Date();
     today.setHours(today.getHours() - 6);
+    this.hasDevice = this.loginService.getUser().hasDevice;
     this.setFormValues(today.toISOString().split('T')[0]);
-    const notEnoughData = false;
     this.getChartsData();
-    this.dataService.getAveragePeriod().subscribe(
-      (data:any) =>{
+    this.dataService.getAveragePeriod().subscribe((data:any) =>{
         if(data.average != null){
           this.periodAverageDuration = data.average + " días";
         }else{
@@ -229,14 +235,57 @@ export class UserDashboardComponent implements OnInit {
     this.fetchMedications();
   }
 
+  getPredictions(){
+    this.dataService.getAveragePeriod().subscribe((data:any) =>{
+      if(data.average != null){
+        this.periodAverageDuration = data.average + " días";
+      }else{
+        this.periodAverageDuration = "No hay suficientes datos.";
+      }
+    }
+);
+  this.dataService.getAverageVariationCycle().subscribe((data: any) => {
+    if (data.average != null) {
+      this.averagePeriodVariation = data.average + ' días';
+    } else {
+      this.averagePeriodVariation = 'No hay suficientes datos.';
+    }
+  });
+  this.dataService.getNextPeriodDate().subscribe((data: any) => {
+    if (data.date != null) {
+      this.nextPeriod = data.date;
+    }
+  });
+  this.dataService.getFertileDays().subscribe((data: any) => {
+    if (data.firstDate != null && data.lastDate != '') {
+      this.firstFertileDay = data.firstDate;
+      this.lastFertileDay = data.lastDate;
+    } else {
+      this.noFertileDays = 'No hay suficientes datos.';
+    }
+  });
+  }
+
+  cleanCharts(){
+    this.dataLineal = []; 
+    this.dataSpike = [];
+    this.dataCircle = [];
+    for (let i = 0; i < this.dataRadarEmotion.length; i++) {
+    this.dataRadarEmotion[i].score = 0;
+    }
+    for (let i = 0; i < this.dataRadarPain.length; i++) {
+        this.dataRadarPain[i].score = 0
+    }
+  }
+
   getChartsData() {
     this.loading = true;
+    this.cleanCharts();
      this.dataService.getPeriodCritiriaLastMonth().subscribe((response: any) => {
-      console.log(response)
         for (let i = 0; i < response.length; i++) {
           let item = response[i];
           switch (item.fieldName) {
-            case 'temperature':
+            case 'temperature':    
               if(item.value){
                this.dataLineal.push({
                 group: 'Temperatura (C°)',
@@ -246,7 +295,7 @@ export class UserDashboardComponent implements OnInit {
             }
             break;
           case 'fluidAmount':
-            if (item.value) {
+            if (item.value) {       
               this.dataSpike.push({
                 group: 'Flujo Cervical',
                 key: item.date.replace(/-/g, '/').toString(),
@@ -263,15 +312,6 @@ export class UserDashboardComponent implements OnInit {
               });
           break;
             case 'emotionType':
-            /*
-              this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
-                console.log(objeto.feature == item.value);
-                if (objeto.feature == item.value) {
-                  return { ...objeto, feature: objeto.feature + 1 };
-                }
-                return objeto;
-              });
-               */
                for (let i = 0; i < this.dataRadarEmotion.length; i++) {
                 if (this.dataRadarEmotion[i].feature == item.value) {
                   this.dataRadarEmotion[i].score = this.dataRadarEmotion[i].score + 1;
@@ -279,14 +319,6 @@ export class UserDashboardComponent implements OnInit {
               }
             break;
             case 'painType':
-              /*
-                this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
-                  if (objeto.feature == item.value) {
-                    return { ...objeto, feature: objeto.feature + 1 };
-                  }
-                  return objeto;
-                });
-                 */
                  for (let i = 0; i < this.dataRadarPain.length; i++) {
                   if (this.dataRadarPain[i].feature == item.value) {
                     this.dataRadarPain[i].score = this.dataRadarPain[i].score + 1;
@@ -301,7 +333,7 @@ export class UserDashboardComponent implements OnInit {
                   value: [item.value],
                 });
                 }
-               break;
+              break;
         }
       }
       this.loading = false;
@@ -382,13 +414,22 @@ export class UserDashboardComponent implements OnInit {
         value: this.emotionType?.toString(),
         date: this.date,
       });
+    if(this.medOpcionesChecked)
+      this.dataArrayList.push({
+        fieldName: 'medication',
+        value: this.medOpcionesChecked.toString(),
+        date: this.date,
+      })
 
     if (this.dataArrayList.length > 0) {
+      this.maskService.isLoading = true;
       this.dataService.addPeriodCriteriaList(this.dataArrayList).subscribe(
         (data: any) => {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
           this.dataArrayList = [];
           this.notificationDataService.getNotifications();
+          this.getChartsData();
+          this.getPredictions();
           this.maskService.isLoading = false;
         },
         (error: any) => {
@@ -450,40 +491,49 @@ export class UserDashboardComponent implements OnInit {
       if (response.length > 0) {
         this.periodCycle = response.find(
           (field: DataObject) => field.fieldName == 'periodCycle'
-        ).value;
+        )?.value;
         this.periodAmount = response.find(
           (field: DataObject) => field.fieldName == 'periodAmount'
-        ).value;
+        )?.value;
         this.periodColor = response.find(
           (field: DataObject) => field.fieldName == 'periodColor'
-        ).value;
+        )?.value;
         this.fluidAmount = response.find(
           (field: DataObject) => field.fieldName == 'fluidAmount'
-        ).value;
+        )?.value;
         this.fluidColor = response.find(
           (field: DataObject) => field.fieldName == 'fluidColor'
-        ).value;
+        )?.value;
         this.emotionalState = response.find(
           (field: DataObject) => field.fieldName == 'emotionalState'
-        ).value;
+        )?.value;
         this.physicalState = response.find(
           (field: DataObject) => field.fieldName == 'physicalState'
-        ).value;
+        )?.value;
         this.sleepHours = response.find(
           (field: DataObject) => field.fieldName == 'sleepHours'
-        ).value;
+        )?.value;
         this.temperature = response.find(
           (field: DataObject) => field.fieldName == 'temperature'
-        ).value;
+        )?.value;
         this.sexTimes = response.find(
           (field: DataObject) => field.fieldName == 'sexTimes'
-        ).value;
+        )?.value;
         this.emotionType = response.find(
           (field: DataObject) => field.fieldName == 'emotionType'
-        ).value;
+        )?.value;
         this.painType = response.find(
           (field: DataObject) => field.fieldName == 'painType'
-        ).value;
+        )?.value;
+        console.log('this.medOpcionesChecked',response.find(
+          (field: DataObject) => field.fieldName == 'medication'
+        )?.value.split(','))
+        this.medOpcionesChecked = response.find(
+          (field: DataObject) => field.fieldName == 'medication'
+        )?.value ? response.find(
+          (field: DataObject) => field.fieldName == 'medication'
+        )?.value.split(','): [];
+
       }
     });
   }
@@ -510,7 +560,6 @@ export class UserDashboardComponent implements OnInit {
   lastFertileDay: any;
   noFertileDays: any;
   fetchMedications() {
-    console.log(this.medications);
     this.medicineService.getMedicineByMedicine(this.medications).subscribe(
       (medications: any) => {
         this.medications = medications;
@@ -519,5 +568,18 @@ export class UserDashboardComponent implements OnInit {
         console.error('Error fetching medications:', error);
       }
     );
+  }
+  medOpcionesChecked:string [] = [];
+
+  onMedicinasClick(event: MatCheckboxChange, medication:Medicina):boolean{
+    if(event.checked){
+      this.medOpcionesChecked.push(medication.name)
+    }else{
+      let index = this.medOpcionesChecked.indexOf(medication.name);
+      this.medOpcionesChecked.splice(index, 1);
+    }
+    console.log('\n',this.medOpcionesChecked.toString())
+    console.log('\n',typeof this.medOpcionesChecked.toString())
+    return true;
   }
 }

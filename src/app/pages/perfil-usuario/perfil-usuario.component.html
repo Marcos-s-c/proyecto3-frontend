@@ -195,7 +195,7 @@
         </button>
       </div>
         <!--Delete after prefrences frecuence-->
-        <div class="notifications-section">
+        <!-- <div class="notifications-section">
           <p>Si quieres obtener el pronóstico de tu siguiente período por texto, selecciona la preferencia de SMS y haz click en el botón.</p>
           <div>
             <button
@@ -206,17 +206,29 @@
               Enviar
             </button>
           </div>
-          <div *ngIf="false">
-            <p>Si quieres obtener el pronóstico de tu siguiente período por WhatsApp, selecciona la preferencia de WhatsApp y haz click en el botón.</p>
-            <div>
-              <button
-                (click)="sendNextPeriodWA()"
-                class="back-container"
-                color="primary"
-                mat-raised-button>
-                Enviar
-              </button>
-            </div>
+        </div> -->
+        <div class="notifications-section">
+          <p>Si quieres obtener el pronóstico de tu siguiente período por WhatsApp, selecciona la preferencia de WhatsApp y haz click en el botón.</p>
+          <div>
+            <button
+              (click)="sendNextPeriodWA()"
+              class="back-container"
+              color="primary"
+              mat-raised-button>
+              Enviar
+            </button>
+          </div>
+        </div>
+        <div class="notifications-section">
+          <p>Si quieres obtener el pronóstico de tus próximos días fértiles por WhatsApp, selecciona la preferencia de WhatsApp y haz click en el botón.</p>
+          <div>
+            <button
+              (click)="sendNextFertileDaysWA()"
+              class="back-container"
+              color="primary"
+              mat-raised-button>
+              Enviar
+            </button>
           </div>
         </div>
     </div>
