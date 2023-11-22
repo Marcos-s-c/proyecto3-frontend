@@ -203,8 +203,7 @@ export class UserDashboardComponent implements OnInit {
     this.hasDevice = this.loginService.getUser().hasDevice;
     this.setFormValues(today.toISOString().split('T')[0]);
     this.getChartsData();
-    this.dataService.getAveragePeriod().subscribe(
-      (data:any) =>{
+    this.dataService.getAveragePeriod().subscribe((data:any) =>{
         if(data.average != null){
           this.periodAverageDuration = data.average + " días";
         }else{
@@ -236,13 +235,57 @@ export class UserDashboardComponent implements OnInit {
     this.fetchMedications();
   }
 
+  getPredictions(){
+    this.dataService.getAveragePeriod().subscribe((data:any) =>{
+      if(data.average != null){
+        this.periodAverageDuration = data.average + " días";
+      }else{
+        this.periodAverageDuration = "No hay suficientes datos.";
+      }
+    }
+);
+  this.dataService.getAverageVariationCycle().subscribe((data: any) => {
+    if (data.average != null) {
+      this.averagePeriodVariation = data.average + ' días';
+    } else {
+      this.averagePeriodVariation = 'No hay suficientes datos.';
+    }
+  });
+  this.dataService.getNextPeriodDate().subscribe((data: any) => {
+    if (data.date != null) {
+      this.nextPeriod = data.date;
+    }
+  });
+  this.dataService.getFertileDays().subscribe((data: any) => {
+    if (data.firstDate != null && data.lastDate != '') {
+      this.firstFertileDay = data.firstDate;
+      this.lastFertileDay = data.lastDate;
+    } else {
+      this.noFertileDays = 'No hay suficientes datos.';
+    }
+  });
+  }
+
+  cleanCharts(){
+    this.dataLineal = []; 
+    this.dataSpike = [];
+    this.dataCircle = [];
+    for (let i = 0; i < this.dataRadarEmotion.length; i++) {
+    this.dataRadarEmotion[i].score = 0;
+    }
+    for (let i = 0; i < this.dataRadarPain.length; i++) {
+        this.dataRadarPain[i].score = 0
+    }
+  }
+
   getChartsData() {
     this.loading = true;
+    this.cleanCharts();
      this.dataService.getPeriodCritiriaLastMonth().subscribe((response: any) => {
         for (let i = 0; i < response.length; i++) {
           let item = response[i];
           switch (item.fieldName) {
-            case 'temperature':
+            case 'temperature':    
               if(item.value){
                this.dataLineal.push({
                 group: 'Temperatura (C°)',
@@ -252,7 +295,7 @@ export class UserDashboardComponent implements OnInit {
             }
             break;
           case 'fluidAmount':
-            if (item.value) {
+            if (item.value) {       
               this.dataSpike.push({
                 group: 'Flujo Cervical',
                 key: item.date.replace(/-/g, '/').toString(),
@@ -269,15 +312,6 @@ export class UserDashboardComponent implements OnInit {
               });
           break;
             case 'emotionType':
-            /*
-              this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
-                console.log(objeto.feature == item.value);
-                if (objeto.feature == item.value) {
-                  return { ...objeto, feature: objeto.feature + 1 };
-                }
-                return objeto;
-              });
-               */
                for (let i = 0; i < this.dataRadarEmotion.length; i++) {
                 if (this.dataRadarEmotion[i].feature == item.value) {
                   this.dataRadarEmotion[i].score = this.dataRadarEmotion[i].score + 1;
@@ -285,14 +319,6 @@ export class UserDashboardComponent implements OnInit {
               }
             break;
             case 'painType':
-              /*
-                this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
-                  if (objeto.feature == item.value) {
-                    return { ...objeto, feature: objeto.feature + 1 };
-                  }
-                  return objeto;
-                });
-                 */
                  for (let i = 0; i < this.dataRadarPain.length; i++) {
                   if (this.dataRadarPain[i].feature == item.value) {
                     this.dataRadarPain[i].score = this.dataRadarPain[i].score + 1;
@@ -307,7 +333,7 @@ export class UserDashboardComponent implements OnInit {
                   value: [item.value],
                 });
                 }
-               break;
+              break;
         }
       }
       this.loading = false;
@@ -402,6 +428,8 @@ export class UserDashboardComponent implements OnInit {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
           this.dataArrayList = [];
           this.notificationDataService.getNotifications();
+          this.getChartsData();
+          this.getPredictions();
           this.maskService.isLoading = false;
         },
         (error: any) => {
