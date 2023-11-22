@@ -92,12 +92,12 @@ body {
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 .cal-month-view .cal-event {
-  background-color: transparent !important;
+  background-color: GREEN !important;
   border-color: black;
   color: #fff;
 }
 
 .cal-month-view .cal-day-badge {
-  background-color: #df5583;
-  color: #fff;
+  background-color: transparent;
+  color: transparent;
 }
