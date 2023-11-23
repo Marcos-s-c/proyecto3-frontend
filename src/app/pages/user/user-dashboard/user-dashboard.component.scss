@@ -69,14 +69,20 @@ mat-drawer-content {
 
 
 .divider{
-width: 120px;
-background-color: gray;
-height: 1px;
+width: 100%;
+background-color: #f7d9d9;
+height: 2px;
 }
 
 .data-card p{
   padding-top: 23px;
-  font-size: large;
+  font-size: 16px;
+  text-align: center;
+}
+
+.data-card h2{
+  padding-top: 23px;
+  font-size: 16px;
 }
 .mat-radio-button {
   display: flex;
@@ -97,6 +103,7 @@ height: 1px;
 .cards-section{
   width: 20%;
   align-items: end;
+
 
   mat-card{
     flex-grow: 4;
@@ -146,6 +153,15 @@ height: 1px;
     }
   }
 
+.card-dashboard{
+  display: flex;
+  align-items: center;
+}
+.icon-dashboard{
+  height: 80px;
+  margin-right: 10px;
+}
+
 @media(max-width: 960px){
   .cards-section{
     display:block;
@@ -161,6 +177,7 @@ height: 1px;
     .card {
       width: 100%;
       margin: 0 0 10px 0;
+      height: fit-content;
     }
     .graph-accordion {
       width: 100%;
