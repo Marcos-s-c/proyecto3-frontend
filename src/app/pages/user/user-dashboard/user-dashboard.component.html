@@ -310,12 +310,21 @@
           </mat-card>
         </div>
         <div class="graphs-section">
+          <!--
           <mat-card style="margin-bottom: 30px;">
             <mat-card-content style="padding-right: 30px;">
               <ibm-stacked-area-chart *ngIf="!loading" [data]="dataLineal" [options]="optionsLineal">
               </ibm-stacked-area-chart>
             </mat-card-content>
           </mat-card>
+          -->
+          <!----->
+          <mat-card style="margin-bottom: 30px;">
+            <mat-card-content>
+              <ibm-area-chart *ngIf="!loading" [data]="dataSpike2" [options]="optionsSpike2"></ibm-area-chart>
+            </mat-card-content>
+          </mat-card>
+          <!----->
           <mat-card>
             <mat-card-content style="padding-right: 30px;">
               <ibm-area-chart *ngIf="!loading" [data]="dataSpike" [options]="optionsSpike"></ibm-area-chart>
