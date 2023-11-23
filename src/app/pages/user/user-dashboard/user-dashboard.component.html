@@ -274,25 +274,34 @@
         <div class="cards-section">
             <mat-card class="data-card">
               <mat-card-content>
-                <h2>
-                  Duración promedio de menstruación
-                </h2>
+                <div class="card-dashboard">
+                  <img src="../../../../assets/periodDuration.png"  class="icon-dashboard"/>
+                  <h2>
+                    Duración promedio de menstruación
+                  </h2>
+                </div>
                 <div class="divider"></div>
                 <p>{{periodAverageDuration}}</p>
               </mat-card-content>
             </mat-card>
             <mat-card class="data-card">
               <mat-card-content>
-                <h2>
-                  Variación promedio del ciclo femenino
-                </h2>
+                <div class="card-dashboard">
+                  <img src="../../../../assets/cycle.png"  class="icon-dashboard"/>
+                  <h2>
+                    Variación promedio del ciclo femenino
+                  </h2>
+                </div>
                 <div class="divider"></div>
                 <p>{{averagePeriodVariation}}</p>
               </mat-card-content>
             </mat-card>
           <mat-card class="data-card">
             <mat-card-content>
-              <h2>Inicio de próxima menstruación</h2>
+              <div class="card-dashboard">
+                <img src="../../../../assets/nextPeriodCalendar.png"  class="icon-dashboard"/>
+                <h2>Inicio de próxima menstruación</h2>
+              </div>
               <div class="divider"></div>
               <p *ngIf="nextPeriod">{{nextPeriod | date }}</p>
               <p *ngIf="!nextPeriod"> No hay suficientes datos.</p>
@@ -300,9 +309,11 @@
           </mat-card>
           <mat-card class="data-card">
             <mat-card-content>
-              <h2>
-                Próximos posibles días fértiles
-              </h2>
+              <div class="card-dashboard">
+                <img src="../../../../assets/fertileCalendar.png"  class="icon-dashboard"/>
+                <h2> Próximos posibles días fértiles
+                </h2>
+              </div>
               <div class="divider"></div>
               <p *ngIf="firstFertileDay">{{firstFertileDay | date}} - {{lastFertileDay | date}} </p>
               <p *ngIf="noFertileDays">{{noFertileDays}} </p>
