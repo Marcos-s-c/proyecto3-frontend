@@ -308,7 +308,13 @@
       <div class="right-med-wrapper">
         <div class="lista-med">
           <h2>Lista de medicamentos</h2>
+
             <mat-action-list>
+              <mat-card *ngIf="medicinas.length === 0">
+                <div  class="med-carta">
+                  <mat-card-content>No hay medicamentos registrados</mat-card-content>
+                </div>
+              </mat-card>
                 <mat-card *ngFor="let med of medicinas">
                   <div class="med-carta">
                     <mat-card-header>{{ med.name }}</mat-card-header>
