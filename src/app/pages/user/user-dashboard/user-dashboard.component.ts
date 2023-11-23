@@ -79,6 +79,55 @@ export class UserDashboardComponent implements OnInit {
     height: '400px',
   };
 
+
+
+
+
+
+  optionsSpike2: any = {
+    title: 'Temperatura (C°)',
+    toolbar: {
+      enabled: false,
+    },
+    axis: {
+      x: {
+        ticks: {
+          // You can configure the number of decimal places for the x-axis here
+          precision: 2, // for example, set precision to 2 for two decimal places
+        },
+      },
+      y: {
+        // Similarly, you can configure the number of decimal places for the y-axis here
+        ticks: {
+          precision: 2,
+        },
+      },
+    },
+    axes: {
+      bottom: {
+        title: 'Fecha',
+        mapsTo: 'date',
+        scaleType: 'labels',
+      },
+      left: {
+        mapsTo: 'value',
+        title: 'Temperatura',
+        scaleType: 'labels',
+      },
+    },
+    height: '400px',
+    width: '100%',
+  };
+  dataSpike2: any = [];
+
+
+
+
+
+
+
+
+
   dataCircle: any = [];
   optionsSpike: any = {
     title: 'Flujo cervical',
@@ -192,7 +241,7 @@ export class UserDashboardComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService, 
+    private medicineService: MedicineService,
     private maskService : MaskService,
     public loginService: LoginService
     ) {}
@@ -267,7 +316,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   cleanCharts(){
-    this.dataLineal = []; 
+    this.dataLineal = [];
     this.dataSpike = [];
     this.dataCircle = [];
     for (let i = 0; i < this.dataRadarEmotion.length; i++) {
@@ -285,17 +334,23 @@ export class UserDashboardComponent implements OnInit {
         for (let i = 0; i < response.length; i++) {
           let item = response[i];
           switch (item.fieldName) {
-            case 'temperature':    
+            case 'temperature':
               if(item.value){
                this.dataLineal.push({
                 group: 'Temperatura (C°)',
                 date: item.date.replace(/-/g, '/').toString(),
-                value: parseInt(item.value),
+                value: parseFloat(item.value),
               });
+                this.dataSpike2.push({
+                  group: 'Temperatura (C°)',
+                  date: item.date.replace(/-/g, '/').toString(),
+                  value: parseFloat(item.value),
+                });
             }
+              console.log(this.dataLineal);
             break;
           case 'fluidAmount':
-            if (item.value) {       
+            if (item.value) {
               this.dataSpike.push({
                 group: 'Flujo Cervical',
                 key: item.date.replace(/-/g, '/').toString(),
