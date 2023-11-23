@@ -15,7 +15,7 @@
   <div>
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Nueva frecuencia</mat-label>
-      <mat-select [(ngModel)]="medicina.frecuencia">
+      <mat-select [(value)]="medicina.frecuencia" >
         <mat-option *ngFor="let frec of frecuencias" [value]="frec">{{frec}}</mat-option>
       </mat-select>
     </mat-form-field>
