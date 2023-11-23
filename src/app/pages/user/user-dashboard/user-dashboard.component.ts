@@ -79,6 +79,55 @@ export class UserDashboardComponent implements OnInit {
     height: '400px',
   };
 
+
+
+
+
+
+  optionsSpike2: any = {
+    title: 'Temperatura (C°)',
+    toolbar: {
+      enabled: false,
+    },
+    axis: {
+      x: {
+        ticks: {
+          // You can configure the number of decimal places for the x-axis here
+          precision: 2, // for example, set precision to 2 for two decimal places
+        },
+      },
+      y: {
+        // Similarly, you can configure the number of decimal places for the y-axis here
+        ticks: {
+          precision: 2,
+        },
+      },
+    },
+    axes: {
+      bottom: {
+        title: 'Fecha',
+        mapsTo: 'date',
+        scaleType: 'labels',
+      },
+      left: {
+        mapsTo: 'value',
+        title: 'Temperatura',
+        scaleType: 'labels',
+      },
+    },
+    height: '400px',
+    width: '100%',
+  };
+  dataSpike2: any = [];
+
+
+
+
+
+
+
+
+
   dataCircle: any = [];
   optionsSpike: any = {
     title: 'Flujo cervical',
@@ -192,7 +241,7 @@ export class UserDashboardComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService, 
+    private medicineService: MedicineService,
     private maskService : MaskService,
     public loginService: LoginService
     ) {}
@@ -203,8 +252,7 @@ export class UserDashboardComponent implements OnInit {
     this.hasDevice = this.loginService.getUser().hasDevice;
     this.setFormValues(today.toISOString().split('T')[0]);
     this.getChartsData();
-    this.dataService.getAveragePeriod().subscribe(
-      (data:any) =>{
+    this.dataService.getAveragePeriod().subscribe((data:any) =>{
         if(data.average != null){
           this.periodAverageDuration = data.average + " días";
         }else{
@@ -236,8 +284,52 @@ export class UserDashboardComponent implements OnInit {
     this.fetchMedications();
   }
 
+  getPredictions(){
+    this.dataService.getAveragePeriod().subscribe((data:any) =>{
+      if(data.average != null){
+        this.periodAverageDuration = data.average + " días";
+      }else{
+        this.periodAverageDuration = "No hay suficientes datos.";
+      }
+    }
+);
+  this.dataService.getAverageVariationCycle().subscribe((data: any) => {
+    if (data.average != null) {
+      this.averagePeriodVariation = data.average + ' días';
+    } else {
+      this.averagePeriodVariation = 'No hay suficientes datos.';
+    }
+  });
+  this.dataService.getNextPeriodDate().subscribe((data: any) => {
+    if (data.date != null) {
+      this.nextPeriod = data.date;
+    }
+  });
+  this.dataService.getFertileDays().subscribe((data: any) => {
+    if (data.firstDate != null && data.lastDate != '') {
+      this.firstFertileDay = data.firstDate;
+      this.lastFertileDay = data.lastDate;
+    } else {
+      this.noFertileDays = 'No hay suficientes datos.';
+    }
+  });
+  }
+
+  cleanCharts(){
+    this.dataLineal = [];
+    this.dataSpike = [];
+    this.dataCircle = [];
+    for (let i = 0; i < this.dataRadarEmotion.length; i++) {
+    this.dataRadarEmotion[i].score = 0;
+    }
+    for (let i = 0; i < this.dataRadarPain.length; i++) {
+        this.dataRadarPain[i].score = 0
+    }
+  }
+
   getChartsData() {
     this.loading = true;
+    this.cleanCharts();
      this.dataService.getPeriodCritiriaLastMonth().subscribe((response: any) => {
         for (let i = 0; i < response.length; i++) {
           let item = response[i];
@@ -247,9 +339,15 @@ export class UserDashboardComponent implements OnInit {
                this.dataLineal.push({
                 group: 'Temperatura (C°)',
                 date: item.date.replace(/-/g, '/').toString(),
-                value: parseInt(item.value),
+                value: parseFloat(item.value),
               });
+                this.dataSpike2.push({
+                  group: 'Temperatura (C°)',
+                  date: item.date.replace(/-/g, '/').toString(),
+                  value: parseFloat(item.value),
+                });
             }
+              console.log(this.dataLineal);
             break;
           case 'fluidAmount':
             if (item.value) {
@@ -269,15 +367,6 @@ export class UserDashboardComponent implements OnInit {
               });
           break;
             case 'emotionType':
-            /*
-              this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
-                console.log(objeto.feature == item.value);
-                if (objeto.feature == item.value) {
-                  return { ...objeto, feature: objeto.feature + 1 };
-                }
-                return objeto;
-              });
-               */
                for (let i = 0; i < this.dataRadarEmotion.length; i++) {
                 if (this.dataRadarEmotion[i].feature == item.value) {
                   this.dataRadarEmotion[i].score = this.dataRadarEmotion[i].score + 1;
@@ -285,14 +374,6 @@ export class UserDashboardComponent implements OnInit {
               }
             break;
             case 'painType':
-              /*
-                this.dataRadarEmotion = this.dataRadarEmotion.map((objeto:any) => {
-                  if (objeto.feature == item.value) {
-                    return { ...objeto, feature: objeto.feature + 1 };
-                  }
-                  return objeto;
-                });
-                 */
                  for (let i = 0; i < this.dataRadarPain.length; i++) {
                   if (this.dataRadarPain[i].feature == item.value) {
                     this.dataRadarPain[i].score = this.dataRadarPain[i].score + 1;
@@ -307,7 +388,7 @@ export class UserDashboardComponent implements OnInit {
                   value: [item.value],
                 });
                 }
-               break;
+              break;
         }
       }
       this.loading = false;
@@ -402,6 +483,8 @@ export class UserDashboardComponent implements OnInit {
           this._snackBar.open(data.Message, undefined, { duration: 5 * 1000 });
           this.dataArrayList = [];
           this.notificationDataService.getNotifications();
+          this.getChartsData();
+          this.getPredictions();
           this.maskService.isLoading = false;
         },
         (error: any) => {
