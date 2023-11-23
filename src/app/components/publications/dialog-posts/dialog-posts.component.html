@@ -12,10 +12,12 @@
     <p>No hay comentarios disponibles</p>
   </div>
   <div *ngIf="!noComments">
-  <div>
-    <mat-card  class="comment-card" *ngFor="let comment of commentsArray">
+  <div style="width: 100%; justify-content: center;">
+    <mat-card  class="comment-card"  *ngFor="let comment of commentsArray">
         <mat-card-content>
-         <h3 style="border-bottom: 1px black solid">{{comment.user_id.name}}</h3>
+          <div style="display: flex; font-weight: bold;">
+               <h3>{{comment.user_id.name}} (<a style="text-decoration: none;" href="mailto:{{comment.user_id.email}}">{{comment.user_id.email}}</a>) </h3>
+          </div>
           <p>{{comment.comment}}</p>
           <p class="date-comment">{{comment.date}}</p>
        </mat-card-content>
