@@ -330,26 +330,26 @@
           </mat-card>
           -->
           <!----->
-          <mat-card style="margin-bottom: 30px;">
+          <mat-card style="margin-bottom: 30px; border-left: #f25287 6px solid;">
             <mat-card-content>
               <ibm-area-chart *ngIf="!loading" [data]="dataSpike2" [options]="optionsSpike2"></ibm-area-chart>
             </mat-card-content>
           </mat-card>
           <!----->
-          <mat-card>
+          <mat-card style="border-left: #f25287 6px solid;">
             <mat-card-content style="padding-right: 30px;">
               <ibm-area-chart *ngIf="!loading" [data]="dataSpike" [options]="optionsSpike"></ibm-area-chart>
             </mat-card-content>
           </mat-card>
         </div>
         <div class="graph-emotions-physical">
-          <mat-card class="card"  style="margin-bottom: 30px;">
+          <mat-card class="card"  style="margin-bottom: 30px; border-left: #f25287 6px solid;">
             <mat-card-content  style="padding-right: 30px;">
               <ibm-simple-bar-chart [data]="dataCircle" *ngIf="!loading" [options]="optionsCircle"></ibm-simple-bar-chart>
             </mat-card-content>
           </mat-card>
           <mat-accordion class="graph-accordion">
-            <mat-expansion-panel [expanded]="true"  style="justify-content: center;"  (opened)="panelOpenState == true" (closed)="panelOpenState == false">
+            <mat-expansion-panel [expanded]="true"  style="justify-content: center; border-left: #f25287 6px solid;"  (opened)="panelOpenState == true" (closed)="panelOpenState == false">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Estado físico
@@ -357,7 +357,7 @@
               </mat-expansion-panel-header>
               <ibm-radar-chart *ngIf="!loading" [data]="dataRadarPain" [options]="optionsRadar"></ibm-radar-chart>
             </mat-expansion-panel>
-            <mat-expansion-panel (opened)="panelOpenState ==  false" (closed)="panelOpenState == true">
+            <mat-expansion-panel  style="border-left: #f25287 6px solid;" (opened)="panelOpenState ==  false" (closed)="panelOpenState == true">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Estado emocional

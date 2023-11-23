@@ -38,6 +38,8 @@ export class UserDashboardComponent implements OnInit {
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
   hasDevice: boolean;
+  colors: any  = ['#FF0000', '#00FF00', '#0000FF'];
+
   optionsLineal: any = {
     title: 'Temperatura (Cº)',
     axes: {
@@ -59,7 +61,13 @@ export class UserDashboardComponent implements OnInit {
     curve: 'curveMonotoneX',
     height: '400px',
     width: '100%',
+    color: {
+      "scale": {
+        "Temperatura (C°)": "#f25287",
+      }
+    },
   };
+
   dataLineal: any = [];
   optionsCircle: any = {
     title: 'Horas de sueño',
@@ -77,12 +85,12 @@ export class UserDashboardComponent implements OnInit {
       },
     },
     height: '400px',
+    color: {
+      "scale": {
+        "Horas de sueño": "#f25287",
+      }
+    },
   };
-
-
-
-
-
 
   optionsSpike2: any = {
     title: 'Temperatura (C°)',
@@ -116,18 +124,14 @@ export class UserDashboardComponent implements OnInit {
       },
     },
     height: '400px',
-    width: '100%',
+    width: '100%', 
+    color: {
+      "scale": {
+        "Temperatura (C°)": "#f25287",
+      }
+    },
   };
   dataSpike2: any = [];
-
-
-
-
-
-
-
-
-
   dataCircle: any = [];
   optionsSpike: any = {
     title: 'Flujo cervical',
@@ -147,7 +151,12 @@ export class UserDashboardComponent implements OnInit {
       },
     },
     height: '350px',
-    width: '100%',
+    width: '100%', 
+     color: {
+      "scale": {
+        "Flujo Cervical": "#f25287",
+      }
+    },
   };
   dataSpike: any = [];
   optionsRadar: any = {
@@ -164,7 +173,12 @@ export class UserDashboardComponent implements OnInit {
       groupMapsTo: 'product',
     },
     height: '25vh',
-    width: '100%',
+    width: '100%', 
+     color: {
+      "scale": {
+        "Sentimientos": "#f25287",
+      }
+    },
   };
   dataRadarPain: any = [
     {
