@@ -148,13 +148,16 @@
         <p>Preferencias</p>
       </div>
     </ng-template>
-    <div class="password-reset-container">
-      <div class="password-reset-form">
-      <h2>
-        Selecciona los métodos por los cuales deseas recibir notificaciones
-      </h2>
-      <div class="pref-cajon">
-        <section class="example-section">
+
+    <div class="wrapper-principal-preferencias">
+      <div class="wrapper-izq-preferencias">
+        <div class="password-reset-container">
+          <div class="password-reset-form-preferencias">
+            <h2>
+              Selecciona los métodos por los cuales deseas recibir notificaciones
+            </h2>
+            <div class="pref-cajon">
+              <section class="example-section">
           <span class="example-list-section">
             <mat-checkbox
               class="example-margin"
@@ -166,7 +169,7 @@
               {{ task.name }}
             </mat-checkbox>
           </span>
-          <span class="example-list-section">
+                <span class="example-list-section">
             <ul>
               <li *ngFor="let subtask of task.subtasks">
                 <mat-checkbox
@@ -182,57 +185,65 @@
               </li>
             </ul>
           </span>
-        </section>
-      </div>
-      <div class="vertical-center">
-        <button
-        (click)="salvarOpciones()"
-        type="submit"
-        class="back-container"
-        color="primary"
-        mat-raised-button>
-          Actualizar preferencias
-        </button>
-      </div>
-        <!--Delete after prefrences frecuence-->
-        <!-- <div class="notifications-section">
-          <p>Si quieres obtener el pronóstico de tu siguiente período por texto, selecciona la preferencia de SMS y haz click en el botón.</p>
-          <div>
-            <button
-              (click)="sendNextPeriodSMS()"
-              class="back-container"
-              color="primary"
-              mat-raised-button>
-              Enviar
-            </button>
-          </div>
-        </div> -->
-        <div class="notifications-section">
-          <p>Si quieres obtener el pronóstico de tu siguiente período por WhatsApp, selecciona la preferencia de WhatsApp y haz click en el botón.</p>
-          <div>
-            <button
-              (click)="sendNextPeriodWA()"
-              class="back-container"
-              color="primary"
-              mat-raised-button>
-              Enviar
-            </button>
+              </section>
+            </div>
+            <div class="vertical-center">
+              <button
+                (click)="salvarOpciones()"
+                type="submit"
+                class="back-container"
+                color="primary"
+                mat-raised-button>
+                Actualizar preferencias
+              </button>
+            </div>
           </div>
         </div>
-        <div class="notifications-section">
-          <p>Si quieres obtener el pronóstico de tus próximos días fértiles por WhatsApp, selecciona la preferencia de WhatsApp y haz click en el botón.</p>
-          <div>
-            <button
-              (click)="sendNextFertileDaysWA()"
-              class="back-container"
-              color="primary"
-              mat-raised-button>
-              Enviar
-            </button>
+      </div>
+      <div class="wrapper-der-preferencias">
+        <div class="wrapper-pronosticos">
+          <h2>
+            Envío de pronósticos
+          </h2>
+          <div class="wrapper-notificacion-individual">
+            <div class="wrapper-imagen">
+              <img src="../../../assets/siguiente-periodo.png" height="66" width="66"/></div>
+            <div class="notifications-section">
+              <p>Obtener el pronóstico de tu siguiente período, selecciona WhatsApp y haz click en el botón.</p>
+              <div  class="div-boton">
+                <button
+                  (click)="sendNextPeriodWA()"
+                  class="back-container"
+                  color="primary"
+                  mat-raised-button>
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="wrapper-notificacion-individual">
+            <div class="wrapper-imagen">
+              <img src="../../../assets/siguiente-fertiles.png" height="66" width="66"/></div>
+            <div class="notifications-section">
+              <div class="wrapper-imagen"></div>
+              <div>
+                <p>Obtener el pronóstico de tus próximos días fértiles, selecciona WhatsApp y haz click en el botón.</p>
+                <div class="div-boton">
+                  <button
+                    (click)="sendNextFertileDaysWA()"
+                    class="back-container"
+                    color="primary"
+                    mat-raised-button>
+                    Enviar
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
     </div>
-  </div>
+
   </mat-tab>
 
   <mat-tab>
@@ -297,7 +308,13 @@
       <div class="right-med-wrapper">
         <div class="lista-med">
           <h2>Lista de medicamentos</h2>
+
             <mat-action-list>
+              <mat-card *ngIf="medicinas.length === 0">
+                <div  class="med-carta">
+                  <mat-card-content>No hay medicamentos registrados</mat-card-content>
+                </div>
+              </mat-card>
                 <mat-card *ngFor="let med of medicinas">
                   <div class="med-carta">
                     <mat-card-header>{{ med.name }}</mat-card-header>

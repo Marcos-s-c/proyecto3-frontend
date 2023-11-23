@@ -595,12 +595,20 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   editarMedicamento(medicine_id: number){
+  let foundMedicina = this.medicinas.find((med) => med.medicine_id === medicine_id);
+
+    if (foundMedicina) {
+      console.info("Editar medicina encontrada")
+    } else {
+      console.error('Medicina no encontrada');
+    }
+
     this.dialog.open(ModalEditarMedicinaComponent, {
       data: {
         medicine_id: medicine_id,
-        name:this.formName,
-        dosis:this.formDosis,
-        frecuencia:this.formFrecuencia
+        name:foundMedicina?.name,
+        dosis:foundMedicina?.dosis,
+        frecuencia:foundMedicina?.frecuencia
       }
     });
 
