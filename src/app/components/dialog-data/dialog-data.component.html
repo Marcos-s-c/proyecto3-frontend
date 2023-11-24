@@ -3,53 +3,53 @@
 
   <ng-container *ngIf="!isEditMode; else editMode">
     <form *ngIf="periodDataForm" [formGroup]="periodDataForm">
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.emotionType !== undefined">
         <mat-label>Tipo de Emoción</mat-label>
-        <input matInput [value]="selectedData?.emotionType ? selectedData?.emotionType : ''" disabled />
+        <input matInput [value]="selectedData?.emotionType || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.emotionalState !== undefined">
         <mat-label>Estado Emocional</mat-label>
-        <input matInput [value]="selectedData?.emotionalState ? selectedData?.emotionalState : ''" disabled />
+        <input matInput [value]="selectedData?.emotionalState || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.fluidAmount !== undefined">
         <mat-label>Cantidad de Fluido</mat-label>
-        <input matInput [value]="selectedData?.fluidAmount ? selectedData?.fluidAmount: ''" disabled />
+        <input matInput [value]="selectedData?.fluidAmount || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.fluidColor !== undefined">
         <mat-label>Color del Fluido</mat-label>
-        <input matInput [value]="selectedData?.fluidColor ? selectedData?.fluidColor: ''" disabled />
+        <input matInput [value]="selectedData?.fluidColor || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.painType !== undefined">
         <mat-label>Tipo de Dolor</mat-label>
-        <input matInput [value]="selectedData?.painType ? selectedData?.painType: ''" disabled />
+        <input matInput [value]="selectedData?.painType || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.periodAmount !== undefined">
         <mat-label>Cantidad del Período</mat-label>
-        <input matInput [value]="selectedData?.periodAmount ? selectedData?.periodAmount: ''" disabled />
+        <input matInput [value]="selectedData?.periodAmount || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.periodColor !== undefined">
         <mat-label>Color del Período</mat-label>
-        <input matInput [value]="selectedData?.periodColor ? selectedData?.periodColor: ''" disabled />
+        <input matInput [value]="selectedData?.periodColor || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.periodCycle !== undefined">
         <mat-label>Ciclo del Período</mat-label>
-        <input matInput [value]="selectedData?.periodCycle ? selectedData?.periodCycle: ''" disabled />
+        <input matInput [value]="selectedData?.periodCycle || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.physicalState !== undefined">
         <mat-label>Estado Físico</mat-label>
-        <input matInput [value]="selectedData?.physicalState ? selectedData?.physicalState: ''" disabled />
+        <input matInput [value]="selectedData?.physicalState || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.sexTimes !== undefined">
         <mat-label>Veces Sexuales</mat-label>
-        <input matInput [value]="selectedData?.sexTimes ? selectedData?.sexTimes: ''" disabled />
+        <input matInput [value]="selectedData?.sexTimes || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.sleepHours !== undefined">
         <mat-label>Horas de Sueño</mat-label>
-        <input matInput [value]="selectedData?.sleepHours ? selectedData?.sleepHours: ''" disabled />
+        <input matInput [value]="selectedData?.sleepHours || ''" disabled />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.temperature !== undefined">
         <mat-label>Temperatura</mat-label>
-        <input matInput [value]="selectedData?.temperature ? selectedData?.temperature: ''" disabled />
+        <input matInput [value]="selectedData?.temperature || ''" disabled />
       </mat-form-field>
     </form>
     <button mat-raised-button (click)="enterEditMode()">Editar</button>
@@ -57,101 +57,53 @@
   </ng-container>
   <ng-template #editMode>
     <form *ngIf="periodDataForm" [formGroup]="periodDataForm">
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.emotionType !== undefined">
         <mat-label>Tipo de Emoción</mat-label>
-        <input
-          matInput
-          placeholder="Tipo de Emoción"
-          formControlName="emotionType"
-        />
+        <input matInput placeholder="Tipo de Emoción" formControlName="emotionType" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.emotionalState !== undefined">
         <mat-label>Estado Emocional</mat-label>
-        <input
-          matInput
-          placeholder="Estado Emocional"
-          formControlName="emotionalState"
-        />
+        <input matInput placeholder="Estado Emocional" formControlName="emotionalState" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.fluidAmount !== undefined">
         <mat-label>Cantidad de Fluido</mat-label>
-        <input
-          matInput
-          placeholder="Cantidad de Fluido"
-          formControlName="fluidAmount"
-        />
+        <input matInput placeholder="Cantidad de Fluido" formControlName="fluidAmount" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.fluidColor !== undefined">
         <mat-label>Color del Fluido</mat-label>
-        <input
-          matInput
-          placeholder="Color del Fluido"
-          formControlName="fluidColor"
-        />
+        <input matInput placeholder="Color del Fluido" formControlName="fluidColor" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.painType !== undefined">
         <mat-label>Tipo de Dolor</mat-label>
-        <input
-          matInput
-          placeholder="Tipo de Dolor"
-          formControlName="painType"
-        />
+        <input matInput placeholder="Tipo de Dolor" formControlName="painType" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.periodAmount !== undefined">
         <mat-label>Cantidad del Período</mat-label>
-        <input
-          matInput
-          placeholder="Cantidad del Período"
-          formControlName="periodAmount"
-        />
+        <input matInput placeholder="Cantidad del Período" formControlName="periodAmount" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.periodColor !== undefined">
         <mat-label>Color del Período</mat-label>
-        <input
-          matInput
-          placeholder="Color del Período"
-          formControlName="periodColor"
-        />
+        <input matInput placeholder="Color del Período" formControlName="periodColor" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.periodCycle !== undefined">
         <mat-label>Ciclo del Período</mat-label>
-        <input
-          matInput
-          placeholder="Ciclo del Período"
-          formControlName="periodCycle"
-        />
+        <input matInput placeholder="Ciclo del Período" formControlName="periodCycle" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.physicalState !== undefined">
         <mat-label>Estado Físico</mat-label>
-        <input
-          matInput
-          placeholder="Estado Físico"
-          formControlName="physicalState"
-        />
+        <input matInput placeholder="Estado Físico" formControlName="physicalState" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.sexTimes !== undefined">
         <mat-label>Veces Sexuales</mat-label>
-        <input
-          matInput
-          placeholder="Veces Sexuales"
-          formControlName="sexTimes"
-        />
+        <input matInput placeholder="Veces Sexuales" formControlName="sexTimes" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.sleepHours !== undefined">
         <mat-label>Horas de Sueño</mat-label>
-        <input
-          matInput
-          placeholder="Horas de Sueño"
-          formControlName="sleepHours"
-        />
+        <input matInput placeholder="Horas de Sueño" formControlName="sleepHours" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="selectedData?.temperature !== undefined">
         <mat-label>Temperatura</mat-label>
-        <input
-          matInput
-          placeholder="Temperatura"
-          formControlName="temperature"
-        />
+        <input matInput placeholder="Temperatura" formControlName="temperature" />
       </mat-form-field>
     </form>
     <button mat-raised-button (click)="saveChanges()">Guardar</button>
