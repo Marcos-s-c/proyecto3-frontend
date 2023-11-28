@@ -3,24 +3,25 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatListModule} from "@angular/material/list";
 import {UserService} from "../../../services/user.service";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatListModule],
+  imports: [MatTableModule, MatPaginatorModule, MatListModule, MatButtonModule],
 })
 
 
 export class DashboardComponent implements OnInit, AfterViewInit {
  // displayedColumns: string[] = ['Nombre', 'Correo electrónico', 'Número telefónico', 'Activar/Desactivar'];
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['name', 'email', 'phone', 'has_device', 'active', 'actions'];
 
-  //displayedColumns: string[] = ['name','phone', 'email', 'active', 'has_device'];
   dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  activeButton: "test";
 
 
   ngAfterViewInit() {
@@ -35,6 +36,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log(data);
       this.dataSource = new MatTableDataSource<User>(data);
     })
+
+  }
+
+  onButtonClick() {
+
   }
 }
 
@@ -42,8 +48,8 @@ export interface User {
   name: string;
   email: string;
   phone: string;
-  active: number;
-  has_device: number;
+  active: boolean;
+  hasDevice: boolean;
 }
 
 
