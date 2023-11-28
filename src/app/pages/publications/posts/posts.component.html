@@ -1,4 +1,21 @@
-<!-- posts.component.html -->
+<div class="search-bar">
+  <div class="search-container">
+    <div class="button-container">
+      <button mat-raised-button class="search-button">
+        Más populares
+      </button>
+      <button mat-raised-button class="search-button">
+        Más recientes
+      </button>
+    </div>
+    <div class="input-container">
+      <mat-form-field>
+        <mat-icon matPrefix>search</mat-icon>
+        <input class="search-input" matInput (keyup)="onSearch($event)"/>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
 <div *ngFor="let post of posts" class="card-container">
   <mat-card class="post-card">
     <img mat-card-image [src]="post.imageUrl" alt="Post Image" />

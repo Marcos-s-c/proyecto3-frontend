@@ -57,3 +57,41 @@
 .red-color{
   color: red;
 }
+
+.search-bar{
+  height: 50px;
+  border-bottom: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-button{
+  margin: 0 15px;
+  background-color: #f25287;
+  color: white;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.input-container{
+  height: 70%;
+}
+
+.search-container{
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-container{
+  display: flex;
+}
+
+.search-input{
+  height: 30px;
+  font-size: 20px;
+}

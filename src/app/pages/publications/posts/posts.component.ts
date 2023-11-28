@@ -4,7 +4,7 @@ import { DialogPostService } from '../../../services/dialogPost.service';
 import { PostService } from 'src/app/services/post.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
-import { NumberInput } from '@angular/cdk/coercion';
+import { MatButtonModule } from '@angular/material/button';
 import { DataService } from '../../../services/dataService.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaskService } from 'src/app/services/mask.service';
@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss'],
+  styleUrls: ['./posts.component.scss']
 })
 export class PostsComponent implements OnInit {
   constructor(
@@ -31,6 +31,7 @@ export class PostsComponent implements OnInit {
   addComment : Boolean = false;
   opened !: Number;
   newComment !: String;
+  searchParam: string = '';
   ngOnInit(): void {
     this.maskService.isLoading = true;
     this.cargarPosts();
@@ -39,9 +40,7 @@ export class PostsComponent implements OnInit {
 
   cargarPosts():void{
     this.postService.getAllPosts().subscribe((response: any) => {
-
       this.posts = response;
-      console.log(this.posts);
       this.maskService.isLoading = false;
     });
   }
@@ -84,7 +83,6 @@ export class PostsComponent implements OnInit {
 
   openPost(post: any): void {
     this.dialogPostService.openPostDialog(post);
-    console.log('Abriendo la publicación:', post);
   }
 
   calculateReadingTime(content: string): number {
@@ -134,5 +132,11 @@ export class PostsComponent implements OnInit {
         : truncatedWords;
     }
     return '';
+  }
+
+  onSearch(event:any){
+    this.postService.getAllPosts(event?.target.value).subscribe((data:any) =>{
+      this.posts = data;
+    })
   }
 }

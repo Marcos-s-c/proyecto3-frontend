@@ -16,8 +16,8 @@ export class PostService {
     return this.http.get(`${baserUrl()}/rest/post/getPost?postId=${postId}`);
   }
 
-  public getAllPosts() {
-    return this.http.get(`${baserUrl()}/rest/post/getAllPosts`);
+  public getAllPosts(searchParam?:string) {
+    return this.http.get(!searchParam ?`${baserUrl()}/rest/post/getAllPosts`:`${baserUrl()}/rest/post/getAllPosts?searchParam=${searchParam}`);
   }
 
   public likePost(postId:string) {
