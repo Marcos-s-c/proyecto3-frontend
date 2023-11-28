@@ -7,6 +7,7 @@ import { MaskService } from 'src/app/services/mask.service';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {Medicina} from "../../../interface/Medicina";
 import { LoginService } from 'src/app/services/login.service';
+import Swal from "sweetalert2";
 
 export type DataObject = {
   fieldName: string;
@@ -124,7 +125,7 @@ export class UserDashboardComponent implements OnInit {
       },
     },
     height: '400px',
-    width: '100%', 
+    width: '100%',
     color: {
       "scale": {
         "Temperatura (C°)": "#f25287",
@@ -151,7 +152,7 @@ export class UserDashboardComponent implements OnInit {
       },
     },
     height: '350px',
-    width: '100%', 
+    width: '100%',
      color: {
       "scale": {
         "Flujo Cervical": "#f25287",
@@ -173,7 +174,7 @@ export class UserDashboardComponent implements OnInit {
       groupMapsTo: 'product',
     },
     height: '25vh',
-    width: '100%', 
+    width: '100%',
      color: {
       "scale": {
         "Sentimientos": "#f25287",
@@ -409,6 +410,7 @@ export class UserDashboardComponent implements OnInit {
     });
   }
   createDataArrayList() {
+    console.log('crear forma')
     //define date
     if (this.date == undefined) this.date = new Date();
     if (this.periodCycle)
@@ -453,18 +455,58 @@ export class UserDashboardComponent implements OnInit {
         value: this.physicalState?.toString(),
         date: this.date,
       });
-    if (this.sleepHours)
+    if (this.sleepHours) {
+      if (this.sleepHours < 0) {
+        console.log('menos de cero')
+        // Muestra un mensaje de error si las horas de sueño son negativas
+        Swal.fire(
+          'Error',
+          'Las horas de sueño no pueden ser negativas',
+          'error'
+        );
+        return; // Detiene el proceso de guardar cambios
+      }
+      if (this.sleepHours >= 23) {
+        console.log('mas de 23')
+        Swal.fire(
+          'Error',
+          'Las horas de sueño no pueden ser mayores a 23',
+          'error'
+        );
+        return; // Detiene el proceso de guardar cambios
+      }
       this.dataArrayList.push({
         fieldName: 'sleepHours',
         value: this.sleepHours?.toString(),
         date: this.date,
-      });
-    if (this.temperature)
+      })
+    };
+    if (this.temperature) {
+      if (this.temperature < 35 || this.temperature > 42) {
+        Swal.fire(
+          'Error',
+          'La temperatura debe estar entre 35°C y 42°C',
+          'error'
+        );
+        return;
+      }
+      const temperatureRegex = /^\d+\.\d{2}$/; // Expresión regular para dos decimales
+      if (!temperatureRegex.test(this.temperature.toString())) {
+        // Muestra un mensaje de error si el formato no tiene dos decimales
+        Swal.fire(
+          'Error',
+          'La temperatura debe tener exactamente dos decimales',
+          'error'
+        );
+        return; // Detiene el proceso de guardar cambios
+      }
+
       this.dataArrayList.push({
         fieldName: 'temperature',
         value: this.temperature?.toString(),
         date: this.date,
-      });
+      })
+    };
     if (this.sexTimes)
       this.dataArrayList.push({
         fieldName: 'sexTimes',
