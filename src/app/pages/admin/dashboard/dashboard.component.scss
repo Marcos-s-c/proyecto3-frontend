@@ -3,10 +3,26 @@ table {
 }
 
 .table-container{
-  margin: 50px;
+  margin: 20px 50px;
 }
 
 .users-title{
   text-align: center;
   margin-top: 50px;
+}
+
+.button-red-class {
+  background-color: darkred;
+}
+
+.button-green-class{
+  background-color: green;
+}
+
+.button-activate-users{
+  width: 50%;
+}
+
+.search-bar{
+  margin-left: 50px;
 }

@@ -4,24 +4,27 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatListModule} from "@angular/material/list";
 import {UserService} from "../../../services/user.service";
 import {MatButtonModule} from "@angular/material/button";
+import {NgClass} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatListModule, MatButtonModule],
+  imports: [MatTableModule, MatPaginatorModule, MatListModule, MatButtonModule, NgClass, FormsModule, MatInputModule],
 })
 
 
 export class DashboardComponent implements OnInit, AfterViewInit {
- // displayedColumns: string[] = ['Nombre', 'Correo electrónico', 'Número telefónico', 'Activar/Desactivar'];
-  displayedColumns: string[] = ['name', 'email', 'phone', 'has_device', 'active', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'phone', 'has_device', 'action'];
 
   dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   activeButton: "test";
+  searchTerm: any;
 
 
   ngAfterViewInit() {
@@ -36,10 +39,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log(data);
       this.dataSource = new MatTableDataSource<User>(data);
     })
-
   }
 
-  onButtonClick() {
+  search() {
 
   }
 }
@@ -50,6 +52,7 @@ export interface User {
   phone: string;
   active: boolean;
   hasDevice: boolean;
+  user_id: number;
 }
 
 
