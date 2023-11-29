@@ -4,7 +4,6 @@ import { DialogPostService } from '../../../services/dialogPost.service';
 import { PostService } from 'src/app/services/post.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
-import { MatButtonModule } from '@angular/material/button';
 import { DataService } from '../../../services/dataService.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaskService } from 'src/app/services/mask.service';
@@ -32,10 +31,10 @@ export class PostsComponent implements OnInit {
   opened !: Number;
   newComment !: String;
   searchParam: string = '';
+  sortBy: string = 'date';
   ngOnInit(): void {
     this.maskService.isLoading = true;
     this.cargarPosts();
-
   }
 
   cargarPosts():void{
@@ -47,6 +46,7 @@ export class PostsComponent implements OnInit {
 
   toggleLike(post: any): void {
     post.likedByLoggedUser = !post.likedByLoggedUser;
+    post.likeAmount = post.likedByLoggedUser ? post.likeAmount+1: post.likeAmount-1
     this.postService.likePost(post.postId).subscribe((data=>{
       console.log(data);
     }))
@@ -135,8 +135,27 @@ export class PostsComponent implements OnInit {
   }
 
   onSearch(event:any){
-    this.postService.getAllPosts(event?.target.value).subscribe((data:any) =>{
+    this.searchParam = event?.target.value;
+    this.postService.getAllPosts(event?.target.value,this.sortBy).subscribe((data:any) =>{
       this.posts = data;
+    })
+  }
+
+  sortByPopular(){
+    this.sortBy = 'likes';
+    this.maskService.isLoading = true;
+    this.postService.getAllPosts(this.searchParam,this.sortBy).subscribe((data:any)=>{
+      this.posts = data;
+      this.maskService.isLoading = false;
+    })
+  }
+
+  sortByDate(){
+    this.sortBy = 'date';
+    this.maskService.isLoading = true;
+    this.postService.getAllPosts(this.searchParam,this.sortBy).subscribe((data:any)=>{
+      this.posts = data;
+      this.maskService.isLoading = false;
     })
   }
 }

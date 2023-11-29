@@ -95,3 +95,12 @@
   height: 30px;
   font-size: 20px;
 }
+
+mat-card-actions{
+  display: flex;
+  align-items: flex-end;
+  h4{
+    color: grey;
+    margin: auto 0;
+  }
+}
