@@ -22,6 +22,11 @@ export class NotificationService{
     public sendNextPeriodSMS(){
       return this.http.post(`${baserUrl()}/rest/twilio/sendMessage/nextPeriod`,{})
     }
+
+    public sendNextFertileDaysSMS(){
+      return this.http.post(`${baserUrl()}/rest/twilio/sendMessage/nextFertileDay`,{})
+    }
+
     public sendNextPeriodWA(){
       return this.http.post(`${baserUrl()}/rest/wa/sendMessage/nextPeriod`, {})
     }
