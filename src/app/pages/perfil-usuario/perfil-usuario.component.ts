@@ -685,6 +685,32 @@ export class PerfilUsuarioComponent implements OnInit {
     );
   }
 
+  sendNextFertileDaysSMS() {
+    this.maskService.isLoading = true;
+    this.notitificationService.sendNextFertileDaysSMS().subscribe(
+      (data: any) => {
+        if(data.result === "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de texto.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        this.maskService.isLoading = false;
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
+      }
+    );
+  }
+
 
   sendNextPeriodWA() {
     this.maskService.isLoading = true;
