@@ -5,6 +5,7 @@ import {User} from "../pages/perfil-usuario/perfil-usuario.component";
 import {ResetContraRequestBody} from "../interface/ResetContraRequestBody";
 import {PreferenciasPostBody} from "../interface/PreferenciasPostBody";
 import {tap} from "rxjs";
+import {FrecuenciasPostBody} from "../interface/FrecuenciasPostBody";
 
 @Injectable({
   providedIn: 'root',
@@ -53,6 +54,15 @@ export class UserService {
   public addPreferencia(prefBody: PreferenciasPostBody):any{
     console.log(prefBody)
     return this.httpClient.post(`${baserUrl()}/rest/users/preferencias`, prefBody)
+      .pipe(
+        tap(response => console.log('Response:', response)),
+        tap(null, error => console.error('Error:', error))
+      );
+  }
+
+  public actualizaFrecuencia(frecBody: FrecuenciasPostBody):any{
+    console.log(frecBody)
+    return this.httpClient.post(`${baserUrl()}/rest/users/frecuencias`, frecBody)
       .pipe(
         tap(response => console.log('Response:', response)),
         tap(null, error => console.error('Error:', error))
