@@ -7,6 +7,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {NgClass} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-dashboard',
@@ -23,15 +24,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  activeButton: "test";
-  searchTerm: any;
+  searchTerm: String = "";
 
+  userStatus ={
+    user_id: 0,
+    active: false
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private _snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -42,7 +47,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   search() {
+      console.log("test");
+  }
 
+  ChangeStatus(user_id: any, active:any) {
+    this.userStatus.user_id = user_id;
+    if(active){
+      this.userStatus.active = false;
+    }else{
+      this.userStatus.active = true;
+    }
+    this.userService.changeStatus(this.userStatus).subscribe((data:any)=>{
+      this.ngOnInit();
+      },
+      (error:any)=>{
+      this._snackBar.open("Hubo un error. Intente de nuevo.", undefined, { duration: 5 * 1000 });
+    })
   }
 }
 
