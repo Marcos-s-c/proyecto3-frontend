@@ -63,4 +63,12 @@ export class UserService {
     return this.httpClient.get(`${baserUrl()}/rest/users/preferencias/${email}`, )
   }
 
+  public getAllUsers(){
+    return this.httpClient.get(`${baserUrl()}/rest/users/all`, )
+  }
+
+
+  public changeStatus(userStatus: any){
+    return this.httpClient.put(`${baserUrl()}/rest/users/changeStatus`, userStatus)
+  }
 }

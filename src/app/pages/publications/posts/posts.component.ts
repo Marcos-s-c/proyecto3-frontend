@@ -4,7 +4,6 @@ import { DialogPostService } from '../../../services/dialogPost.service';
 import { PostService } from 'src/app/services/post.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
-import { NumberInput } from '@angular/cdk/coercion';
 import { DataService } from '../../../services/dataService.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaskService } from 'src/app/services/mask.service';
@@ -13,7 +12,7 @@ import Swal from "sweetalert2";
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss'],
+  styleUrls: ['./posts.component.scss']
 })
 export class PostsComponent implements OnInit {
   constructor(
@@ -31,23 +30,23 @@ export class PostsComponent implements OnInit {
   addComment : Boolean = false;
   opened !: Number;
   newComment !: String;
+  searchParam: string = '';
+  sortBy: string = 'date';
   ngOnInit(): void {
     this.maskService.isLoading = true;
     this.cargarPosts();
-
   }
 
   cargarPosts():void{
     this.postService.getAllPosts().subscribe((response: any) => {
-
       this.posts = response;
-      console.log(this.posts);
       this.maskService.isLoading = false;
     });
   }
 
   toggleLike(post: any): void {
     post.likedByLoggedUser = !post.likedByLoggedUser;
+    post.likeAmount = post.likedByLoggedUser ? post.likeAmount+1: post.likeAmount-1
     this.postService.likePost(post.postId).subscribe((data=>{
       console.log(data);
     }))
@@ -84,7 +83,6 @@ export class PostsComponent implements OnInit {
 
   openPost(post: any): void {
     this.dialogPostService.openPostDialog(post);
-    console.log('Abriendo la publicación:', post);
   }
 
   calculateReadingTime(content: string): number {
@@ -134,5 +132,30 @@ export class PostsComponent implements OnInit {
         : truncatedWords;
     }
     return '';
+  }
+
+  onSearch(event:any){
+    this.searchParam = event?.target.value;
+    this.postService.getAllPosts(event?.target.value,this.sortBy).subscribe((data:any) =>{
+      this.posts = data;
+    })
+  }
+
+  sortByPopular(){
+    this.sortBy = 'likes';
+    this.maskService.isLoading = true;
+    this.postService.getAllPosts(this.searchParam,this.sortBy).subscribe((data:any)=>{
+      this.posts = data;
+      this.maskService.isLoading = false;
+    })
+  }
+
+  sortByDate(){
+    this.sortBy = 'date';
+    this.maskService.isLoading = true;
+    this.postService.getAllPosts(this.searchParam,this.sortBy).subscribe((data:any)=>{
+      this.posts = data;
+      this.maskService.isLoading = false;
+    })
   }
 }

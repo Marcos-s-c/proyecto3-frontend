@@ -62,7 +62,6 @@ import { MaskLoaderComponent } from './components/mask-loader/mask-loader.compon
         NavbarComponent,
         SignupComponent,
         LoginComponent,
-        DashboardComponent,
         UserDashboardComponent,
         PasswordResetComponent,
         DialogPasswordResetComponent,
