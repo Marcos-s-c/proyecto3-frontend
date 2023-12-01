@@ -87,9 +87,21 @@ export class CalendarComponent implements OnInit {
     // Transforma los datos consolidados en objetos CalendarEvent
     const calendarEvents: CalendarEvent[] = consolidatedData.map(
       (consolidatedItem: Record<string, any>) => {
+        const periodCycle = consolidatedItem['periodCycle'];
+        let dotClass = '';
+        if (periodCycle === 'inicio') {
+          dotClass = 'dot-red'; // Si el valor de periodColor es 'rojo', el color será rojo
+        } else if (periodCycle === 'fin') {
+          dotClass = 'dot-red'; // Si el valor de periodColor es 'rojo', el color será rojo
+        } else {
+          dotClass = 'dot-green'; // De lo contrario, el color será verde
+        }
+
+        
         return {
           start: consolidatedItem['date'],
           title: consolidatedItem['date'],
+          cssClass: `cal-event ${dotClass}`, // Agrega la clase CSS al evento junto con cal-event
         };
       }
     );
