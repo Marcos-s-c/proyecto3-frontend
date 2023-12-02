@@ -238,14 +238,21 @@
             <div class="wrapper-imagen">
               <img src="../../../assets/siguiente-periodo.png" height="66" width="66"/></div>
             <div class="notifications-section">
-              <p>Obtener el pronóstico de tu siguiente período, selecciona WhatsApp y haz click en el botón.</p>
+              <p>Obtener el pronóstico de tu siguiente período, selecciona WhatsApp o SMS y haz click en el botón.</p>
               <div  class="div-boton">
                 <button
                   (click)="sendNextPeriodWA()"
                   class="back-container"
                   color="primary"
                   mat-raised-button>
-                  Enviar
+                  Enviar por WA
+                </button>
+                <button
+                  (click)="sendNextPeriodSMS()"
+                  class="back-container"
+                  color="primary"
+                  mat-raised-button>
+                  Enviar por SMS
                 </button>
               </div>
             </div>
@@ -256,14 +263,21 @@
             <div class="notifications-section">
               <div class="wrapper-imagen"></div>
               <div>
-                <p>Obtener el pronóstico de tus próximos días fértiles, selecciona WhatsApp y haz click en el botón.</p>
+                <p>Obtener el pronóstico de tus próximos días fértiles, selecciona WhatsApp o SMS y haz click en el botón.</p>
                 <div class="div-boton">
                   <button
                     (click)="sendNextFertileDaysWA()"
                     class="back-container"
                     color="primary"
                     mat-raised-button>
-                    Enviar
+                    Enviar por WA
+                  </button>
+                  <button
+                    (click)="sendNextFertileDaysSMS()"
+                     class="back-container"
+                     color="primary"
+                     mat-raised-button>
+                      Enviar por SMS
                   </button>
                 </div>
               </div>
