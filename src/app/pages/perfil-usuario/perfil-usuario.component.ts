@@ -26,6 +26,7 @@ import {
 } from '@angular/material/dialog';
 import {ModalEditarMedicinaComponent} from "./modal-editar-medicina/modal-editar-medicina.component";
 import { MaskService } from 'src/app/services/mask.service';
+import {FrecuenciasPostBody} from "../../interface/FrecuenciasPostBody";
 
 export interface Task {
   name: string;
@@ -102,6 +103,7 @@ export class PerfilUsuarioComponent implements OnInit {
 
     this.cargarPreferenciasActuales();
     this.anadeFrecuencias();
+    this.anadeFrecuenciasNotificaciones()
     this.getAllMedicinasFiltered();
   }
 
@@ -394,7 +396,22 @@ export class PerfilUsuarioComponent implements OnInit {
             task.completed = true;
           }
         })
-        console.log(this.task.subtasks);
+
+        if(response.anticipation_notice === 1){
+          this.formFrecuenciaNotificacion = 'Mismo día de pronóstico';
+        }
+        if(response.anticipation_notice === 2){
+          this.formFrecuenciaNotificacion = '1 día antes';
+        }
+        if(response.anticipation_notice === 3){
+          this.formFrecuenciaNotificacion = '3 días antes';
+        }
+        if(response.anticipation_notice === 4){
+          this.formFrecuenciaNotificacion = '1 semana antes';
+        }
+        if(response.anticipation_notice === 5){
+          this.formFrecuenciaNotificacion = '15 días antes';
+        }
         this.maskService.isLoading = false;
       }, (error) => {
         console.error("error: ", error);
@@ -486,6 +503,7 @@ export class PerfilUsuarioComponent implements OnInit {
   formDosis: string = '';
   formFrecuencia: string = '';
   formName: string = '';
+  formFrecuenciaNotificacion: string = '';
 
   printToConsole(event: any) {
     console.log(event.target.value);
@@ -613,9 +631,6 @@ export class PerfilUsuarioComponent implements OnInit {
     });
 
     this.dialog.afterAllClosed.subscribe(result => {
-      console.log('\ncomponente usuario',result)
-      console.log('\ncomponente usuario',result)
-      console.log('\ncomponente usuario',result)
       this.getAllMedicinasFiltered();
     })
   }
@@ -651,6 +666,16 @@ export class PerfilUsuarioComponent implements OnInit {
     this.frecuencias.push('Una dosis mensual')
     this.frecuencias.push('Indefinida')
   }
+
+  frecuenciasNotificaciones: string[] = [];
+  anadeFrecuenciasNotificaciones(){
+    this.frecuenciasNotificaciones.push('Mismo día de pronóstico')
+    this.frecuenciasNotificaciones.push('1 día antes')
+    this.frecuenciasNotificaciones.push('3 días antes')
+    this.frecuenciasNotificaciones.push('1 semana antes')
+    this.frecuenciasNotificaciones.push('15 días antes')
+  }
+
 
   getAllMedicinasFiltered(){
     console.log('medicinas')
@@ -763,5 +788,60 @@ export class PerfilUsuarioComponent implements OnInit {
       }
     );
   }
+  salvarOpcionesFrecuecia() {
+    let frecuenciaSeleccionada = this.formFrecuenciaNotificacion;
+    console.log('salvarOpcionesFrecuecia()')
+    if(this.formFrecuenciaNotificacion === '' || this.formFrecuenciaNotificacion === ' ' || this.formFrecuenciaNotificacion === null){
+      console.log('frecuenciaSeleccionada ', frecuenciaSeleccionada)
 
+      Swal.fire({
+        title: 'Todos los campos son obligatorios',
+        text: 'Favor seleccionar frecuencia de notificación.',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        return;
+      });
+    }// if
+
+
+    let anticipationNoticeBody:FrecuenciasPostBody = {
+      anticipation_notice : 0,
+      emailId: this.user.email
+    }
+
+    if(frecuenciaSeleccionada === 'Mismo día de pronóstico'){
+      anticipationNoticeBody.anticipation_notice = 1;
+    }
+    if(frecuenciaSeleccionada === '1 día antes'){
+      anticipationNoticeBody.anticipation_notice = 2;
+    }
+    if(frecuenciaSeleccionada === '3 días antes'){
+      anticipationNoticeBody.anticipation_notice = 3;
+    }
+    if(frecuenciaSeleccionada === '1 semana antes'){
+      anticipationNoticeBody.anticipation_notice = 4;
+    }
+    if(frecuenciaSeleccionada === '15 días antes'){
+      anticipationNoticeBody.anticipation_notice = 5;
+    }
+
+    console.log('anticipationNoticeBody.anticipation_notice ', anticipationNoticeBody.anticipation_notice)
+    this.maskService.isLoading = true;
+    this.userService.actualizaFrecuencia(anticipationNoticeBody).subscribe(
+      (response: any) => {
+        console.log('this.userService.actualizaFrecuencia ', response);
+        this.maskService.isLoading = false;
+      },
+      (error: any) => {
+        console.error('userService.addPreferencia ', error);
+
+      }
+    );
+
+
+
+  }//salvar
 }
