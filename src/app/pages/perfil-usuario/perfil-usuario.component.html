@@ -194,7 +194,36 @@
                 class="back-container"
                 color="primary"
                 mat-raised-button>
-                Actualizar preferencias
+                Actualizar métodos
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="frecuencias-notificacion-container">
+          <div class="frecuencias-notificacion-preferencias">
+            <h2>
+              Frecuencia de notificaciones
+            </h2>
+            <div class="pref-cajon">
+              <section class="example-section">
+                <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Frecuencia</mat-label>
+                <mat-form-field>
+                  <mat-select [(ngModel)]="formFrecuenciaNotificacion">
+                    <mat-option *ngFor="let frec of frecuenciasNotificaciones" [value]="frec">{{frec}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-form-field>
+              </section>
+            </div>
+            <div class="vertical-center">
+              <button
+                (click)="salvarOpcionesFrecuecia()"
+                type="submit"
+                class="back-container"
+                color="primary"
+                mat-raised-button>
+                Actualizar frecuencia
               </button>
             </div>
           </div>
