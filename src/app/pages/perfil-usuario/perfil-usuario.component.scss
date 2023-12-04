@@ -299,6 +299,7 @@ mat-card{
 }
 
 .wrapper-pronosticos{
+  width: 40rem;
   margin-top: 3%;
   background-color: white;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
@@ -328,4 +329,17 @@ mat-card{
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.mat-tooltip {
+  font-size: 18px;
+}
+
+.anticipa-tooltip {
+  margin-top: -2px;
+
+  mat-icon {
+    margin-top: -10px;
+    margin-left: -15px;
+  }
 }

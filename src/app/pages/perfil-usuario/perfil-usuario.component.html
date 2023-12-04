@@ -202,15 +202,27 @@
         <div class="frecuencias-notificacion-container">
           <div class="frecuencias-notificacion-preferencias">
             <h2>
-              Frecuencia de notificaciones
+              Anticipación de notificaciones
+              <button
+                class="anticipa-tooltip"
+                mat-icon-button
+                color="primary"
+                aria-label="Button that displays a tooltip when focused or hovered over"
+                matTooltip="Configura con cuánta anticipación se va a recibir notificaciones del próximo ciclo menstrual y próximos días fértiles a través de los métodos seleccionados."
+              >
+                <mat-icon class="el-tooltip">info</mat-icon>
+              </button>
             </h2>
+
             <div class="pref-cajon">
               <section class="example-section">
                 <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Frecuencia</mat-label>
+                <mat-label>Anticipación</mat-label>
+                <mat-form-field>
                   <mat-select [(ngModel)]="formFrecuenciaNotificacion">
                     <mat-option *ngFor="let frec of frecuenciasNotificaciones" [value]="frec">{{frec}}</mat-option>
                   </mat-select>
+                </mat-form-field>
               </mat-form-field>
               </section>
             </div>
