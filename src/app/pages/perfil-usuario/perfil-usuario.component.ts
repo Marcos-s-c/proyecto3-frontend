@@ -789,6 +789,32 @@ export class PerfilUsuarioComponent implements OnInit {
       }
     );
   }
+
+  sendMonthlyReport(){
+    this.maskService.isLoading = true;
+    this.notitificationService.sendMonthlyReport().subscribe({
+      next: (response) => {
+        this.snack.open('Reporte enviado al correo.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
+      },
+      error: (error)=>{
+        if(error.error.message.includes('preferencias')){
+          this.snack.open(error.error.message, 'Aceptar', {
+            duration: 3000,
+          });
+          this.maskService.isLoading = false;
+          return;
+        }
+        this.snack.open('Ocurrió un error enviando el reporte, por favor contactar a soporte técnico.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
+      }
+    });
+  }
+
   salvarOpcionesFrecuecia() {
     let frecuenciaSeleccionada = this.formFrecuenciaNotificacion;
     console.log('salvarOpcionesFrecuecia()')

@@ -269,7 +269,7 @@
         </div>
       </div>
     </mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer-content id="form-container">
       <div class="info-section">
         <div class="cards-section">
             <mat-card class="data-card">
@@ -369,6 +369,7 @@
         </div>
       </div>
       <button
+      id="form-button"
       style="position: fixed; width: 60px; height: 60px; color: white; font-size: 40px; background-color: #f25287; border-radius: 50%; bottom: 20px; right: 60px;"
       mat-raised-button (click)="drawer.toggle()">+</button>
     </mat-drawer-content>
