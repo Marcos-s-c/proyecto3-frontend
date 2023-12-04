@@ -67,7 +67,6 @@ export class CalendarComponent implements OnInit {
     }
   }
   groupAndCombineFieldsByDate(data: any) {
-    console.log(this.fertilePeriod);
     const grouped: Record<string, Record<string, any>> = {};
 
     // Agrupa los datos por fecha
@@ -94,7 +93,6 @@ export class CalendarComponent implements OnInit {
         }
       }
       consolidatedData.push(consolidatedItem);
-      console.log(consolidatedItem);
     }
 
     // Crea eventos para los días fértiles y agrégalos al arreglo events
@@ -117,22 +115,63 @@ export class CalendarComponent implements OnInit {
     // Agrega los eventos de días fértiles adicionales al arreglo events
     this.events = this.events.concat(pinkDotEvents);
 
+    console.log(consolidatedData);
+
+    const startDates = consolidatedData.filter(
+      (item) => item['periodCycle'] === 'inicio'
+    );
+
+    const endDates = consolidatedData.filter(
+      (item) => item['periodCycle'] === 'fin'
+    );
+
+    startDates.forEach((startDateItem) => {
+      const startDate = startDateItem['date'];
+      const endDateItem = endDates.find((item) => item['date'] > startDate);
+
+      if (endDateItem) {
+        const endDate = endDateItem['date'];
+
+        // Generar el rango de fechas entre 'inicio' y 'fin'
+        const dateRange: Date[] = this.generateDateRange(startDate, endDate);
+
+        // Crear eventos para el rango de fechas y agregarlos al arreglo events
+        const cycleEvents: CalendarEvent[] = dateRange.map((date) => ({
+          start: date,
+          title: 'Cycle Day',
+          cssClass: 'cal-event dot-red',
+        }));
+
+        this.events = this.events.concat(cycleEvents);
+      }
+    });
+
+    const periodCycleStartDate = new Date();
+
+    const periodCycleEndDate = new Date('2023-12-8');
+
+    const periodCycleRange: Date[] = this.generateDateRange(
+      periodCycleStartDate,
+      periodCycleEndDate
+    );
+
+    const periodCycleEvents: CalendarEvent[] = periodCycleRange.map(
+      (date: Date) => ({
+        start: date,
+        title: 'Cycle Day',
+        cssClass: `cal-event dot-red`,
+      })
+    );
+
+    this.events = this.events.concat(periodCycleEvents);
+
     // Transforma los datos consolidados en objetos CalendarEvent
     const calendarEvents: CalendarEvent[] = consolidatedData.map(
       (consolidatedItem: Record<string, any>) => {
-        const periodCycle = consolidatedItem['periodCycle'];
-        let dotClass = '';
-        if (periodCycle === 'inicio') {
-          dotClass = 'dot-red';
-        } else if (periodCycle === 'fin') {
-          dotClass = 'dot-red';
-        } else {
-          dotClass = 'dot-green';
-        }
         return {
           start: consolidatedItem['date'],
           title: consolidatedItem['date'],
-          cssClass: `cal-event ${dotClass}`,
+          cssClass: `cal-event dot-green`,
         };
       }
     );
