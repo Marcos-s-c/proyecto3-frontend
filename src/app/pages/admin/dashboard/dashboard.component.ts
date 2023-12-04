@@ -40,6 +40,7 @@ export class DashboardComponent implements  AfterViewInit {
 
   ngAfterViewInit() {
     this.userService.getAllUsers().subscribe((data: any)=>{
+      console.log(data);
       this.dataSource = new MatTableDataSource<User>(data);
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = 'Usuarios por página';
