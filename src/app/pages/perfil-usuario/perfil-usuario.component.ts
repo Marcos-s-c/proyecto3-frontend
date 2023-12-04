@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -27,7 +27,7 @@ import {
 import {ModalEditarMedicinaComponent} from "./modal-editar-medicina/modal-editar-medicina.component";
 import { MaskService } from 'src/app/services/mask.service';
 import {FrecuenciasPostBody} from "../../interface/FrecuenciasPostBody";
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 export interface Task {
   name: string;
   value: string;
@@ -48,6 +48,7 @@ export interface User {
   selector: 'app-perfil-usuario',
   templateUrl: './perfil-usuario.component.html',
   styleUrls: ['./perfil-usuario.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     MatTabsModule,
@@ -64,6 +65,7 @@ export interface User {
     MatCardModule,
     MatDialogModule,
     TextComponent,
+    MatTooltipModule,
   ],
 })
 export class PerfilUsuarioComponent implements OnInit {
@@ -397,20 +399,20 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         })
 
-        if(response.anticipation_notice === 1){
+        if(response.anticipation_notice === 0){
           this.formFrecuenciaNotificacion = 'Mismo día de pronóstico';
         }
-        if(response.anticipation_notice === 2){
+        if(response.anticipation_notice === 1){
           this.formFrecuenciaNotificacion = '1 día antes';
         }
         if(response.anticipation_notice === 3){
           this.formFrecuenciaNotificacion = '3 días antes';
         }
-        if(response.anticipation_notice === 4){
+        if(response.anticipation_notice === 7){
           this.formFrecuenciaNotificacion = '1 semana antes';
         }
-        if(response.anticipation_notice === 5){
-          this.formFrecuenciaNotificacion = '15 días antes';
+        if(response.anticipation_notice === 14){
+          this.formFrecuenciaNotificacion = '2 semanas antes';
         }
         this.maskService.isLoading = false;
       }, (error) => {
@@ -669,11 +671,10 @@ export class PerfilUsuarioComponent implements OnInit {
 
   frecuenciasNotificaciones: string[] = [];
   anadeFrecuenciasNotificaciones(){
-    this.frecuenciasNotificaciones.push('Mismo día de pronóstico')
     this.frecuenciasNotificaciones.push('1 día antes')
     this.frecuenciasNotificaciones.push('3 días antes')
     this.frecuenciasNotificaciones.push('1 semana antes')
-    this.frecuenciasNotificaciones.push('15 días antes')
+    this.frecuenciasNotificaciones.push('2 semanas antes')
   }
 
 
@@ -813,19 +814,19 @@ export class PerfilUsuarioComponent implements OnInit {
     }
 
     if(frecuenciaSeleccionada === 'Mismo día de pronóstico'){
-      anticipationNoticeBody.anticipation_notice = 1;
+      anticipationNoticeBody.anticipation_notice = 0;
     }
     if(frecuenciaSeleccionada === '1 día antes'){
-      anticipationNoticeBody.anticipation_notice = 2;
+      anticipationNoticeBody.anticipation_notice = 1;
     }
     if(frecuenciaSeleccionada === '3 días antes'){
       anticipationNoticeBody.anticipation_notice = 3;
     }
     if(frecuenciaSeleccionada === '1 semana antes'){
-      anticipationNoticeBody.anticipation_notice = 4;
+      anticipationNoticeBody.anticipation_notice = 7;
     }
-    if(frecuenciaSeleccionada === '15 días antes'){
-      anticipationNoticeBody.anticipation_notice = 5;
+    if(frecuenciaSeleccionada === '2 semanas antes'){
+      anticipationNoticeBody.anticipation_notice = 14;
     }
 
     console.log('anticipationNoticeBody.anticipation_notice ', anticipationNoticeBody.anticipation_notice)

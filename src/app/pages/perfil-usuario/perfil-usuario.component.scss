@@ -320,3 +320,16 @@ mat-card{
   display: flex;
   justify-content: center;
 }
+
+.mat-tooltip {
+  font-size: 18px;
+}
+
+.anticipa-tooltip {
+  margin-top: -2px;
+
+  mat-icon {
+    margin-top: -10px;
+    margin-left: -15px;
+  }
+}
