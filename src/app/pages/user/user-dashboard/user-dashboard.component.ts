@@ -9,6 +9,9 @@ import {Medicina} from "../../../interface/Medicina";
 import { LoginService } from 'src/app/services/login.service';
 import Swal from "sweetalert2";
 
+import html2canvas from 'html2canvas';
+import * as FileSaver from 'file-saver';
+
 export type DataObject = {
   fieldName: string;
   value: any;
@@ -43,6 +46,9 @@ export class UserDashboardComponent implements OnInit {
 
   optionsLineal: any = {
     title: 'Temperatura (Cº)',
+    toolbar:{
+      enabled: false
+    },
     axes: {
       left: {
         title: 'Grados (Cº)',
@@ -56,9 +62,7 @@ export class UserDashboardComponent implements OnInit {
         mapsTo: 'date',
       },
     },
-    toolbar: {
-      enabled: false,
-    },
+
     curve: 'curveMonotoneX',
     height: '400px',
     width: '100%',
@@ -72,8 +76,8 @@ export class UserDashboardComponent implements OnInit {
   dataLineal: any = [];
   optionsCircle: any = {
     title: 'Horas de sueño',
-    toolbar: {
-      enabled: false,
+    toolbar:{
+      enabled: false
     },
     axes: {
       left: {
@@ -95,8 +99,8 @@ export class UserDashboardComponent implements OnInit {
 
   optionsSpike2: any = {
     title: 'Temperatura (C°)',
-    toolbar: {
-      enabled: false,
+    toolbar:{
+      enabled: false
     },
     axis: {
       x: {
@@ -136,8 +140,8 @@ export class UserDashboardComponent implements OnInit {
   dataCircle: any = [];
   optionsSpike: any = {
     title: 'Flujo cervical',
-    toolbar: {
-      enabled: false,
+    toolbar:{
+      enabled: false
     },
     axes: {
       bottom: {
@@ -161,8 +165,8 @@ export class UserDashboardComponent implements OnInit {
   };
   dataSpike: any = [];
   optionsRadar: any = {
-    toolbar: {
-      enabled: false,
+    toolbar:{
+      enabled: false
     },
     radar: {
       axes: {
@@ -299,6 +303,21 @@ export class UserDashboardComponent implements OnInit {
     this.fetchMedications();
   }
 
+  captureAndDownload(id:any) {
+    const element = document.getElementById(id); 
+    if (!element) {
+      console.error('El elemento no fue encontrado');
+      return;
+    }
+    html2canvas(element).then(canvas => {
+      canvas.toBlob(blob => {
+        if (blob) {
+          FileSaver.saveAs(blob, id+'.png');
+        }
+      });
+    });
+  }
+  
   getPredictions(){
     this.dataService.getAveragePeriod().subscribe((data:any) =>{
       if(data.average != null){

@@ -330,24 +330,63 @@
           </mat-card>
           -->
           <!----->
-          <mat-card style="margin-bottom: 30px; border-left: #f25287 6px solid;">
+          <div id="temperatura">
+          <button 
+          (click)="captureAndDownload('temperatura')"
+          mat-icon-button
+          style="
+          position: relative;
+          top: 40px;
+          z-index: 2;
+          left: 93%;
+          ">
+            <mat-icon >open_in_new</mat-icon>
+          </button>
+          <mat-card  style=" border-left: #f25287 6px solid;">
             <mat-card-content>
               <ibm-area-chart *ngIf="!loading" [data]="dataSpike2" [options]="optionsSpike2"></ibm-area-chart>
             </mat-card-content>
           </mat-card>
+         
+          </div>
+        
           <!----->
+          <div id="flujo">
+            <button 
+            (click)="captureAndDownload('flujo')"
+            mat-icon-button
+            style="
+            position: relative;
+            top: 40px;
+            z-index: 2;
+            left: 93%;">
+              <mat-icon >open_in_new</mat-icon>
+            </button>
           <mat-card style="border-left: #f25287 6px solid;">
             <mat-card-content style="padding-right: 30px;">
               <ibm-area-chart *ngIf="!loading" [data]="dataSpike" [options]="optionsSpike"></ibm-area-chart>
             </mat-card-content>
           </mat-card>
+          </div>
         </div>
         <div class="graph-emotions-physical">
-          <mat-card class="card"  style="margin-bottom: 30px; border-left: #f25287 6px solid;">
+          <div id="sueno">
+            <button 
+            (click)="captureAndDownload('sueno')"
+            mat-icon-button
+            style="
+            position: relative;
+            top: 40px;
+            z-index: 2;
+            left: 93%;">
+              <mat-icon >open_in_new</mat-icon>
+            </button>
+          <mat-card class="card"  style="margin-bottom: 35px; border-left: #f25287 6px solid;">
             <mat-card-content  style="padding-right: 30px;">
               <ibm-simple-bar-chart [data]="dataCircle" *ngIf="!loading" [options]="optionsCircle"></ibm-simple-bar-chart>
             </mat-card-content>
           </mat-card>
+          </div>
           <mat-accordion class="graph-accordion">
             <mat-expansion-panel [expanded]="true"  style="justify-content: center; border-left: #f25287 6px solid;"  (opened)="panelOpenState == true" (closed)="panelOpenState == false">
               <mat-expansion-panel-header>
@@ -355,15 +394,39 @@
                   Estado físico
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <ibm-radar-chart *ngIf="!loading" [data]="dataRadarPain" [options]="optionsRadar"></ibm-radar-chart>
-            </mat-expansion-panel>
+              <div id="estadoFisico">
+                <button 
+                (click)="captureAndDownload('estadoFisico')"
+                mat-icon-button
+                style="
+                position: relative;
+
+                z-index: 2;
+                left: 93%;">
+                  <mat-icon >open_in_new</mat-icon>
+                </button>
+                <ibm-radar-chart *ngIf="!loading" [data]="dataRadarPain" [options]="optionsRadar"></ibm-radar-chart>
+              </div>
+              </mat-expansion-panel>
             <mat-expansion-panel  style="border-left: #f25287 6px solid;" (opened)="panelOpenState ==  false" (closed)="panelOpenState == true">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Estado emocional
                 </mat-panel-title>
               </mat-expansion-panel-header>
+              <div id="estadoFisico">
+                <button 
+                (click)="captureAndDownload('estadoFisico')"
+                mat-icon-button
+                style="
+                position: relative;
+
+                z-index: 2;
+                left: 93%;">
+                  <mat-icon >open_in_new</mat-icon>
+                </button>
               <ibm-radar-chart *ngIf="!loading" [data]="dataRadarEmotion" [options]="optionsRadar"></ibm-radar-chart>
+              </div>
             </mat-expansion-panel>
           </mat-accordion>
         </div>

@@ -38,6 +38,7 @@ import {JsonPipe} from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ChartsModule } from '@carbon/charts-angular'
+
 import {Component} from '@angular/core';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DialogService } from 'src/app/services/dialog.service';
