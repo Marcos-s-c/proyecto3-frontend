@@ -40,7 +40,6 @@ export class DashboardComponent implements  AfterViewInit {
 
   ngAfterViewInit() {
     this.userService.getAllUsers().subscribe((data: any)=>{
-      console.log(data);
       this.dataSource = new MatTableDataSource<User>(data);
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = 'Usuarios por página';
@@ -59,8 +58,15 @@ export class DashboardComponent implements  AfterViewInit {
     }else{
       this.userStatus.active = true;
     }
+
+
     this.userService.changeStatus(this.userStatus).subscribe((data:any)=>{
-      this.ngAfterViewInit();
+
+        if(this.searchTerm != null){
+          this.search();
+        }else{
+          this.ngAfterViewInit();
+        }
       },
       (error:any)=>{
       this._snackBar.open("Hubo un error. Intente de nuevo.", undefined, { duration: 5 * 1000 });
