@@ -18,7 +18,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 
 
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements  AfterViewInit {
   displayedColumns: string[] = ['name', 'email', 'phone', 'has_device', 'action'];
 
   dataSource = new MatTableDataSource<User>();
@@ -31,23 +31,25 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     active: false
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+
 
   constructor(private userService: UserService,
               private _snackBar: MatSnackBar) {
   }
 
-  ngOnInit(): void {
+
+  ngAfterViewInit() {
     this.userService.getAllUsers().subscribe((data: any)=>{
       console.log(data);
       this.dataSource = new MatTableDataSource<User>(data);
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = 'Usuarios por página';
     })
   }
-
   search() {
-      console.log("test");
+    this.userService.searchUser(this.searchTerm).subscribe((data: any)=>{
+      this.dataSource = new MatTableDataSource<User>(data);
+    })
   }
 
   ChangeStatus(user_id: any, active:any) {
@@ -58,7 +60,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.userStatus.active = true;
     }
     this.userService.changeStatus(this.userStatus).subscribe((data:any)=>{
-      this.ngOnInit();
+      this.ngAfterViewInit();
       },
       (error:any)=>{
       this._snackBar.open("Hubo un error. Intente de nuevo.", undefined, { duration: 5 * 1000 });

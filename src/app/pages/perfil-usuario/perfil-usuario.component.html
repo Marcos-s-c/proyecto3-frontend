@@ -194,7 +194,46 @@
                 class="back-container"
                 color="primary"
                 mat-raised-button>
-                Actualizar preferencias
+                Actualizar métodos
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="frecuencias-notificacion-container">
+          <div class="frecuencias-notificacion-preferencias">
+            <h2>
+              Anticipación de notificaciones
+              <button
+                class="anticipa-tooltip"
+                mat-icon-button
+                color="primary"
+                aria-label="Button that displays a tooltip when focused or hovered over"
+                matTooltip="Configura con cuánta anticipación se va a recibir notificaciones del próximo ciclo menstrual y próximos días fértiles a través de los métodos seleccionados."
+              >
+                <mat-icon class="el-tooltip">info</mat-icon>
+              </button>
+            </h2>
+
+            <div class="pref-cajon">
+              <section class="example-section">
+                <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Anticipación</mat-label>
+                <mat-form-field>
+                  <mat-select [(ngModel)]="formFrecuenciaNotificacion">
+                    <mat-option *ngFor="let frec of frecuenciasNotificaciones" [value]="frec">{{frec}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-form-field>
+              </section>
+            </div>
+            <div class="vertical-center">
+              <button
+                (click)="salvarOpcionesFrecuecia()"
+                type="submit"
+                class="back-container"
+                color="primary"
+                mat-raised-button>
+                Actualizar frecuencia
               </button>
             </div>
           </div>
@@ -251,6 +290,27 @@
                       Enviar por SMS
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper-pronosticos">
+          <h2>
+            Envío de reportes por correo
+          </h2>
+          <div class="reportes">
+            <div class="wrapper-imagen">
+              <img src="../../../assets/siguiente-periodo.png" height="66" width="66"/></div>
+            <div class="notifications-section">
+              <p>Obtener un reporte del mes actual de tu ciclo menstrual.</p>
+              <div  class="div-boton">
+                <button
+                  (click)="sendMonthlyReport()"
+                  class="back-container"
+                  color="primary"
+                  mat-raised-button>
+                  Enviar
+                </button>
               </div>
             </div>
           </div>
