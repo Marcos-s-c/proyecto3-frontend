@@ -39,6 +39,18 @@
     [viewDate]="viewDate"
     [events]="events"
   >
+    <ng-template #cellTemplate let-day="day" let-events="events">
+      <div class="cal-cell-top" *ngIf="events.length > 0">
+        <div
+          class="cal-event"
+          *ngFor="let event of events"
+          [ngStyle]="{
+            backgroundColor: event.meta?.color,
+            borderColor: event.meta?.color
+          }"
+        ></div>
+      </div>
+    </ng-template>
   </mwl-calendar-month-view>
 
   <mwl-calendar-week-view
@@ -62,7 +74,7 @@
       ><span style="color: green">Verde:</span>
       El día contiene información |
       <span style="color: red"> ROJO:</span>
-      Día de menstruación | <span style="color: #df5583"> ROSADO:</span> Días de
+      Día de menstruación | <span style="color: ORANGE"> NARANJA:</span> Días de
       ovulación</b
     >
   </p>

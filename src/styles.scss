@@ -92,13 +92,26 @@ body {
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 .cal-month-view .cal-event {
-  background-color: GREEN !important;
+  background-color: transparent;
   border-color: black;
   color: #fff;
 }
+
+.dot-red {
+  background-color: red !important; /* Define el color rojo para la clase dot-red */
+}
+
+.dot-green {
+  background-color: green !important; /* Define el color verde para la clase dot-green */
+}
+
+.dot-pink {
+  background-color: orange !important; /* Define el color verde para la clase dot-green */
+}
+
+
 
 .cal-month-view .cal-day-badge {
   background-color: transparent;
   color: transparent;
 }
-
