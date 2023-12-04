@@ -146,25 +146,6 @@ export class CalendarComponent implements OnInit {
       }
     });
 
-    const periodCycleStartDate = new Date();
-
-    const periodCycleEndDate = new Date('2023-12-8');
-
-    const periodCycleRange: Date[] = this.generateDateRange(
-      periodCycleStartDate,
-      periodCycleEndDate
-    );
-
-    const periodCycleEvents: CalendarEvent[] = periodCycleRange.map(
-      (date: Date) => ({
-        start: date,
-        title: 'Cycle Day',
-        cssClass: `cal-event dot-red`,
-      })
-    );
-
-    this.events = this.events.concat(periodCycleEvents);
-
     // Transforma los datos consolidados en objetos CalendarEvent
     const calendarEvents: CalendarEvent[] = consolidatedData.map(
       (consolidatedItem: Record<string, any>) => {
