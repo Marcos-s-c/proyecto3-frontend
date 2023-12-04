@@ -28,12 +28,25 @@ export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   events: CalendarEvent[] = [];
+  fertilePeriod: any = {};
 
   ngOnInit() {
     this.maskService.isLoading = true;
-    this.getDataById().subscribe((data) => {
-      this.groupedData = this.groupAndCombineFieldsByDate(data);
+
+    // Obtener los días fértiles y guardarlos en la variable fertilePeriod
+    this.getFertileDays().subscribe((data) => {
+      this.fertilePeriod = data;
+
+
+      // Utilizar groupedData para otros fines (criterios de campos, etc.)
+      this.getDataById().subscribe((existingData) => {
+        this.groupedData = this.groupAndCombineFieldsByDate(existingData);
+      });
     });
+  }
+
+  getFertileDays() {
+    return this.dataService.getFertileDays();
   }
 
   getDataById() {
@@ -55,6 +68,7 @@ export class CalendarComponent implements OnInit {
     }
   }
   groupAndCombineFieldsByDate(data: any) {
+    console.log(this.fertilePeriod);
     const grouped: Record<string, Record<string, any>> = {};
 
     // Agrupa los datos por fecha
@@ -90,18 +104,16 @@ export class CalendarComponent implements OnInit {
         const periodCycle = consolidatedItem['periodCycle'];
         let dotClass = '';
         if (periodCycle === 'inicio') {
-          dotClass = 'dot-red'; // Si el valor de periodColor es 'rojo', el color será rojo
+          dotClass = 'dot-red';
         } else if (periodCycle === 'fin') {
-          dotClass = 'dot-red'; // Si el valor de periodColor es 'rojo', el color será rojo
+          dotClass = 'dot-red';
         } else {
-          dotClass = 'dot-green'; // De lo contrario, el color será verde
+          dotClass = 'dot-green';
         }
-
-        
         return {
           start: consolidatedItem['date'],
           title: consolidatedItem['date'],
-          cssClass: `cal-event ${dotClass}`, // Agrega la clase CSS al evento junto con cal-event
+          cssClass: `cal-event ${dotClass}`, 
         };
       }
     );
