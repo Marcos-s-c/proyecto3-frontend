@@ -1,54 +1,59 @@
 <div class="dialog-content">
   <h2>Día {{ selectedData?.date | date : "dd/MM/yyyy" }}</h2>
 
+
   <ng-container *ngIf="!isEditMode; else editMode">
-    <form *ngIf="periodDataForm" [formGroup]="periodDataForm">
+    <form class="form-calendar" *ngIf="periodDataForm" [formGroup]="periodDataForm">
       <mat-form-field *ngIf="selectedData?.emotionType !== undefined">
-        <mat-label>Tipo de Emoción</mat-label>
+        <mat-label>Tipo de emoción <span>😶</span></mat-label>
         <input matInput [value]="selectedData?.emotionType || ''" disabled />
       </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.emotionalState !== undefined">
-        <mat-label>Estado Emocional</mat-label>
-        <input matInput [value]="selectedData?.emotionalState || ''" disabled />
-      </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.fluidAmount !== undefined">
-        <mat-label>Cantidad de Fluido</mat-label>
-        <input matInput [value]="selectedData?.fluidAmount || ''" disabled />
-      </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.fluidColor !== undefined">
-        <mat-label>Color del Fluido</mat-label>
-        <input matInput [value]="selectedData?.fluidColor || ''" disabled />
-      </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.painType !== undefined">
-        <mat-label>Tipo de Dolor</mat-label>
-        <input matInput [value]="selectedData?.painType || ''" disabled />
-      </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.periodAmount !== undefined">
-        <mat-label>Cantidad del Período</mat-label>
-        <input matInput [value]="selectedData?.periodAmount || ''" disabled />
-      </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.periodColor !== undefined">
-        <mat-label>Color del Período</mat-label>
-        <input matInput [value]="selectedData?.periodColor || ''" disabled />
-      </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.periodCycle !== undefined">
-        <mat-label>Ciclo del Período</mat-label>
-        <input matInput [value]="selectedData?.periodCycle || ''" disabled />
-      </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.physicalState !== undefined">
-        <mat-label>Estado Físico</mat-label>
-        <input matInput [value]="selectedData?.physicalState || ''" disabled />
-      </mat-form-field>
+      <!--
+<mat-form-field *ngIf="selectedData?.emotionalState !== undefined">
+  <mat-label>Estado Emocional</mat-label>
+  <input matInput [value]="selectedData?.emotionalState || ''" disabled />
+</mat-form-field>
+-->
+  <mat-form-field *ngIf="selectedData?.fluidAmount !== undefined">
+    <mat-label>Cantidad de flujo cervical <span>💦</span></mat-label>
+    <input matInput [value]="selectedData?.fluidAmount || ''" disabled />
+  </mat-form-field>
+  <mat-form-field *ngIf="selectedData?.fluidColor !== undefined">
+    <mat-label>Color del flujo cervical <span>🎨</span></mat-label>
+    <input matInput [value]="selectedData?.fluidColor || ''" disabled />
+  </mat-form-field>
+  <mat-form-field *ngIf="selectedData?.painType !== undefined">
+    <mat-label>Tipo de dolor<span>😖</span></mat-label>
+    <input matInput [value]="selectedData?.painType || ''" disabled />
+  </mat-form-field>
+  <mat-form-field *ngIf="selectedData?.periodAmount !== undefined">
+    <mat-label>Flujo de menstruación <span>🩸🩸</span></mat-label>
+    <input matInput [value]="selectedData?.periodAmount || ''" disabled />
+  </mat-form-field>
+  <mat-form-field *ngIf="selectedData?.periodColor !== undefined">
+    <mat-label>Color de menstruación <span>🎨</span></mat-label>
+    <input matInput [value]="selectedData?.periodColor || ''" disabled />
+  </mat-form-field>
+  <mat-form-field *ngIf="selectedData?.periodCycle !== undefined">
+    <mat-label>Ciclo de menstruación <span>📆</span></mat-label>
+    <input matInput [value]="selectedData?.periodCycle || ''" disabled />
+  </mat-form-field>
+<!--
+<mat-form-field *ngIf="selectedData?.physicalState !== undefined">
+  <mat-label>Estado Físico</mat-label>
+  <input matInput [value]="selectedData?.physicalState || ''" disabled />
+</mat-form-field>
+-->
       <mat-form-field *ngIf="selectedData?.sexTimes !== undefined">
-        <mat-label>Veces Sexuales</mat-label>
+        <mat-label>Vida sexual<span>🫦</span></mat-label>
         <input matInput [value]="selectedData?.sexTimes || ''" disabled />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.sleepHours !== undefined">
-        <mat-label>Horas de Sueño</mat-label>
+        <mat-label>Horas de sueño <span>😴</span></mat-label>
         <input matInput [value]="selectedData?.sleepHours || ''" disabled />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.temperature !== undefined">
-        <mat-label>Temperatura</mat-label>
+        <mat-label>Temperatura (°C) <span>🌡️</span></mat-label>
         <input matInput [value]="selectedData?.temperature || ''" disabled />
       </mat-form-field>
     </form>
@@ -57,52 +62,57 @@
   </ng-container>
   <ng-template #editMode>
     <form *ngIf="periodDataForm" [formGroup]="periodDataForm">
+
       <mat-form-field *ngIf="selectedData?.emotionType !== undefined">
-        <mat-label>Tipo de Emoción</mat-label>
+        <mat-label>Tipo de emoción <span>😶</span></mat-label>
         <input matInput placeholder="Tipo de Emoción" formControlName="emotionType" />
       </mat-form-field>
-      <mat-form-field *ngIf="selectedData?.emotionalState !== undefined">
-        <mat-label>Estado Emocional</mat-label>
-        <input matInput placeholder="Estado Emocional" formControlName="emotionalState" />
-      </mat-form-field>
+      <!--
+   <mat-form-field *ngIf="selectedData?.emotionalState !== undefined">
+     <mat-label>Estado Emocional</mat-label>
+     <input matInput placeholder="Estado Emocional" formControlName="emotionalState" />
+   </mat-form-field>
+      -->
       <mat-form-field *ngIf="selectedData?.fluidAmount !== undefined">
-        <mat-label>Cantidad de Fluido</mat-label>
+        <mat-label>Cantidad de flujo cervical <span>💦</span></mat-label>
         <input matInput placeholder="Cantidad de Fluido" formControlName="fluidAmount" />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.fluidColor !== undefined">
-        <mat-label>Color del Fluido</mat-label>
+        <mat-label>Color del flujo cervical <span>🎨</span></mat-label>
         <input matInput placeholder="Color del Fluido" formControlName="fluidColor" />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.painType !== undefined">
-        <mat-label>Tipo de Dolor</mat-label>
+        <mat-label>Tipo de dolor<span>😖</span></mat-label>
         <input matInput placeholder="Tipo de Dolor" formControlName="painType" />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.periodAmount !== undefined">
-        <mat-label>Cantidad del Período</mat-label>
+        <mat-label>Flujo de menstruación <span>🩸🩸</span></mat-label>
         <input matInput placeholder="Cantidad del Período" formControlName="periodAmount" />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.periodColor !== undefined">
-        <mat-label>Color del Período</mat-label>
+        <mat-label>Color de menstruación<span>🎨</span></mat-label>
         <input matInput placeholder="Color del Período" formControlName="periodColor" />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.periodCycle !== undefined">
-        <mat-label>Ciclo del Período</mat-label>
+        <mat-label>Ciclo de menstruación <span>📆</span></mat-label>
         <input matInput placeholder="Ciclo del Período" formControlName="periodCycle" />
       </mat-form-field>
+      <!--
       <mat-form-field *ngIf="selectedData?.physicalState !== undefined">
         <mat-label>Estado Físico</mat-label>
         <input matInput placeholder="Estado Físico" formControlName="physicalState" />
       </mat-form-field>
+      -->
       <mat-form-field *ngIf="selectedData?.sexTimes !== undefined">
-        <mat-label>Veces Sexuales</mat-label>
-        <input matInput placeholder="Veces Sexuales" formControlName="sexTimes" />
+        <mat-label>Vida sexual<span>🫦</span></mat-label>
+        <input matInput placeholder="Vida sexual" formControlName="sexTimes" />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.sleepHours !== undefined">
-        <mat-label>Horas de Sueño</mat-label>
-        <input matInput placeholder="Horas de Sueño" formControlName="sleepHours" />
+        <mat-label>Horas de sueño <span>😴</span></mat-label>
+        <input matInput placeholder="Horas de sueño" formControlName="sleepHours" />
       </mat-form-field>
       <mat-form-field *ngIf="selectedData?.temperature !== undefined">
-        <mat-label>Temperatura</mat-label>
+        <mat-label>Temperatura (°C) <span>🌡️</span></mat-label>
         <input matInput placeholder="Temperatura" formControlName="temperature" />
       </mat-form-field>
     </form>

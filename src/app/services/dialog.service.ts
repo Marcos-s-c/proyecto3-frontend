@@ -14,7 +14,7 @@ export class DialogService {
   openDialog(data: PeriodData): void {
     this.selectedDataSubject.next(data); // Envía los datos al BehaviorSubject
     const dialogRef = this.dialog.open(DialogDataComponent, {
-      width: '80%',
+      width: '700px',
     });
   }
 
