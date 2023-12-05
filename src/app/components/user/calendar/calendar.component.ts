@@ -118,11 +118,11 @@ export class CalendarComponent implements OnInit {
     console.log(consolidatedData);
 
     const startDates = consolidatedData.filter(
-      (item) => item['periodCycle'] === 'inicio'
+      (item) => item['periodCycle'] === 'Inicio'
     );
 
     const endDates = consolidatedData.filter(
-      (item) => item['periodCycle'] === 'fin'
+      (item) => item['periodCycle'] === 'Fin'
     );
 
     startDates.forEach((startDateItem) => {
