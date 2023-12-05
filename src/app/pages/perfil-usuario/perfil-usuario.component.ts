@@ -145,6 +145,26 @@ export class PerfilUsuarioComponent implements OnInit {
     this.confirmPassword = '';
   }
 
+  passwordValidation(password:any){
+    const regexLongitud = /.{8,}/;
+    const regexMinuscula = /[a-z]/;
+    const regexMayuscula = /[A-Z]/;
+    const regexNumero = /\d/;
+    const regexEspecial = /[!@#$%^&*(),.?":{}|<>]/;
+
+    const isLong = regexLongitud.test(password);
+    const isMinus = regexMinuscula.test(password);
+    const isUpper = regexMayuscula.test(password);
+    const isNum = regexNumero.test(password);
+    const isSpecial = regexEspecial.test(password);
+
+    if(isLong && isMinus && isUpper && isNum && isSpecial){
+      return true
+    }else{
+      return false;
+    }
+  }
+
   confirmaContraActual(event: any) {
     this.body = { string: this.currentPassword, email: this.user.email };
   }
@@ -178,7 +198,19 @@ export class PerfilUsuarioComponent implements OnInit {
       this.clearFields();
       return;
     }
-
+    if(!this.passwordValidation(this.newPassword)){
+      Swal.fire({
+        title: 'Contraseña inválida',
+        text: 'La contraseña debe ser de mínimo 8 caracteres, debe contener una mayúscula, una minúscula, un número y un caracter especial.',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      });
+      const passwordInput = document.getElementsByName("password")[0] as HTMLInputElement;
+      passwordInput.value = '';
+      return;
+    }
     this.maskService.isLoading = true;
     this.userService.compara(this.body).subscribe(
       (response: any) => {
