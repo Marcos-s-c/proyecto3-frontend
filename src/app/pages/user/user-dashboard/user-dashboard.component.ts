@@ -304,7 +304,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   captureAndDownload(id:any) {
-    const element = document.getElementById(id); 
+    const element = document.getElementById(id);
     if (!element) {
       console.error('El elemento no fue encontrado');
       return;
@@ -317,7 +317,7 @@ export class UserDashboardComponent implements OnInit {
       });
     });
   }
-  
+
   getPredictions(){
     this.dataService.getAveragePeriod().subscribe((data:any) =>{
       if(data.average != null){
