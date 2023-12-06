@@ -66,7 +66,7 @@
               </button>
 
               <button *ngIf="editar" mat-raised-button class="buttonVenus">
-                Salvar Cambios
+                Guardar Cambios
               </button>
               <div style="margin-left: 3px; margin-right: 3px"></div>
               <button
@@ -198,7 +198,7 @@
               <button
                 class="anticipa-tooltip"
                 mat-icon-button
-                style="color: #f25287"
+                style="color: #3f51b5"
                 aria-label="Button that displays a tooltip when focused or hovered over"
                 matTooltip="Configura con cuánta anticipación se va a recibir notificaciones del próximo ciclo menstrual y próximos días fértiles a través de los métodos seleccionados."
               >
@@ -406,9 +406,15 @@
             </mat-card>
             <mat-card *ngFor="let med of medicinas">
               <div class="med-carta">
-                <mat-card-header><h2>{{ med.name }}</h2></mat-card-header>
-                <mat-card-content><h3>{{ med.dosis }}</h3></mat-card-content>
-                <mat-card-content><h3>{{ med.frecuencia }}</h3></mat-card-content>
+                <mat-card-header
+                  ><h2>{{ med.name }}</h2></mat-card-header
+                >
+                <mat-card-content
+                  ><h3>{{ med.dosis }}</h3></mat-card-content
+                >
+                <mat-card-content
+                  ><h3>{{ med.frecuencia }}</h3></mat-card-content
+                >
                 <mat-card-footer>
                   <div class="boton">
                     <button
