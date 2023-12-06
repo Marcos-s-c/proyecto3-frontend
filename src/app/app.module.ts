@@ -56,7 +56,10 @@ import { PostsComponent } from './pages/publications/posts/posts.component';
 import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
 import { ModalEditarMedicinaComponent  } from './pages/perfil-usuario/modal-editar-medicina/modal-editar-medicina.component';
 import { MaskLoaderComponent } from './components/mask-loader/mask-loader.component';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
+registerLocaleData(localeEs);
 @NgModule({
     declarations: [
         AppComponent,

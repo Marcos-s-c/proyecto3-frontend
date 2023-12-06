@@ -28,7 +28,7 @@
   </div>
 
   <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate : view + "ViewTitle" : "en" }}</h3>
+    <h3>{{ viewDate | calendarDate : view + "ViewTitle" : "Es" }}</h3>
   </div>
 </div>
 
@@ -38,6 +38,7 @@
     *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"
     [events]="events"
+    [locale]="'Es'"
   >
     <ng-template #cellTemplate let-day="day" let-events="events">
       <div class="cal-cell-top" *ngIf="events.length > 0">
