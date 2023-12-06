@@ -115,6 +115,11 @@ export class CalendarComponent implements OnInit {
     // Agrega los eventos de días fértiles adicionales al arreglo events
     this.events = this.events.concat(pinkDotEvents);
 
+    consolidatedData.sort(
+      (a: any, b: any) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
     console.log(consolidatedData);
 
     const startDates = consolidatedData.filter(
