@@ -1,4 +1,21 @@
-<!-- posts.component.html -->
+<div class="search-bar">
+  <div class="search-container">
+    <div class="button-container">
+      <button mat-raised-button class="search-button" (click)="sortByPopular()">
+        Más populares
+      </button>
+      <button mat-raised-button class="search-button" (click)="sortByDate()">
+        Más recientes
+      </button>
+    </div>
+    <div class="input-container">
+      <mat-form-field>
+        <mat-icon matPrefix>search</mat-icon>
+        <input class="search-input" matInput (keyup)="onSearch($event)"/>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
 <div *ngFor="let post of posts" class="card-container">
   <mat-card class="post-card">
     <img mat-card-image [src]="post.imageUrl" alt="Post Image" />
@@ -16,7 +33,7 @@
       <button mat-icon-button (click)="toggleLike(post)" [ngClass]="{'red-color': post.likedByLoggedUser }">
         <mat-icon>{{ post.likedByLoggedUser ? "favorite" : "favorite_border" }}</mat-icon>
       </button>
-
+      <h4>{{post.likeAmount}} likes</h4>
       <button mat-icon-button (click)="openPost(post)">
         <mat-icon>open_in_new</mat-icon>
       </button>

@@ -20,6 +20,8 @@ export class ModalEditarMedicinaComponent implements OnInit{
     dosis:'',
     frecuencia:'',
   }
+
+  public nuevaDosis01:string = "nuevadosisprueba"
   //
   // public medicine_id: number;
   // public name: string ;
@@ -59,11 +61,13 @@ export class ModalEditarMedicinaComponent implements OnInit{
     console.log('dosis', this.medicina.dosis);
     console.log('frecuencia', this.medicina.frecuencia);
 
-    this.medServervice.modificaMedicina(this.medicina, this.medicina.medicine_id).subscribe((response:any) => {
-      console.log('response ', response)
+    if(this.medicina.name === ''|| this.medicina.name === ' ' || this.medicina.name === null
+        || this.medicina.dosis === '' || this.medicina.dosis === ' '|| this.medicina.dosis === null
+      || this.medicina.frecuencia === '' || this.medicina.frecuencia === ' '|| this.medicina.frecuencia === null
+    ){
       Swal.fire({
-        title: 'Medicina modificada',
-        text: 'Medicina modificada con éxito.',
+        title: 'Todos los campos son obligatorios',
+        text: 'Favor llenar todos los campos.',
         showCancelButton: false,
         showConfirmButton: true,
         confirmButtonText: 'Aceptar',
@@ -73,10 +77,28 @@ export class ModalEditarMedicinaComponent implements OnInit{
           // El usuario hizo clic en "Aceptar"
         }
       });
-      const dataToSendBack = this.medicina;
-      this.dialogRef.close(dataToSendBack);
+    }else{
+      this.medServervice.modificaMedicina(this.medicina, this.medicina.medicine_id).subscribe((response:any) => {
+        console.log('response ', response)
+        Swal.fire({
+          title: 'Medicina modificada',
+          text: 'Medicina modificada con éxito.',
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: 'pink',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario hizo clic en "Aceptar"
+          }
+        });
+        const dataToSendBack = this.medicina;
+        this.dialogRef.close(dataToSendBack);
 
-    })
+      })
+    }
+
+
 
 
   }

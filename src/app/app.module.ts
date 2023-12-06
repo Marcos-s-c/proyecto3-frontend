@@ -38,6 +38,7 @@ import { JsonPipe } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChartsModule } from '@carbon/charts-angular';
+
 import { Component } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -55,6 +56,10 @@ import { PostsComponent } from './pages/publications/posts/posts.component';
 import { DialogPostsComponent } from './components/publications/dialog-posts/dialog-posts.component';
 import { ModalEditarMedicinaComponent } from './pages/perfil-usuario/modal-editar-medicina/modal-editar-medicina.component';
 import { MaskLoaderComponent } from './components/mask-loader/mask-loader.component';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs);
 import { ButtonComponent } from './components/shared/button/button.component';
 import { InputComponent } from './components/shared/input/input.component';
 import { ContainerComponent } from './components/shared/container/container.component';

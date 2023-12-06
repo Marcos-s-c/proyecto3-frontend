@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +26,8 @@ import {
 } from '@angular/material/dialog';
 import {ModalEditarMedicinaComponent} from "./modal-editar-medicina/modal-editar-medicina.component";
 import { MaskService } from 'src/app/services/mask.service';
-
+import {FrecuenciasPostBody} from "../../interface/FrecuenciasPostBody";
+import {MatTooltipModule} from '@angular/material/tooltip';
 export interface Task {
   name: string;
   value: string;
@@ -47,6 +48,7 @@ export interface User {
   selector: 'app-perfil-usuario',
   templateUrl: './perfil-usuario.component.html',
   styleUrls: ['./perfil-usuario.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     MatTabsModule,
@@ -63,6 +65,7 @@ export interface User {
     MatCardModule,
     MatDialogModule,
     TextComponent,
+    MatTooltipModule,
   ],
 })
 export class PerfilUsuarioComponent implements OnInit {
@@ -102,6 +105,7 @@ export class PerfilUsuarioComponent implements OnInit {
 
     this.cargarPreferenciasActuales();
     this.anadeFrecuencias();
+    this.anadeFrecuenciasNotificaciones()
     this.getAllMedicinasFiltered();
   }
 
@@ -141,6 +145,26 @@ export class PerfilUsuarioComponent implements OnInit {
     this.confirmPassword = '';
   }
 
+  passwordValidation(password:any){
+    const regexLongitud = /.{8,}/;
+    const regexMinuscula = /[a-z]/;
+    const regexMayuscula = /[A-Z]/;
+    const regexNumero = /\d/;
+    const regexEspecial = /[!@#$%^&*(),.?":{}|<>]/;
+
+    const isLong = regexLongitud.test(password);
+    const isMinus = regexMinuscula.test(password);
+    const isUpper = regexMayuscula.test(password);
+    const isNum = regexNumero.test(password);
+    const isSpecial = regexEspecial.test(password);
+
+    if(isLong && isMinus && isUpper && isNum && isSpecial){
+      return true
+    }else{
+      return false;
+    }
+  }
+
   confirmaContraActual(event: any) {
     this.body = { string: this.currentPassword, email: this.user.email };
   }
@@ -174,7 +198,19 @@ export class PerfilUsuarioComponent implements OnInit {
       this.clearFields();
       return;
     }
-
+    if(!this.passwordValidation(this.newPassword)){
+      Swal.fire({
+        title: 'Contraseña inválida',
+        text: 'La contraseña debe ser de mínimo 8 caracteres, debe contener una mayúscula, una minúscula, un número y un caracter especial.',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      });
+      const passwordInput = document.getElementsByName("password")[0] as HTMLInputElement;
+      passwordInput.value = '';
+      return;
+    }
     this.maskService.isLoading = true;
     this.userService.compara(this.body).subscribe(
       (response: any) => {
@@ -394,7 +430,22 @@ export class PerfilUsuarioComponent implements OnInit {
             task.completed = true;
           }
         })
-        console.log(this.task.subtasks);
+
+        if(response.anticipation_notice === 0){
+          this.formFrecuenciaNotificacion = 'Mismo día de pronóstico';
+        }
+        if(response.anticipation_notice === 1){
+          this.formFrecuenciaNotificacion = '1 día antes';
+        }
+        if(response.anticipation_notice === 3){
+          this.formFrecuenciaNotificacion = '3 días antes';
+        }
+        if(response.anticipation_notice === 7){
+          this.formFrecuenciaNotificacion = '1 semana antes';
+        }
+        if(response.anticipation_notice === 14){
+          this.formFrecuenciaNotificacion = '2 semanas antes';
+        }
         this.maskService.isLoading = false;
       }, (error) => {
         console.error("error: ", error);
@@ -486,6 +537,7 @@ export class PerfilUsuarioComponent implements OnInit {
   formDosis: string = '';
   formFrecuencia: string = '';
   formName: string = '';
+  formFrecuenciaNotificacion: string = '';
 
   printToConsole(event: any) {
     console.log(event.target.value);
@@ -595,19 +647,24 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   editarMedicamento(medicine_id: number){
+  let foundMedicina = this.medicinas.find((med) => med.medicine_id === medicine_id);
+
+    if (foundMedicina) {
+      console.info("Editar medicina encontrada")
+    } else {
+      console.error('Medicina no encontrada');
+    }
+
     this.dialog.open(ModalEditarMedicinaComponent, {
       data: {
         medicine_id: medicine_id,
-        name:this.formName,
-        dosis:this.formDosis,
-        frecuencia:this.formFrecuencia
+        name:foundMedicina?.name,
+        dosis:foundMedicina?.dosis,
+        frecuencia:foundMedicina?.frecuencia
       }
     });
 
     this.dialog.afterAllClosed.subscribe(result => {
-      console.log('\ncomponente usuario',result)
-      console.log('\ncomponente usuario',result)
-      console.log('\ncomponente usuario',result)
       this.getAllMedicinasFiltered();
     })
   }
@@ -644,6 +701,15 @@ export class PerfilUsuarioComponent implements OnInit {
     this.frecuencias.push('Indefinida')
   }
 
+  frecuenciasNotificaciones: string[] = [];
+  anadeFrecuenciasNotificaciones(){
+    this.frecuenciasNotificaciones.push('1 día antes')
+    this.frecuenciasNotificaciones.push('3 días antes')
+    this.frecuenciasNotificaciones.push('1 semana antes')
+    this.frecuenciasNotificaciones.push('2 semanas antes')
+  }
+
+
   getAllMedicinasFiltered(){
     console.log('medicinas')
     this.medicineService.getAllMedicamentos().subscribe((response: Medicina[]) => {
@@ -654,6 +720,32 @@ export class PerfilUsuarioComponent implements OnInit {
   sendNextPeriodSMS() {
     this.maskService.isLoading = true;
     this.notitificationService.sendNextPeriodSMS().subscribe(
+      (data: any) => {
+        if(data.result === "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de texto.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        if(data.result !== "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
+          this.snack.open('El mensaje fue enviado al número registrado en el perfil.', 'Aceptar', {
+            duration: 3000,
+          });
+        }
+        this.maskService.isLoading = false;
+      },
+      (error: any) => {
+        console.log(error);
+        this.snack.open('Hubo un error, no se pudo llevar a cabo su solicitud.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
+      }
+    );
+  }
+
+  sendNextFertileDaysSMS() {
+    this.maskService.isLoading = true;
+    this.notitificationService.sendNextFertileDaysSMS().subscribe(
       (data: any) => {
         if(data.result === "Debe ajustar sus preferencias de notificaciones, para recibir mensajes de texto."){
           this.snack.open('Debe ajustar sus preferencias de notificaciones para recibir mensajes de texto.', 'Aceptar', {
@@ -730,4 +822,85 @@ export class PerfilUsuarioComponent implements OnInit {
     );
   }
 
+  sendMonthlyReport(){
+    this.maskService.isLoading = true;
+    this.notitificationService.sendMonthlyReport().subscribe({
+      next: (response) => {
+        this.snack.open('Reporte enviado al correo.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
+      },
+      error: (error)=>{
+        if(error.error.message.includes('preferencias')){
+          this.snack.open(error.error.message, 'Aceptar', {
+            duration: 3000,
+          });
+          this.maskService.isLoading = false;
+          return;
+        }
+        this.snack.open('Ocurrió un error enviando el reporte, por favor contactar a soporte técnico.', 'Aceptar', {
+          duration: 3000,
+        });
+        this.maskService.isLoading = false;
+      }
+    });
+  }
+
+  salvarOpcionesFrecuecia() {
+    let frecuenciaSeleccionada = this.formFrecuenciaNotificacion;
+    console.log('salvarOpcionesFrecuecia()')
+    if(this.formFrecuenciaNotificacion === '' || this.formFrecuenciaNotificacion === ' ' || this.formFrecuenciaNotificacion === null){
+      console.log('frecuenciaSeleccionada ', frecuenciaSeleccionada)
+
+      Swal.fire({
+        title: 'Todos los campos son obligatorios',
+        text: 'Favor seleccionar frecuencia de notificación.',
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: 'pink',
+      }).then((result) => {
+        return;
+      });
+    }// if
+
+
+    let anticipationNoticeBody:FrecuenciasPostBody = {
+      anticipation_notice : 0,
+      emailId: this.user.email
+    }
+
+    if(frecuenciaSeleccionada === 'Mismo día de pronóstico'){
+      anticipationNoticeBody.anticipation_notice = 0;
+    }
+    if(frecuenciaSeleccionada === '1 día antes'){
+      anticipationNoticeBody.anticipation_notice = 1;
+    }
+    if(frecuenciaSeleccionada === '3 días antes'){
+      anticipationNoticeBody.anticipation_notice = 3;
+    }
+    if(frecuenciaSeleccionada === '1 semana antes'){
+      anticipationNoticeBody.anticipation_notice = 7;
+    }
+    if(frecuenciaSeleccionada === '2 semanas antes'){
+      anticipationNoticeBody.anticipation_notice = 14;
+    }
+
+    console.log('anticipationNoticeBody.anticipation_notice ', anticipationNoticeBody.anticipation_notice)
+    this.maskService.isLoading = true;
+    this.userService.actualizaFrecuencia(anticipationNoticeBody).subscribe(
+      (response: any) => {
+        console.log('this.userService.actualizaFrecuencia ', response);
+        this.maskService.isLoading = false;
+      },
+      (error: any) => {
+        console.error('userService.addPreferencia ', error);
+
+      }
+    );
+
+
+
+  }//salvar
 }

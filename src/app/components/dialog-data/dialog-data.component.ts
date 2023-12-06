@@ -196,6 +196,7 @@ export class DialogDataComponent implements OnInit {
         }
         if (this.periodDataForm?.value.sleepHours) {
           if (this.periodDataForm.value.sleepHours < 0) {
+            console.log('menos de cero')
             // Muestra un mensaje de error si las horas de sueño son negativas
             Swal.fire(
               'Error',
@@ -205,6 +206,7 @@ export class DialogDataComponent implements OnInit {
             return; // Detiene el proceso de guardar cambios
           }
           if (this.periodDataForm.value.sleepHours >= 23) {
+            console.log('mas de 23')
             Swal.fire(
               'Error',
               'Las horas de sueño no pueden ser mayores a 23',

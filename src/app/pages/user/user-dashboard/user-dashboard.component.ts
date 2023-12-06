@@ -7,6 +7,10 @@ import { MaskService } from 'src/app/services/mask.service';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {Medicina} from "../../../interface/Medicina";
 import { LoginService } from 'src/app/services/login.service';
+import Swal from "sweetalert2";
+
+import html2canvas from 'html2canvas';
+import * as FileSaver from 'file-saver';
 
 export type DataObject = {
   fieldName: string;
@@ -38,13 +42,18 @@ export class UserDashboardComponent implements OnInit {
   meds: Array<String> = new Array();
   dataArrayList: Array<DataObject> = [];
   hasDevice: boolean;
+  colors: any  = ['#FF0000', '#00FF00', '#0000FF'];
+
   optionsLineal: any = {
     title: 'Temperatura (Cº)',
+    toolbar:{
+      enabled: false
+    },
     axes: {
       left: {
         title: 'Grados (Cº)',
         stacked: true,
-        scaleType: 'linear',
+       // scaleType: 'linear',
         mapsTo: 'value',
       },
       bottom: {
@@ -53,18 +62,22 @@ export class UserDashboardComponent implements OnInit {
         mapsTo: 'date',
       },
     },
-    toolbar: {
-      enabled: false,
-    },
+
     curve: 'curveMonotoneX',
     height: '400px',
     width: '100%',
+    color: {
+      "scale": {
+        "Temperatura (C°)": "#f25287",
+      }
+    },
   };
+
   dataLineal: any = [];
   optionsCircle: any = {
     title: 'Horas de sueño',
-    toolbar: {
-      enabled: false,
+    toolbar:{
+      enabled: false
     },
     axes: {
       left: {
@@ -77,13 +90,58 @@ export class UserDashboardComponent implements OnInit {
       },
     },
     height: '400px',
+    color: {
+      "scale": {
+        "Horas de sueño": "#f25287",
+      }
+    },
   };
 
+  optionsSpike2: any = {
+    title: 'Temperatura (C°)',
+    toolbar:{
+      enabled: false
+    },
+    axis: {
+      x: {
+        ticks: {
+          // You can configure the number of decimal places for the x-axis here
+          precision: 2, // for example, set precision to 2 for two decimal places
+        },
+      },
+      y: {
+        // Similarly, you can configure the number of decimal places for the y-axis here
+        ticks: {
+          precision: 2,
+        },
+      },
+    },
+    axes: {
+      bottom: {
+        title: 'Fecha',
+        mapsTo: 'date',
+        scaleType: 'labels',
+      },
+      left: {
+        mapsTo: 'value',
+        title: 'Temperatura',
+        scaleType: 'labels',
+      },
+    },
+    height: '400px',
+    width: '100%',
+    color: {
+      "scale": {
+        "Temperatura (C°)": "#f25287",
+      }
+    },
+  };
+  dataSpike2: any = [];
   dataCircle: any = [];
   optionsSpike: any = {
     title: 'Flujo cervical',
-    toolbar: {
-      enabled: false,
+    toolbar:{
+      enabled: false
     },
     axes: {
       bottom: {
@@ -99,11 +157,16 @@ export class UserDashboardComponent implements OnInit {
     },
     height: '350px',
     width: '100%',
+     color: {
+      "scale": {
+        "Flujo Cervical": "#f25287",
+      }
+    },
   };
   dataSpike: any = [];
   optionsRadar: any = {
-    toolbar: {
-      enabled: false,
+    toolbar:{
+      enabled: false
     },
     radar: {
       axes: {
@@ -116,6 +179,11 @@ export class UserDashboardComponent implements OnInit {
     },
     height: '25vh',
     width: '100%',
+     color: {
+      "scale": {
+        "Sentimientos": "#f25287",
+      }
+    },
   };
   dataRadarPain: any = [
     {
@@ -192,7 +260,7 @@ export class UserDashboardComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private notificationDataService : NotificationDataService,
-    private medicineService: MedicineService, 
+    private medicineService: MedicineService,
     private maskService : MaskService,
     public loginService: LoginService
     ) {}
@@ -235,6 +303,21 @@ export class UserDashboardComponent implements OnInit {
     this.fetchMedications();
   }
 
+  captureAndDownload(id:any) {
+    const element = document.getElementById(id); 
+    if (!element) {
+      console.error('El elemento no fue encontrado');
+      return;
+    }
+    html2canvas(element).then(canvas => {
+      canvas.toBlob(blob => {
+        if (blob) {
+          FileSaver.saveAs(blob, id+'.png');
+        }
+      });
+    });
+  }
+  
   getPredictions(){
     this.dataService.getAveragePeriod().subscribe((data:any) =>{
       if(data.average != null){
@@ -267,7 +350,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   cleanCharts(){
-    this.dataLineal = []; 
+    this.dataLineal = [];
     this.dataSpike = [];
     this.dataCircle = [];
     for (let i = 0; i < this.dataRadarEmotion.length; i++) {
@@ -285,20 +368,26 @@ export class UserDashboardComponent implements OnInit {
         for (let i = 0; i < response.length; i++) {
           let item = response[i];
           switch (item.fieldName) {
-            case 'temperature':    
+            case 'temperature':
               if(item.value){
                this.dataLineal.push({
                 group: 'Temperatura (C°)',
                 date: item.date.replace(/-/g, '/').toString(),
-                value: parseInt(item.value),
+                value: parseFloat(item.value),
               });
+                this.dataSpike2.push({
+                  group: 'Temperatura (C°)',
+                  date:this.convertirFecha(item.date.replace(/-/g, '/').toString()),
+                  value: parseFloat(item.value),
+                });
             }
+              console.log(this.dataLineal);
             break;
           case 'fluidAmount':
-            if (item.value) {       
+            if (item.value) {
               this.dataSpike.push({
                 group: 'Flujo Cervical',
-                key: item.date.replace(/-/g, '/').toString(),
+                key: this.convertirFecha(item.date.replace(/-/g, '/').toString()),
                 value: (item.value != null) ? item.value  : 0,
               });
             }
@@ -329,7 +418,7 @@ export class UserDashboardComponent implements OnInit {
                 if(item.value){
                    this.dataCircle.push({
                   group: 'Horas de sueño',
-                  date: item.date.replace(/-/g, '/').toString(),
+                  date: this.convertirFecha(item.date.replace(/-/g, '/').toString()),
                   value: [item.value],
                 });
                 }
@@ -339,7 +428,23 @@ export class UserDashboardComponent implements OnInit {
       this.loading = false;
     });
   }
+
+   convertirFecha(fechaString: any) {
+    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+    const diasSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  
+    const fecha = new Date(fechaString);
+    const diaSemana = diasSemana[fecha.getDay()];
+    const diaMes = fecha.getDate();
+    const mes = meses[fecha.getMonth()];
+    const anio = fecha.getFullYear();
+  
+    return `${diaSemana}, ${mes} - ${diaMes < 10 ? '0' : ''}${diaMes} `;
+   }
+
   createDataArrayList() {
+    console.log('crear forma')
     //define date
     if (this.date == undefined) this.date = new Date();
     if (this.periodCycle)
@@ -384,18 +489,58 @@ export class UserDashboardComponent implements OnInit {
         value: this.physicalState?.toString(),
         date: this.date,
       });
-    if (this.sleepHours)
+    if (this.sleepHours) {
+      if (this.sleepHours < 0) {
+        console.log('menos de cero')
+        // Muestra un mensaje de error si las horas de sueño son negativas
+        Swal.fire(
+          'Error',
+          'Las horas de sueño no pueden ser negativas',
+          'error'
+        );
+        return; // Detiene el proceso de guardar cambios
+      }
+      if (this.sleepHours >= 23) {
+        console.log('mas de 23')
+        Swal.fire(
+          'Error',
+          'Las horas de sueño no pueden ser mayores a 23',
+          'error'
+        );
+        return; // Detiene el proceso de guardar cambios
+      }
       this.dataArrayList.push({
         fieldName: 'sleepHours',
         value: this.sleepHours?.toString(),
         date: this.date,
-      });
-    if (this.temperature)
+      })
+    };
+    if (this.temperature) {
+      if (this.temperature < 35 || this.temperature > 42) {
+        Swal.fire(
+          'Error',
+          'La temperatura debe estar entre 35°C y 42°C',
+          'error'
+        );
+        return;
+      }
+      const temperatureRegex = /^\d+\.\d{2}$/; // Expresión regular para dos decimales
+      if (!temperatureRegex.test(this.temperature.toString())) {
+        // Muestra un mensaje de error si el formato no tiene dos decimales
+        Swal.fire(
+          'Error',
+          'La temperatura debe tener exactamente dos decimales',
+          'error'
+        );
+        return; // Detiene el proceso de guardar cambios
+      }
+
       this.dataArrayList.push({
         fieldName: 'temperature',
         value: this.temperature?.toString(),
         date: this.date,
-      });
+      })
+    };
     if (this.sexTimes)
       this.dataArrayList.push({
         fieldName: 'sexTimes',

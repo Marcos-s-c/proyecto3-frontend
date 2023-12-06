@@ -5,6 +5,7 @@ import {User} from "../pages/perfil-usuario/perfil-usuario.component";
 import {ResetContraRequestBody} from "../interface/ResetContraRequestBody";
 import {PreferenciasPostBody} from "../interface/PreferenciasPostBody";
 import {tap} from "rxjs";
+import {FrecuenciasPostBody} from "../interface/FrecuenciasPostBody";
 
 @Injectable({
   providedIn: 'root',
@@ -59,8 +60,29 @@ export class UserService {
       );
   }
 
+  public actualizaFrecuencia(frecBody: FrecuenciasPostBody):any{
+    console.log(frecBody)
+    return this.httpClient.post(`${baserUrl()}/rest/users/frecuencias`, frecBody)
+      .pipe(
+        tap(response => console.log('Response:', response)),
+        tap(null, error => console.error('Error:', error))
+      );
+  }
+
   public getPreferenciasByEmail(email:string){
     return this.httpClient.get(`${baserUrl()}/rest/users/preferencias/${email}`, )
   }
 
+  public getAllUsers(){
+    return this.httpClient.get(`${baserUrl()}/rest/users/all`, )
+  }
+
+
+  public changeStatus(userStatus: any){
+    return this.httpClient.put(`${baserUrl()}/rest/users/changeStatus`, userStatus)
+  }
+
+  public searchUser(userSearch: String) {
+    return this.httpClient.get(`${baserUrl()}/rest/users/all?search=`+ userSearch,)
+  }
 }
