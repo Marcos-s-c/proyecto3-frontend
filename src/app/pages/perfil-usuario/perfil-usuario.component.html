@@ -1,10 +1,18 @@
 <mat-tab-group class="profile-tabs">
   <mat-tab>
     <ng-template mat-tab-label>
-      <div>
-        <p>Información personal</p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+        "
+      >
+        <h3 style="margin: 0">Información personal</h3>
       </div>
     </ng-template>
+
     <div class="password-reset-container">
       <div class="password-reset-form">
         <h1>Información personal</h1>
@@ -60,7 +68,7 @@
                 *ngIf="!editar"
                 mat-raised-button
                 (click)="onEditar($event)"
-                class="buttonVenus"
+                class="buttonVenus long-button"
               >
                 Editar
               </button>
@@ -85,8 +93,15 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <div>
-        <p>Seguridad</p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+        "
+      >
+        <h3 style="margin: 0">Seguridad</h3>
       </div>
     </ng-template>
     <div class="password-reset-container">
@@ -137,8 +152,15 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <div>
-        <p>Preferencias</p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+        "
+      >
+        <h3 style="margin: 0">Preferencias</h3>
       </div>
     </ng-template>
 
@@ -317,7 +339,7 @@
               <div class="div-boton">
                 <button
                   (click)="sendMonthlyReport()"
-                  class="buttonVenus"
+                  class="buttonVenus long-button"
                   mat-raised-button
                 >
                   Enviar
@@ -332,8 +354,15 @@
 
   <mat-tab>
     <ng-template mat-tab-label>
-      <div>
-        <p>Medicamentos</p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+        "
+      >
+        <h3 style="margin: 0">Medicamentos</h3>
       </div>
     </ng-template>
 

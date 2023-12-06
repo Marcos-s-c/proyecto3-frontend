@@ -11,7 +11,7 @@
   </a>
   <span>
     <a [routerLink]="'/'" style="text-decoration: none; color: inherit"
-      >Venus</a
+      ><h3>Venus</h3></a
     >
   </span>
 
@@ -37,56 +37,75 @@
         <a
           href="#services"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon ml20"
           aria-label="Example icon-button with heart icon"
         >
-          Servicio
+          <button mat-button style="font-size: 18px">Servicio</button>
         </a>
+
         <a
           href="#testimonies"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon mr20 ml50"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
-          Testimonios
+          <button mat-button style="font-size: 18px">Testimonios</button>
         </a>
         <a
           href="#science"
           mat-icon-button
           class="example-icon favorite-icon mr20 ml70"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
-          Fuentes
+          <button mat-button style="font-size: 18px">Fuentes</button>
         </a>
         <a
           href="#contact"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon mr20 ml25"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
-          Contacto
+          <button mat-button style="font-size: 18px">Contacto</button>
         </a>
         <span class="example-spacer"></span>
       </div>
       <div class="right-elements">
-        <a
-          (click)="logout()"
-          style="margin-right: 50px"
-          mat-icon-button
+        <button
+          mat-button
+          style="padding-right: 80px"
           class="example-icon favorite-icon"
           aria-label="Example icon-button with heart icon"
         >
-          Cerrar sesión
-        </a>
+          <a
+            (click)="logout()"
+            mat-icon-button
+            class="example-icon favorite-icon"
+            aria-label="Example icon-button with heart icon"
+            style="font-size: 18px"
+          >
+            Cerrar sesión
+          </a>
+        </button>
         <button
           *ngIf="user"
           mat-button
-          style="margin-right: 10px"
+          style="padding-right: 50px"
           class="example-icon favorite-icon"
           aria-label="Example icon-button with heart icon"
           [routerLink]="'/user-dashboard'"
         >
-          Ir al Inicio
+          <a
+            (click)="logout()"
+            mat-icon-button
+            class="example-icon favorite-icon"
+            aria-label="Example icon-button with heart icon"
+            style="font-size: 18px"
+          >
+            Ir al Inicio
+          </a>
         </button>
       </div>
     </div>
@@ -118,14 +137,16 @@
           mat-icon-button
           class="example-icon favorite-icon mr20 ml70"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
           Inicio
         </a>
         <a
           [routerLink]="'/user-calendar'"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon mr20 ml20"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
           Calendario
         </a>
@@ -134,6 +155,7 @@
           mat-icon-button
           class="example-icon favorite-icon mr20 ml70"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
           Publicaciones
         </a>
@@ -143,24 +165,36 @@
       <div class="right-elements">
         <button
           mat-button
-          style="margin-right: 10px"
           class="example-icon favorite-icon"
           aria-label="Example icon-button with heart icon"
         >
-          <a class="profile-link" [routerLink]="'/perfil'">{{
-            user.email || "Perfil"
-          }}</a>
+          <a
+            class="profile-link"
+            [routerLink]="'/perfil'"
+            style="font-size: 18px"
+            >{{ user.email || "Perfil" }}</a
+          >
         </button>
-        <a
-          (click)="logout()"
-          style="margin-right: 50px"
-          mat-icon-button
+        <button
+          mat-button
+          style="padding-right: 80px"
           class="example-icon favorite-icon"
           aria-label="Example icon-button with heart icon"
         >
-          Cerrar sesión
-        </a>
+          <a
+            (click)="logout()"
+            mat-icon-button
+            class="example-icon favorite-icon"
+            aria-label="Example icon-button with heart icon"
+            style="font-size: 18px"
+          >
+            Cerrar sesión
+          </a>
+        </button>
         <button
+          mat-button
+          class="example-icon favorite-icon"
+          aria-label="Example icon-button with heart icon"
           type="button"
           (click)="openDialog()"
           (click)="notificationsVisibility()"
@@ -190,56 +224,77 @@
         <a
           href="#services"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon ml20"
           aria-label="Example icon-button with heart icon"
         >
-          Servicio
+          <button mat-button style="font-size: 18px">Servicio</button>
         </a>
+
         <a
           href="#testimonies"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon mr20 ml50"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
-          Testimonios
+          <button mat-button style="font-size: 18px">Testimonios</button>
         </a>
         <a
           href="#science"
           mat-icon-button
           class="example-icon favorite-icon mr20 ml70"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
-          Fuentes
+          <button mat-button style="font-size: 18px">Fuentes</button>
         </a>
         <a
           href="#contact"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon mr20 ml25"
           aria-label="Example icon-button with heart icon"
+          style="font-size: 18px"
         >
-          Contacto
+          <button mat-button style="font-size: 18px">Contacto</button>
         </a>
         <span class="example-spacer"></span>
       </div>
       <div class="right-elements">
-        <!-- Menú de la página de inicio cuando el usuario no está logeado -->
-        <a
-          [routerLink]="'/login'"
-          mat-icon-button
+        <button
+          mat-button
           class="example-icon favorite-icon"
           aria-label="Example icon-button with heart icon"
+          style="padding-right: 80px"
         >
-          Iniciar sesión
-        </a>
-        <div style="margin-right: 10px">
           <a
-            [routerLink]="'/signup'"
+            [routerLink]="'/login'"
             mat-icon-button
-            class="example-icon favorite-icon mr20 ml70"
+            class="example-icon favorite-icon"
             aria-label="Example icon-button with heart icon"
+            style="font-size: 18px"
           >
-            Registrarme
+            Iniciar sesión
           </a>
+        </button>
+        <!-- Menú de la página de inicio cuando el usuario no está logeado -->
+
+        <div style="margin-right: 10px">
+          <button
+            mat-button
+            class="example-icon favorite-icon"
+            aria-label="Example icon-button with heart icon"
+            style="padding-right: 50px"
+          >
+            <a
+              [routerLink]="'/signup'"
+              mat-icon-button
+              class="example-icon favorite-icon"
+              aria-label="Example icon-button with heart icon"
+              style="font-size: 18px"
+            >
+              Registrarme
+            </a>
+          </button>
         </div>
       </div>
     </div>
