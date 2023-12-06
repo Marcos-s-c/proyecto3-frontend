@@ -218,11 +218,9 @@
               <section class="example-section">
                 <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Anticipación</mat-label>
-                <mat-form-field>
                   <mat-select [(ngModel)]="formFrecuenciaNotificacion">
                     <mat-option *ngFor="let frec of frecuenciasNotificaciones" [value]="frec">{{frec}}</mat-option>
                   </mat-select>
-                </mat-form-field>
               </mat-form-field>
               </section>
             </div>
