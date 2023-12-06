@@ -108,7 +108,7 @@ export class CalendarComponent implements OnInit {
     // Crea eventos para cada fecha dentro del rango y agrégalos al arreglo events
     const pinkDotEvents: CalendarEvent[] = dateRange.map((date: Date) => ({
       start: date,
-      title: 'Fertility Day',
+      title: 'Día de fertilidad',
       cssClass: `cal-event dot-pink`,
     }));
 
@@ -143,7 +143,7 @@ export class CalendarComponent implements OnInit {
         // Crear eventos para el rango de fechas y agregarlos al arreglo events
         const cycleEvents: CalendarEvent[] = dateRange.map((date) => ({
           start: date,
-          title: 'Cycle Day',
+          title: 'Día de menstruación',
           cssClass: 'cal-event dot-red',
         }));
 
@@ -156,7 +156,7 @@ export class CalendarComponent implements OnInit {
       (consolidatedItem: Record<string, any>) => {
         return {
           start: consolidatedItem['date'],
-          title: consolidatedItem['date'],
+          title: 'Día con información',
           cssClass: `cal-event dot-green`,
         };
       }
