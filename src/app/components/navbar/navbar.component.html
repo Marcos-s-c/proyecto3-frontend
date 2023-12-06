@@ -132,14 +132,15 @@
     >
       <div class="left-elements">
         <!-- Menú común para todas las páginas cuando el usuario está logeado -->
+
         <a
           [routerLink]="'/user-dashboard'"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon mr20 ml25"
           aria-label="Example icon-button with heart icon"
           style="font-size: 18px"
         >
-          Inicio
+          <button mat-button style="font-size: 18px">Inicio</button>
         </a>
         <a
           [routerLink]="'/user-calendar'"
@@ -148,16 +149,16 @@
           aria-label="Example icon-button with heart icon"
           style="font-size: 18px"
         >
-          Calendario
+          <button mat-button style="font-size: 18px">Calendario</button>
         </a>
         <a
           [routerLink]="'/community/publication-posts'"
           mat-icon-button
-          class="example-icon favorite-icon mr20 ml70"
+          class="example-icon favorite-icon mr20 ml50"
           aria-label="Example icon-button with heart icon"
           style="font-size: 18px"
         >
-          Publicaciones
+          <button mat-button style="font-size: 18px">Publicaciones</button>
         </a>
 
         <span class="example-spacer"></span>
