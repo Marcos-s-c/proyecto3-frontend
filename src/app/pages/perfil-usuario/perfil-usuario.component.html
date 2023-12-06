@@ -7,7 +7,7 @@
     </ng-template>
     <div class="password-reset-container">
       <div class="password-reset-form">
-        <h2>Información personal</h2>
+        <h1>Información personal</h1>
         <form (ngSubmit)="formSubmit($event)">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Nombre</mat-label>
@@ -91,7 +91,7 @@
     </ng-template>
     <div class="password-reset-container">
       <div class="password-reset-form">
-        <h2>Restablecer Contraseña</h2>
+        <h1>Restablecer Contraseña</h1>
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Contraseña actual</mat-label>
           <input
@@ -146,10 +146,10 @@
       <div class="wrapper-izq-preferencias">
         <div class="password-reset-container">
           <div class="password-reset-form-preferencias">
-            <h2>
+            <h1>
               Selecciona los métodos por los cuales deseas recibir
               notificaciones
-            </h2>
+            </h1>
             <div class="pref-cajon">
               <section class="example-section">
                 <span class="example-list-section">
@@ -193,7 +193,7 @@
         </div>
         <div class="frecuencias-notificacion-container">
           <div class="frecuencias-notificacion-preferencias">
-            <h2>
+            <h1>
               Anticipación de notificaciones
               <button
                 class="anticipa-tooltip"
@@ -204,7 +204,7 @@
               >
                 <mat-icon class="el-tooltip">info</mat-icon>
               </button>
-            </h2>
+            </h1>
 
             <div class="pref-cajon">
               <section class="example-section">
@@ -235,7 +235,7 @@
       </div>
       <div class="wrapper-der-preferencias">
         <div class="wrapper-pronosticos">
-          <h2>Envío de pronósticos</h2>
+          <h1>Envío de pronósticos</h1>
           <div class="wrapper-notificacion-individual">
             <div class="wrapper-imagen">
               <img
@@ -245,10 +245,10 @@
               />
             </div>
             <div class="notifications-section">
-              <p>
+              <h3>
                 Obtener el pronóstico de tu siguiente período, selecciona
                 WhatsApp o SMS y haz click en el botón.
-              </p>
+              </h3>
               <div class="div-boton">
                 <button
                   (click)="sendNextPeriodWA()"
@@ -278,10 +278,10 @@
             <div class="notifications-section">
               <div class="wrapper-imagen"></div>
               <div>
-                <p>
+                <h3>
                   Obtener el pronóstico de tus próximos días fértiles,
                   selecciona WhatsApp o SMS y haz click en el botón.
-                </p>
+                </h3>
                 <div class="div-boton">
                   <button
                     (click)="sendNextFertileDaysWA()"
@@ -303,7 +303,7 @@
           </div>
         </div>
         <div class="wrapper-pronosticos">
-          <h2>Envío de reportes por correo</h2>
+          <h1>Envío de reportes por correo</h1>
           <div class="reportes">
             <div class="wrapper-imagen">
               <img
@@ -313,7 +313,7 @@
               />
             </div>
             <div class="notifications-section">
-              <p>Obtener un reporte del mes actual de tu ciclo menstrual.</p>
+              <h3>Obtener un reporte del mes actual de tu ciclo menstrual.</h3>
               <div class="div-boton">
                 <button
                   (click)="sendMonthlyReport()"
