@@ -303,7 +303,7 @@
                 <h2>Inicio de próxima menstruación</h2>
               </div>
               <div class="divider"></div>
-              <p *ngIf="nextPeriod">{{nextPeriod | date }}</p>
+              <p *ngIf="nextPeriod">{{nextPeriod | date: 'dd/MM/yyyy' }}</p>
               <p *ngIf="!nextPeriod"> No hay suficientes datos.</p>
             </mat-card-content>
           </mat-card>
@@ -315,7 +315,7 @@
                 </h2>
               </div>
               <div class="divider"></div>
-              <p *ngIf="firstFertileDay">{{firstFertileDay | date}} - {{lastFertileDay | date}} </p>
+              <p *ngIf="firstFertileDay">{{firstFertileDay | date: 'dd/MM/yyyy'}} - {{lastFertileDay | date: 'dd/MM/yyyy'}} </p>
               <p *ngIf="noFertileDays">{{noFertileDays}} </p>
             </mat-card-content>
           </mat-card>
