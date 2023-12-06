@@ -15,7 +15,6 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
   @include angular-material-theme($alternate-theme);
 }
 
-
 //@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 body {
   margin: 0;
@@ -124,8 +123,6 @@ body {
 .dot-pink {
   background-color: orange !important; /* Define el color verde para la clase dot-green */
 }
-
-
 
 .cal-month-view .cal-day-badge {
   background-color: transparent;
