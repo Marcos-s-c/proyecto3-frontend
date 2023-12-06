@@ -53,7 +53,7 @@ export class UserDashboardComponent implements OnInit {
       left: {
         title: 'Grados (Cº)',
         stacked: true,
-        scaleType: 'linear',
+       // scaleType: 'linear',
         mapsTo: 'value',
       },
       bottom: {
@@ -304,7 +304,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   captureAndDownload(id:any) {
-    const element = document.getElementById(id);
+    const element = document.getElementById(id); 
     if (!element) {
       console.error('El elemento no fue encontrado');
       return;
@@ -317,7 +317,7 @@ export class UserDashboardComponent implements OnInit {
       });
     });
   }
-
+  
   getPredictions(){
     this.dataService.getAveragePeriod().subscribe((data:any) =>{
       if(data.average != null){
@@ -377,7 +377,7 @@ export class UserDashboardComponent implements OnInit {
               });
                 this.dataSpike2.push({
                   group: 'Temperatura (C°)',
-                  date: item.date.replace(/-/g, '/').toString(),
+                  date:this.convertirFecha(item.date.replace(/-/g, '/').toString()),
                   value: parseFloat(item.value),
                 });
             }
@@ -387,7 +387,7 @@ export class UserDashboardComponent implements OnInit {
             if (item.value) {
               this.dataSpike.push({
                 group: 'Flujo Cervical',
-                key: item.date.replace(/-/g, '/').toString(),
+                key: this.convertirFecha(item.date.replace(/-/g, '/').toString()),
                 value: (item.value != null) ? item.value  : 0,
               });
             }
@@ -418,7 +418,7 @@ export class UserDashboardComponent implements OnInit {
                 if(item.value){
                    this.dataCircle.push({
                   group: 'Horas de sueño',
-                  date: item.date.replace(/-/g, '/').toString(),
+                  date: this.convertirFecha(item.date.replace(/-/g, '/').toString()),
                   value: [item.value],
                 });
                 }
@@ -428,6 +428,21 @@ export class UserDashboardComponent implements OnInit {
       this.loading = false;
     });
   }
+
+   convertirFecha(fechaString: any) {
+    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+    const diasSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  
+    const fecha = new Date(fechaString);
+    const diaSemana = diasSemana[fecha.getDay()];
+    const diaMes = fecha.getDate();
+    const mes = meses[fecha.getMonth()];
+    const anio = fecha.getFullYear();
+  
+    return `${diaSemana}, ${mes} - ${diaMes < 10 ? '0' : ''}${diaMes} `;
+   }
+
   createDataArrayList() {
     console.log('crear forma')
     //define date
