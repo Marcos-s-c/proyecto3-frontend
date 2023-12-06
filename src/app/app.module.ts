@@ -71,7 +71,6 @@ import { TitleComponent } from './components/shared/title/title.component';
     NavbarComponent,
     SignupComponent,
     LoginComponent,
-    DashboardComponent,
     UserDashboardComponent,
     PasswordResetComponent,
     DialogPasswordResetComponent,
