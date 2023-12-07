@@ -143,6 +143,7 @@
           <button mat-button style="font-size: 18px">Inicio</button>
         </a>
         <a
+          *ngIf="!isAdmin()"
           [routerLink]="'/user-calendar'"
           mat-icon-button
           class="example-icon favorite-icon mr20 ml20"
@@ -151,6 +152,7 @@
         >
           <button mat-button style="font-size: 18px">Calendario</button>
         </a>
+
         <a
           [routerLink]="'/community/publication-posts'"
           mat-icon-button
