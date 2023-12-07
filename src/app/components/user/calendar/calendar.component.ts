@@ -108,7 +108,7 @@ export class CalendarComponent implements OnInit {
     // Crea eventos para cada fecha dentro del rango y agrégalos al arreglo events
     const pinkDotEvents: CalendarEvent[] = dateRange.map((date: Date) => ({
       start: date,
-      title: 'Día de fertilidad',
+      title: 'Pronóstico de fertilidad',
       cssClass: `cal-event dot-pink`,
     }));
 
