@@ -23,26 +23,27 @@
 .mat-icon-button.active .material-icons {
   color: #df5583;
 }
-.commentarea{
+.commentarea {
   width: 100%;
 }
-.button-send{
+.button-send {
   margin-right: 10px;
 }
 
-.post-header{
+.post-header {
   display: flex;
   align-items: center;
-  h4, h2{
+  h4,
+  h2 {
     padding: 0 3px;
   }
-  h4{
+  h4 {
     color: grey;
     padding-top: 3px;
   }
 }
 
-.add-post-button{
+.add-post-button {
   position: fixed;
   width: 60px;
   height: 60px;
@@ -54,20 +55,20 @@
   right: 20px;
 }
 
-.red-color{
+.red-color {
   color: red;
 }
 
-.search-bar{
-  height: 50px;
-  border-bottom: 1px solid gray;
+.search-bar {
+  height: 60px;
+
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 15px;
 }
 
-.search-button{
+.search-button {
   margin: 0 15px;
   background-color: #f25287;
   color: white;
@@ -76,30 +77,30 @@
   align-items: center;
 }
 
-.input-container{
+.input-container {
   height: 70%;
 }
 
-.search-container{
+.search-container {
   width: 95%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.button-container{
+.button-container {
   display: flex;
 }
 
-.search-input{
+.search-input {
   height: 30px;
   font-size: 20px;
 }
 
-mat-card-actions{
+mat-card-actions {
   display: flex;
   align-items: flex-end;
-  h4{
+  h4 {
     color: grey;
     margin: auto 0;
   }

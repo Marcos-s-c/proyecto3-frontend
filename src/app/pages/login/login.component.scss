@@ -1,3 +1,7 @@
+/* login.component.scss */
+.error {
+  border: 1px solid red;
+}
 .full-width {
   width: 100%;
 }
@@ -21,15 +25,11 @@ mat-dialog-actions {
   min-height: 30px; /* Ajusta la altura mínima según tus necesidades */
 }
 
-@media (max-width: 500px) {
+.top {
+  margin-top: 5vw;
 }
-
-.mat-card {
-  border-radius: 20px !important;
-}
-
 @media (max-width: 768px) {
-  .mat-card {
-    border-radius: 10px !important;
+  .top {
+    margin-top: 15vw;
   }
 }

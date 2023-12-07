@@ -1,13 +1,21 @@
 <mat-tab-group class="profile-tabs">
   <mat-tab>
     <ng-template mat-tab-label>
-      <div>
-        <p>Información personal</p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+        "
+      >
+        <h3 style="margin: 0">Información personal</h3>
       </div>
     </ng-template>
-      <div class="password-reset-container">
-        <div class="password-reset-form">
-        <h2>Información personal</h2>
+
+    <div class="password-reset-container">
+      <div class="password-reset-form">
+        <h1>Información personal</h1>
         <form (ngSubmit)="formSubmit($event)">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Nombre</mat-label>
@@ -57,28 +65,22 @@
           <div class="container">
             <div class="vertical-center">
               <button
-                class="back-container"
-                color="primary"
                 *ngIf="!editar"
                 mat-raised-button
                 (click)="onEditar($event)"
+                class="buttonVenus long-button"
               >
                 Editar
               </button>
-              <button
-                *ngIf="editar"
-                mat-raised-button
-                class="full-width-button button-color custom-button"
-                class="back-container"
-                color="primary"
-              >
-                Salvar Cambios
+
+              <button *ngIf="editar" mat-raised-button class="buttonVenus">
+                Guardar Cambios
               </button>
+              <div style="margin-left: 3px; margin-right: 3px"></div>
               <button
                 *ngIf="editar"
                 mat-raised-button
-                class="back-container"
-                color="primary"
+                class="buttonVenus"
                 (click)="onCancelar($event)"
               >
                 Cancelar
@@ -86,66 +88,79 @@
             </div>
           </div>
         </form>
-        </div>
-      </div>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <div>
-        <p>Seguridad</p>
-      </div>
-    </ng-template>
-    <div class="password-reset-container">
-      <div class="password-reset-form">
-        <h2>Restablecer Contraseña</h2>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Contraseña actual</mat-label>
-            <input
-              type="password"
-              [(ngModel)]="currentPassword"
-              name="currentPassword"
-              matInput
-              placeholder="Digite la contraseña actual"
-            />
-          </mat-form-field>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Nueva contraseña</mat-label>
-            <input
-              type="password"
-              [(ngModel)]="newPassword"
-              name="newPassword"
-              matInput
-              placeholder="Enter new password"
-            />
-          </mat-form-field>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Confirmar nueva contraseña</mat-label>
-            <input
-              type="password"
-              [(ngModel)]="confirmPassword"
-              name="confirmPassword"
-              matInput
-              placeholder="Confirm new password"
-            />
-          </mat-form-field>
-          <div class="button-container">
-            <button
-            type="submit"
-            class="back-container"
-            color="primary"
-            mat-raised-button
-            (click)="resetPassword()"
-            >
-              Reestablecer contraseña
-            </button>
-          </div>
       </div>
     </div>
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <div>
-        <p>Preferencias</p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+        "
+      >
+        <h3 style="margin: 0">Seguridad</h3>
+      </div>
+    </ng-template>
+    <div class="password-reset-container">
+      <div class="password-reset-form">
+        <h1>Restablecer Contraseña</h1>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Contraseña actual</mat-label>
+          <input
+            type="password"
+            [(ngModel)]="currentPassword"
+            name="currentPassword"
+            matInput
+            placeholder="Digite la contraseña actual"
+          />
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Nueva contraseña</mat-label>
+          <input
+            type="password"
+            [(ngModel)]="newPassword"
+            name="newPassword"
+            matInput
+            placeholder="Enter new password"
+          />
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Confirmar nueva contraseña</mat-label>
+          <input
+            type="password"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            matInput
+            placeholder="Confirm new password"
+          />
+        </mat-form-field>
+        <div class="button-container">
+          <button
+            type="submit"
+            class="buttonVenus"
+            mat-raised-button
+            (click)="resetPassword()"
+          >
+            Reestablecer contraseña
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+        "
+      >
+        <h3 style="margin: 0">Preferencias</h3>
       </div>
     </ng-template>
 
@@ -153,47 +168,46 @@
       <div class="wrapper-izq-preferencias">
         <div class="password-reset-container">
           <div class="password-reset-form-preferencias">
-            <h2>
-              Selecciona los métodos por los cuales deseas recibir notificaciones
-            </h2>
+            <h1>
+              Selecciona los métodos por los cuales deseas recibir
+              notificaciones
+            </h1>
             <div class="pref-cajon">
               <section class="example-section">
-          <span class="example-list-section">
-            <mat-checkbox
-              class="example-margin"
-              [checked]="allComplete"
-              [color]="task.color"
-              [indeterminate]="someComplete()"
-              (change)="setAll($event.checked)"
-            >
-              {{ task.name }}
-            </mat-checkbox>
-          </span>
                 <span class="example-list-section">
-            <ul>
-              <li *ngFor="let subtask of task.subtasks">
-                <mat-checkbox
-                  [value]="subtask.value"
-                  [(ngModel)]="subtask.completed"
-                  [color]="subtask.color"
-                  (ngModelChange)="updateAllComplete()"
-                  class="notificaciones"
-                  [checked]="isOptionSelected(subtask)"
-                >
-                  {{ subtask.name }}
-                </mat-checkbox>
-              </li>
-            </ul>
-          </span>
+                  <mat-checkbox
+                    class="example-margin"
+                    [checked]="allComplete"
+                    [indeterminate]="someComplete()"
+                    (change)="setAll($event.checked)"
+                  >
+                    {{ task.name }}
+                  </mat-checkbox>
+                </span>
+                <span class="example-list-section">
+                  <ul>
+                    <li *ngFor="let subtask of task.subtasks">
+                      <mat-checkbox
+                        [value]="subtask.value"
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                        class="notificaciones"
+                        [checked]="isOptionSelected(subtask)"
+                      >
+                        {{ subtask.name }}
+                      </mat-checkbox>
+                    </li>
+                  </ul>
+                </span>
               </section>
             </div>
             <div class="vertical-center">
               <button
                 (click)="salvarOpciones()"
                 type="submit"
-                class="back-container"
-                color="primary"
-                mat-raised-button>
+                class="buttonVenus"
+                mat-raised-button
+              >
                 Actualizar métodos
               </button>
             </div>
@@ -201,36 +215,40 @@
         </div>
         <div class="frecuencias-notificacion-container">
           <div class="frecuencias-notificacion-preferencias">
-            <h2>
+            <h1>
               Anticipación de notificaciones
               <button
                 class="anticipa-tooltip"
                 mat-icon-button
-                color="primary"
+                style="color: #3f51b5"
                 aria-label="Button that displays a tooltip when focused or hovered over"
                 matTooltip="Configura con cuánta anticipación se va a recibir notificaciones del próximo ciclo menstrual y próximos días fértiles a través de los métodos seleccionados."
               >
                 <mat-icon class="el-tooltip">info</mat-icon>
               </button>
-            </h2>
+            </h1>
 
             <div class="pref-cajon">
               <section class="example-section">
                 <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Anticipación</mat-label>
+                  <mat-label>Anticipación</mat-label>
                   <mat-select [(ngModel)]="formFrecuenciaNotificacion">
-                    <mat-option *ngFor="let frec of frecuenciasNotificaciones" [value]="frec">{{frec}}</mat-option>
+                    <mat-option
+                      *ngFor="let frec of frecuenciasNotificaciones"
+                      [value]="frec"
+                      >{{ frec }}</mat-option
+                    >
                   </mat-select>
-              </mat-form-field>
+                </mat-form-field>
               </section>
             </div>
             <div class="vertical-center">
               <button
                 (click)="salvarOpcionesFrecuecia()"
                 type="submit"
-                class="back-container"
-                color="primary"
-                mat-raised-button>
+                class="buttonVenus"
+                mat-raised-button
+              >
                 Actualizar frecuencia
               </button>
             </div>
@@ -239,27 +257,33 @@
       </div>
       <div class="wrapper-der-preferencias">
         <div class="wrapper-pronosticos">
-          <h2>
-            Envío de pronósticos
-          </h2>
+          <h1>Envío de pronósticos</h1>
           <div class="wrapper-notificacion-individual">
             <div class="wrapper-imagen">
-              <img src="../../../assets/siguiente-periodo.png" height="66" width="66"/></div>
+              <img
+                src="../../../assets/siguiente-periodo.png"
+                height="66"
+                width="66"
+              />
+            </div>
             <div class="notifications-section">
-              <p>Obtener el pronóstico de tu siguiente período, selecciona WhatsApp o SMS y haz click en el botón.</p>
-              <div  class="div-boton">
+              <h3>
+                Obtener el pronóstico de tu siguiente período, selecciona
+                WhatsApp o SMS y haz click en el botón.
+              </h3>
+              <div class="div-boton">
                 <button
                   (click)="sendNextPeriodWA()"
-                  class="back-container"
-                  color="primary"
-                  mat-raised-button>
+                  class="buttonVenus"
+                  mat-raised-button
+                >
                   Enviar por WA
                 </button>
                 <button
                   (click)="sendNextPeriodSMS()"
-                  class="back-container"
-                  color="primary"
-                  mat-raised-button>
+                  class="buttonVenus"
+                  mat-raised-button
+                >
                   Enviar por SMS
                 </button>
               </div>
@@ -267,25 +291,33 @@
           </div>
           <div class="wrapper-notificacion-individual">
             <div class="wrapper-imagen">
-              <img src="../../../assets/siguiente-fertiles.png" height="66" width="66"/></div>
+              <img
+                src="../../../assets/siguiente-fertiles.png"
+                height="66"
+                width="66"
+              />
+            </div>
             <div class="notifications-section">
               <div class="wrapper-imagen"></div>
               <div>
-                <p>Obtener el pronóstico de tus próximos días fértiles, selecciona WhatsApp o SMS y haz click en el botón.</p>
+                <h3>
+                  Obtener el pronóstico de tus próximos días fértiles,
+                  selecciona WhatsApp o SMS y haz click en el botón.
+                </h3>
                 <div class="div-boton">
                   <button
                     (click)="sendNextFertileDaysWA()"
-                    class="back-container"
-                    color="primary"
-                    mat-raised-button>
+                    class="buttonVenus"
+                    mat-raised-button
+                  >
                     Enviar por WA
                   </button>
                   <button
                     (click)="sendNextFertileDaysSMS()"
-                     class="back-container"
-                     color="primary"
-                     mat-raised-button>
-                      Enviar por SMS
+                    class="buttonVenus"
+                    mat-raised-button
+                  >
+                    Enviar por SMS
                   </button>
                 </div>
               </div>
@@ -293,20 +325,23 @@
           </div>
         </div>
         <div class="wrapper-pronosticos">
-          <h2>
-            Envío de reportes por correo
-          </h2>
+          <h1>Envío de reportes por correo</h1>
           <div class="reportes">
             <div class="wrapper-imagen">
-              <img src="../../../assets/siguiente-periodo.png" height="66" width="66"/></div>
+              <img
+                src="../../../assets/siguiente-periodo.png"
+                height="66"
+                width="66"
+              />
+            </div>
             <div class="notifications-section">
-              <p>Obtener un reporte del mes actual de tu ciclo menstrual.</p>
-              <div  class="div-boton">
+              <h3>Obtener un reporte del mes actual de tu ciclo menstrual.</h3>
+              <div class="div-boton">
                 <button
                   (click)="sendMonthlyReport()"
-                  class="back-container"
-                  color="primary"
-                  mat-raised-button>
+                  class="buttonVenus long-button"
+                  mat-raised-button
+                >
                   Enviar
                 </button>
               </div>
@@ -315,13 +350,19 @@
         </div>
       </div>
     </div>
-
   </mat-tab>
 
   <mat-tab>
     <ng-template mat-tab-label>
-      <div>
-        <p>Medicamentos</p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+        "
+      >
+        <h3 style="margin: 0">Medicamentos</h3>
       </div>
     </ng-template>
 
@@ -329,7 +370,7 @@
       <div class="left-med-wrapper">
         <div class="password-reset-container">
           <div class="password-reset-form">
-            <h2>Agrega tus medicamentos</h2>
+            <h1>Agrega tus medicamentos</h1>
             <div class="formWr">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Nombre</mat-label>
@@ -357,18 +398,24 @@
 
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Frecuencia</mat-label>
+                <mat-form-field class="full-width">
                   <mat-select [(ngModel)]="formFrecuencia">
-                    <mat-option *ngFor="let frec of frecuencias" [value]="frec">{{frec}}</mat-option>
+                    <mat-option
+                      *ngFor="let frec of frecuencias"
+                      [value]="frec"
+                      >{{ frec }}</mat-option
+                    >
                   </mat-select>
+                </mat-form-field>
 
               </mat-form-field>
             </div>
             <div class="button-container">
               <button
                 (click)="salvarMedicamento()"
-                class="back-container"
-                color="primary"
-                mat-raised-button>
+                class="buttonVenus long-button"
+                mat-raised-button
+              >
                 Guardar
               </button>
             </div>
@@ -377,33 +424,50 @@
       </div>
       <div class="right-med-wrapper">
         <div class="lista-med">
-          <h2>Lista de medicamentos</h2>
+          <h1>Lista de medicamentos</h1>
 
-            <mat-action-list>
-              <mat-card *ngIf="medicinas.length === 0">
-                <div  class="med-carta">
-                  <mat-card-content>No hay medicamentos registrados</mat-card-content>
-                </div>
-              </mat-card>
-                <mat-card *ngFor="let med of medicinas">
-                  <div class="med-carta">
-                    <mat-card-header>{{ med.name }}</mat-card-header>
-                    <mat-card-content>{{ med.dosis }}</mat-card-content>
-                    <mat-card-content>{{ med.frecuencia }}</mat-card-content>
-                    <mat-card-footer>
-                      <div class="boton">
-                        <button mat-stroked-button color="primary" (click)="editarMedicamento(med.medicine_id)">Editar</button>
-                        <button mat-stroked-button color="warn" (click)="borrarMedicamento(med.medicine_id)">Borrar</button>
-                      </div>
-                    </mat-card-footer>
+          <mat-action-list>
+            <mat-card *ngIf="medicinas.length === 0">
+              <div class="med-carta">
+                <mat-card-content
+                  >No hay medicamentos registrados</mat-card-content
+                >
+              </div>
+            </mat-card>
+            <mat-card *ngFor="let med of medicinas">
+              <div class="med-carta">
+                <mat-card-header
+                  ><h2>{{ med.name }}</h2></mat-card-header
+                >
+                <mat-card-content
+                  ><h3>{{ med.dosis }}</h3></mat-card-content
+                >
+                <mat-card-content
+                  ><h3>{{ med.frecuencia }}</h3></mat-card-content
+                >
+                <mat-card-footer>
+                  <div class="boton">
+                    <button
+                      mat-stroked-button
+                      style="color: #3f51b5"
+                      (click)="editarMedicamento(med.medicine_id)"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      mat-stroked-button
+                      color="warn"
+                      (click)="borrarMedicamento(med.medicine_id)"
+                    >
+                      Borrar
+                    </button>
                   </div>
-                </mat-card>
-            </mat-action-list>
+                </mat-card-footer>
+              </div>
+            </mat-card>
+          </mat-action-list>
         </div>
-
-
       </div>
     </div>
-
   </mat-tab>
 </mat-tab-group>

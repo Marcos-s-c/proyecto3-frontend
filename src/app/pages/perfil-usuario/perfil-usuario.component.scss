@@ -4,6 +4,37 @@
   justify-content: center;
 }
 
+.buttonVenus {
+  border-radius: 4px;
+  background-color: #3f51b5;
+  color: white;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
+  border: 1px solid #3f51b5;
+  cursor: pointer;
+}
+
+.buttonVenus:hover {
+  background-color: #4c61d8;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.buttonVenus:active {
+  transform: scale(0.95);
+}
+
+::ng-deep .mat-tab-label-active {
+  color: #f25287; /* Cambiar color del texto de la pestaña seleccionada */
+  background-color: pink; /* Cambiar color de fondo de la pestaña seleccionada */
+  // Agrega otros estilos necesarios
+}
+
+.long-button {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
 .left-section {
   flex: 1;
   align-items: center;
@@ -60,7 +91,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3%;
+  margin-top: 2%;
 }
 
 .password-reset-form {
@@ -73,6 +104,7 @@
   text-align: center;
   //border: red solid 1px;
   flex-grow: 4;
+  margin-bottom: 10px;
 }
 
 .password-reset-form h2 {
@@ -113,11 +145,10 @@
   height: 100%;
 }
 
-
 .password-reset-form-preferencias {
   background-color: white;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
   padding: 20px;
   max-width: 35rem;
@@ -126,7 +157,7 @@
   flex-grow: 4;
 }
 
-.frecuencias-notificacion-container{
+.frecuencias-notificacion-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -134,29 +165,27 @@
   margin: 3% 0;
 }
 
-.reportes{
+.reportes {
   width: 35rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 0.5rem ;
+  margin-top: 0.5rem;
   background-color: white;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
 }
 
-.frecuencias-notificacion-preferencias{
+.frecuencias-notificacion-preferencias {
   background-color: white;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
   padding: 20px;
   text-align: center;
   width: 35rem;
 }
-
-
 
 .example-section {
   display: flex;
@@ -204,8 +233,7 @@ frecuenciWr {
   margin: 1rem;
 }
 
-
-.back-container{
+.back-container {
   font-size: small;
   display: flex;
   align-items: center;
@@ -213,117 +241,114 @@ frecuenciWr {
   margin: 5px;
 }
 
-.vertical-center{
+.vertical-center {
   display: flex;
   width: 100%;
   justify-content: center;
 }
 
-.example-list-section{
+.example-list-section {
   padding: 0 35px;
   width: 100%;
 }
 
-.med-wrapper{
+.med-wrapper {
   display: flex;
   justify-content: space-evenly;
-  height: fit-content;
+
   width: 100%;
 }
 
-.left-med-wrapper, .right-med-wrapper{
-  height: fit-content;
+.left-med-wrapper,
+.right-med-wrapper {
   width: 48%;
-  margin: 5% 1% 0% 1%;
 }
 
 .lista-med {
   background-color: white;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
   padding: 20px;
   max-width: 80%;
   text-align: center;
-  margin-top: 3%;
+  margin-top: 2%;
 }
 
-.boton{
+.boton {
   display: flex;
   justify-content: space-around;
-  button{
+  button {
     width: 50%;
   }
 }
 
-mat-card{
+mat-card {
   margin-bottom: 1rem;
 }
 
-.wrapper-notificacion-individual{
+.wrapper-notificacion-individual {
   width: 35rem;
   display: flex;
   align-items: center;
-  margin-top: 0.5rem ;
+  margin-top: 0.5rem;
   background-color: white;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
   margin-top: 2rem;
 }
 
-.notifications-section{
+.notifications-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-size: small;
-  p{
+  p {
     margin: 1.2rem 3rem 0 0;
   }
 }
 
-.div-boton{
+.div-boton {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 80%;
-  button{
+  button {
     margin: 0.5rem;
   }
 }
 
-.wrapper-imagen{
+.wrapper-imagen {
   height: fit-content;
   width: fit-content;
   margin: 0 1rem 0 1rem;
 }
 
-.wrapper-pronosticos{
+.wrapper-pronosticos {
   width: 40rem;
   margin-top: 3%;
   background-color: white;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
   padding: 20px;
   text-align: center;
 }
 
-
-
-.wrapper-principal-preferencias{
+.wrapper-principal-preferencias {
   display: flex;
   justify-content: space-evenly;
   width: 100%;
   height: fit-content;
 }
 
-.wrapper-izq-preferencias{
-  width:50%;
+.wrapper-izq-preferencias {
+  width: 50%;
   height: fit-content;
 }
 
-.wrapper-der-preferencias{
+.wrapper-der-preferencias {
   width: 50%;
   height: fit-content;
   display: flex;
