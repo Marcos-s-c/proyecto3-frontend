@@ -7,8 +7,6 @@ import { MaskService } from 'src/app/services/mask.service';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {Medicina} from "../../../interface/Medicina";
 import { LoginService } from 'src/app/services/login.service';
-import Swal from "sweetalert2";
-
 import html2canvas from 'html2canvas';
 import * as FileSaver from 'file-saver';
 
@@ -304,7 +302,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   captureAndDownload(id:any) {
-    const element = document.getElementById(id); 
+    const element = document.getElementById(id);
     if (!element) {
       console.error('El elemento no fue encontrado');
       return;
@@ -317,7 +315,7 @@ export class UserDashboardComponent implements OnInit {
       });
     });
   }
-  
+
   getPredictions(){
     this.dataService.getAveragePeriod().subscribe((data:any) =>{
       if(data.average != null){
@@ -433,13 +431,13 @@ export class UserDashboardComponent implements OnInit {
     const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
     const diasSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-  
+
     const fecha = new Date(fechaString);
     const diaSemana = diasSemana[fecha.getDay()];
     const diaMes = fecha.getDate();
     const mes = meses[fecha.getMonth()];
     const anio = fecha.getFullYear();
-  
+
     return `${diaSemana}, ${mes} - ${diaMes < 10 ? '0' : ''}${diaMes} `;
    }
 
@@ -491,22 +489,15 @@ export class UserDashboardComponent implements OnInit {
       });
     if (this.sleepHours) {
       if (this.sleepHours < 0) {
-        console.log('menos de cero')
-        // Muestra un mensaje de error si las horas de sueño son negativas
-        Swal.fire(
-          'Error',
-          'Las horas de sueño no pueden ser negativas',
-          'error'
-        );
+        this._snackBar.open('Las horas de sueño no pueden ser negativas.', undefined, {
+          duration: 5 * 1000,
+        });
         return; // Detiene el proceso de guardar cambios
       }
       if (this.sleepHours >= 23) {
-        console.log('mas de 23')
-        Swal.fire(
-          'Error',
-          'Las horas de sueño no pueden ser mayores a 23',
-          'error'
-        );
+        this._snackBar.open('Las horas de sueño no pueden ser mayores a 23.', undefined, {
+          duration: 5 * 1000,
+        });
         return; // Detiene el proceso de guardar cambios
       }
       this.dataArrayList.push({
@@ -517,21 +508,16 @@ export class UserDashboardComponent implements OnInit {
     };
     if (this.temperature) {
       if (this.temperature < 35 || this.temperature > 42) {
-        Swal.fire(
-          'Error',
-          'La temperatura debe estar entre 35°C y 42°C',
-          'error'
-        );
+        this._snackBar.open('La temperatura debe estar entre 35°C y 42°C.', undefined, {
+          duration: 5 * 1000,
+        });
         return;
       }
       const temperatureRegex = /^\d+\.\d{2}$/; // Expresión regular para dos decimales
       if (!temperatureRegex.test(this.temperature.toString())) {
-        // Muestra un mensaje de error si el formato no tiene dos decimales
-        Swal.fire(
-          'Error',
-          'La temperatura debe tener exactamente dos decimales',
-          'error'
-        );
+        this._snackBar.open('La temperatura debe tener exactamente dos decimales.', undefined, {
+          duration: 5 * 1000,
+        });
         return; // Detiene el proceso de guardar cambios
       }
 
