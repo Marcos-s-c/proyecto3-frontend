@@ -11,6 +11,7 @@
         <img src="../../../assets/login.png" width="100" height="100" />
       </div>
       <form (ngSubmit)="formSubmit()">
+<<<<<<< HEAD
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Email</mat-label>
           <input
@@ -48,6 +49,36 @@
         >
           Iniciar sesión
         </button>
+=======
+        <div>
+          <app-input
+            [label]="'Correo Electrónico'"
+            [placeholder]="'Ingrese su correo electrónico'"
+            [error]="!loginData.email"
+            errorMessage="Correo electrónico es requerido"
+            [(value)]="loginData.email"
+            [type]="'text'"
+            [hint]="'El correo de usuario debe ser válido'"
+            id="email"
+          ></app-input>
+
+          <app-input
+            [label]="'Contraseña'"
+            [placeholder]="'Digite su contraseña'"
+            [error]="!loginData.password"
+            errorMessage="La contraseña es requerida"
+            [(value)]="loginData.password"
+            [type]="'password'"
+            [hint]="'La contraseña debe ser válida'"
+            id="password"
+          ></app-input>
+        </div>
+        <br /><br />
+
+        <div class="text-center">
+          <app-button type="submit" id="login-button">Iniciar sesión</app-button>
+          <!-- <button type="reset" style = "margin-left: 20px;" mat-raised-button color="accent">Limpiar</button> -->
+>>>>>>> 4f8bdacad97932cf13b8049b411eff2dc038f6a8
         </div>
       </form>
       <mat-dialog-actions class="text-center">
