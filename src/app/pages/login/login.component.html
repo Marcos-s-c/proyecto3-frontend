@@ -20,6 +20,7 @@
             [(value)]="loginData.email"
             [type]="'text'"
             [hint]="'El correo de usuario debe ser válido'"
+            id="email"
           ></app-input>
 
           <app-input
@@ -30,12 +31,13 @@
             [(value)]="loginData.password"
             [type]="'password'"
             [hint]="'La contraseña debe ser válida'"
+            id="password"
           ></app-input>
         </div>
         <br /><br />
 
         <div class="text-center">
-          <app-button type="submit">Iniciar sesión</app-button>
+          <app-button type="submit" id="login-button">Iniciar sesión</app-button>
           <!-- <button type="reset" style = "margin-left: 20px;" mat-raised-button color="accent">Limpiar</button> -->
         </div>
       </form>
